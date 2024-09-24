@@ -19,6 +19,8 @@ public class SignUpRequest {
     @NotBlank
     @Size(min = 6, max = 20)
     private String password;
+    
+    private String schoolId;
 
     @NotBlank
     private String roles;
@@ -27,13 +29,15 @@ public class SignUpRequest {
         this.username = "";
         this.email = "";
         this.password = "";
+        this.schoolId = "";
         this.roles = "";
     }
-    public SignUpRequest(String name, String username, String email, String password, String roles) {
+    public SignUpRequest(String name, String username, String email, String password, String schoolId, String roles) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.schoolId = schoolId;
         this.roles = roles;
     }
 
@@ -68,6 +72,15 @@ public class SignUpRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(String schoolId) {
+        this.schoolId = schoolId;
+    }
+
 
     public String getRoles() {
         return roles;

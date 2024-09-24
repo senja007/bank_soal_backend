@@ -23,6 +23,10 @@ public class User {
     @NotBlank
     @Size(max = 100)
     private String password;
+    
+    @NotBlank(message = "")
+    private String schoolId;
+    
     @NotBlank
     private String roles;
 
@@ -31,11 +35,12 @@ public class User {
     public User() {
 
     }
-    public User(String name, String username, String email, String password, String roles, Instant createdAt) {
+    public User(String name, String username, String email, String password,String schoolId, String roles, Instant createdAt) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.schoolId = schoolId;
         this.roles = roles;
         this.createdAt = createdAt;
     }
@@ -71,6 +76,15 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(String schoolId) {
+        this.schoolId = schoolId;
+    }
+
 
     public String getPassword() {
         return password;

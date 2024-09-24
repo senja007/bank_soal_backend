@@ -31,188 +31,188 @@ public class HBaseClientStructure {
         TableName tableSubject = TableName.valueOf("subjects");
         String[] subjects = { "main", "study_program", "subject_group", "detail" };
         client.deleteTable(tableSubject);
-    ////  client.createTable(tableSubject, subjects);
+     client.createTable(tableSubject, subjects);
 
         // Create Tabel Bab
         TableName tableChapter = TableName.valueOf("chapters");
         String[] chapters = { "main", "subject", "detail" };
         client.deleteTable(tableChapter);
-  ////   client.createTable(tableChapter, chapters);
+     client.createTable(tableChapter, chapters);
 
         // Create Tabel Rumpun Mata Kuliah
         TableName tableSubjectGroup = TableName.valueOf("subject_groups");
         String[] subjectGroups = { "main", "detail" };
         client.deleteTable(tableSubjectGroup);
-   ////  client.createTable(tableSubjectGroup, subjectGroups);
+     client.createTable(tableSubjectGroup, subjectGroups);
 
         // Create Tabel Dosen
          TableName tableLecture= TableName.valueOf("lectures");
          String[] lectures = { "main", "study_program", "religion", "user", "detail" };
          client.deleteTable(tableLecture);
-     ////   client.createTable(tableLecture, lectures);
+        client.createTable(tableLecture, lectures);
 
         // Create Tabel Mahasiswa
          TableName tableStudent = TableName.valueOf("students");
          String[] students = { "main", "study_program", "religion", "user", "detail" };
          client.deleteTable(tableStudent);
-     ////   client.createTable(tableStudent, students);
+        client.createTable(tableStudent, students);
 
         // Create Tabel RPS
         TableName tableRPS = TableName.valueOf("rps");
         String[] RPS = { "main", "learning_media_softwares", "learning_media_hardwares", "requirement_subjects", "study_program", "subject", "dev_lecturers", "teaching_lecturers", "coordinator_lecturers", "ka_study_program", "detail" };
         client.deleteTable(tableRPS);
-    ////   client.createTable(tableRPS, RPS);
+       client.createTable(tableRPS, RPS);
 
         // Create Tabel Detail RPS
          TableName tableRPSDetail = TableName.valueOf("rps_details");
          String[] RPSDetails = { "main", "rps", "learning_materials", "form_learning", "learning_methods", "assignments", "estimated_times", "student_learning_experiences", "assessment_criterias", "appraisal_forms", "assessment_indicators", "detail" };
          client.deleteTable(tableRPSDetail);
-     ////   client.createTable(tableRPSDetail, RPSDetails);
+        client.createTable(tableRPSDetail, RPSDetails);
 
         // Create Table Pustaka
         TableName tableReference = TableName.valueOf("references");
         String[] references = { "main", "detail" };
         client.deleteTable(tableReference);
-    ////   client.createTable(tableReference, references);
+       client.createTable(tableReference, references);
 
         // Create Table Media Pembelajaran
         TableName tableLearningMedia = TableName.valueOf("learning_medias");
         String[] learningMedias = { "main", "detail" };
         client.deleteTable(tableLearningMedia);
-   ////    client.createTable(tableLearningMedia, learningMedias);
+       client.createTable(tableLearningMedia, learningMedias);
 
         // Create Table Agama
         TableName tableReligion = TableName.valueOf("religions");
         String[] religions = { "main", "detail" };
         client.deleteTable(tableReligion);
-    ////  client.createTable(tableReligion, religions);
+      client.createTable(tableReligion, religions);
 
         // Create Table Jurusan
         TableName tableDepartment = TableName.valueOf("departments");
         String[] departments = { "main", "detail" };
         client.deleteTable(tableDepartment);
-    ////   client.createTable(tableDepartment, departments);
+       client.createTable(tableDepartment, departments);
 
         // Create Table Prodi
         TableName tableStudyProgram = TableName.valueOf("study_programs");
         String[] studyPrograms = { "main", "department", "detail" };
         client.deleteTable(tableStudyProgram);
-    ////  client.createTable(tableStudyProgram, studyPrograms);
+      client.createTable(tableStudyProgram, studyPrograms);
 
          //Create Table Users
          TableName tableUser = TableName.valueOf("users");
          String[] users = { "main", "detail" };
          client.deleteTable(tableUser);
-    ////    client.createTable(tableUser, users);
+        client.createTable(tableUser, users);
 
         // Create Table Bentuk Penilaian
         TableName tableAppraisalForm = TableName.valueOf("appraisal_forms");
         String[] appraisalForms = { "main", "detail" };
         client.deleteTable(tableAppraisalForm);
-    ////   client.createTable(tableAppraisalForm, appraisalForms);
+       client.createTable(tableAppraisalForm, appraisalForms);
 
         // Create Tabel Kriteria Penilaian
         TableName tableAssessmentCriteria = TableName.valueOf("assessment_criterias");
         String[] assessmentCriterias = { "main", "detail" };
         client.deleteTable(tableAssessmentCriteria);
-    ////    client.createTable(tableAssessmentCriteria, assessmentCriterias);
+        client.createTable(tableAssessmentCriteria, assessmentCriterias);
 
         // Create Tabel Bentuk Pembelajaran
         TableName tableFormLearning = TableName.valueOf("form_learnings");
         String[] formLearnings = { "main", "detail" };
         client.deleteTable(tableFormLearning);
-    ////  client.createTable(tableFormLearning, formLearnings);
+      client.createTable(tableFormLearning, formLearnings);
 
         // Create Tabel Metode Pembelajaran
         TableName tableLearningMethod = TableName.valueOf("learning_methods");
         String[] learningMethods = { "main", "detail" };
         client.deleteTable(tableLearningMethod);
-////   client.createTable(tableLearningMethod, learningMethods);
+   client.createTable(tableLearningMethod, learningMethods);
 
          //Create Tabel Pertanyaan
          TableName tableQuestion = TableName.valueOf("questions");
          String[] questions = { "main", "rps_detail", "detail" };
          client.deleteTable(tableQuestion);
-    ////   client.createTable(tableQuestion, questions);
+       client.createTable(tableQuestion, questions);
 
          //Create Tabel Jawaban
          TableName tableAnswer = TableName.valueOf("answers");
          String[] answers = { "main", "question", "detail" };
          client.deleteTable(tableAnswer);
-    ////    client.createTable(tableAnswer, answers);
+        client.createTable(tableAnswer, answers);
 
         // Create Tabel Ujian
         TableName tableExam = TableName.valueOf("exams");
         String[] exams = { "main", "rps", "questions", "detail" };
         client.deleteTable(tableExam);
-  ////  client.createTable(tableExam, exams);
+    client.createTable(tableExam, exams);
 
         // Create Tabel Kuis
          TableName tableQuizzes = TableName.valueOf("quizzes");
          String[] quizzes = { "main", "rps", "questions", "detail" };
          client.deleteTable(tableQuizzes);
-    ////     client.createTable(tableQuizzes, quizzes);
+         client.createTable(tableQuizzes, quizzes);
         // Create Tabel Pengumuman Kuis
         TableName tableQuizzesAnnouncement = TableName.valueOf("quizzes_announcement");
         String[] quizzes_announcement = { "main", "rps", "questions", "detail" };
         client.deleteTable(tableQuizzesAnnouncement);
- ////     client.createTable(tableQuizzesAnnouncement, quizzes_announcement);
+      client.createTable(tableQuizzesAnnouncement, quizzes_announcement);
 
         // Create Tabel Latihan
          TableName tableExcercise = TableName.valueOf("exercises");
          String[] exercises = { "main", "rps", "questions", "detail" };
          client.deleteTable(tableExcercise);
-   ////    client.createTable(tableExcercise, exercises);
+       client.createTable(tableExcercise, exercises);
 
         // Create Tabel Percobaan pengumpulan Ujian
         TableName tableExamAttempts = TableName.valueOf("exam_attempts");
         String[] examAttempts = { "main", "exam", "user", "student", "student_answers", "detail" };
         client.deleteTable(tableExamAttempts);
- ////      client.createTable(tableExamAttempts, examAttempts);
+       client.createTable(tableExamAttempts, examAttempts);
 
         // Create Tabel Percobaan pengumpulan Kuis
         TableName tableQuizAttempts = TableName.valueOf("quiz_attempts");
         String[] quizAttempts = { "main", "quiz", "user", "student", "student_answers", "detail" };
         client.deleteTable(tableQuizAttempts);
-   ////    client.createTable(tableQuizAttempts, quizAttempts);
+       client.createTable(tableQuizAttempts, quizAttempts);
 
         // // Create Tabel Percobaan pengumpulan Latihan
          TableName tableExerciseAttempts = TableName.valueOf("exercise_attempts");
          String[] exerciseAttempts = { "main", "exercise", "user", "student", "student_answers", "detail" };
          client.deleteTable(tableExerciseAttempts);
-  ////       client.createTable(tableExerciseAttempts, exerciseAttempts);
+         client.createTable(tableExerciseAttempts, exerciseAttempts);
 
         // Create Tabel Metode Pembelajaran
         TableName tableExamType = TableName.valueOf("exam_types");
         String[] examTypes = { "main", "detail" };
         client.deleteTable(tableExamType);
-   ////    client.createTable(tableExamType, examTypes);
+       client.createTable(tableExamType, examTypes);
 
         // Create Tabel Krireria Penilaian Soal
 
          TableName tableQuestionCriteria = TableName.valueOf("question_criterias");
          String[] questionCriterias = { "main", "detail" };
          client.deleteTable(tableQuestionCriteria);
-  ////       client.createTable(tableQuestionCriteria, questionCriterias);
+         client.createTable(tableQuestionCriteria, questionCriterias);
 
         // Create Tabel Nilai Linguistic
 
          TableName tableLinguisticValue = TableName.valueOf("linguistic_values");
          String[] linguisticValues = { "main", "detail" };
          client.deleteTable(tableLinguisticValue);
-  ////       client.createTable(tableLinguisticValue, linguisticValues);
+         client.createTable(tableLinguisticValue, linguisticValues);
 
         // Create Tabel  Team Teaching
         TableName tableTeamTeaching = TableName.valueOf("team_teachings");
         String[] teamTeachings = {"main","detail","lecture","lecture2","lecture3"};
         client.deleteTable(tableTeamTeaching);
-   ////     client.createTable(tableTeamTeaching, teamTeachings);
+        client.createTable(tableTeamTeaching, teamTeachings);
 
         // Create Tabel Penilaian Soal
         TableName tableCriteriaValue = TableName.valueOf("criteria_values");
         String[] criteriaValues = { "main","detail","team_teaching","question","user","value1","value2","value3","value4","value5","value6","value7","value8","value9"};
         client.deleteTable(tableCriteriaValue);
- ////       client.createTable(tableCriteriaValue, criteriaValues);
+        client.createTable(tableCriteriaValue, criteriaValues);
 
         // seeder
         // time now
@@ -251,22 +251,25 @@ public class HBaseClientStructure {
          client.insertRecord(tableUser, "USR001", "main", "email", "admin@gmail.com");
          client.insertRecord(tableUser, "USR001", "main", "username", "admin");
          client.insertRecord(tableUser, "USR001", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
+         client.insertRecord(tableUser, "USR001", "main", "schoolId", "");
          client.insertRecord(tableUser, "USR001", "main", "roles", "1");
          client.insertRecord(tableUser, "USR001", "main", "created_at", "2023-05-14T04:56:23.174Z");
          client.insertRecord(tableUser, "USR001", "detail", "created_by", "Doyatama");
 
          client.insertRecord(tableUser, "USR002", "main", "id", "USR002");
-         client.insertRecord(tableUser, "USR002", "main", "email", "dosen@gmail.com");
-         client.insertRecord(tableUser, "USR002", "main", "username", "dosen");
+         client.insertRecord(tableUser, "USR002", "main", "email", "operator1@gmail.com");
+         client.insertRecord(tableUser, "USR002", "main", "username", "operator1");
          client.insertRecord(tableUser, "USR002", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
+         client.insertRecord(tableUser, "USR002", "main", "schoolId", "1");
          client.insertRecord(tableUser, "USR002", "main", "roles", "2");
          client.insertRecord(tableUser, "USR002", "main", "created_at", "2023-05-14T04:56:23.174Z");
          client.insertRecord(tableUser, "USR002", "detail", "created_by", "Doyatama");
 
          client.insertRecord(tableUser, "USR003", "main", "id", "USR003");
-         client.insertRecord(tableUser, "USR003", "main", "email", "dosen2@gmail.com");
-         client.insertRecord(tableUser, "USR003", "main", "username", "dosen2");
+         client.insertRecord(tableUser, "USR003", "main", "email", "operator2@gmail.com");
+         client.insertRecord(tableUser, "USR003", "main", "username", "operator2");
          client.insertRecord(tableUser, "USR003", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
+         client.insertRecord(tableUser, "USR003", "main", "schoolId", "2");
          client.insertRecord(tableUser, "USR003", "main", "roles", "2");
          client.insertRecord(tableUser, "USR003", "main", "created_at", "2023-05-14T04:56:23.174Z");
          client.insertRecord(tableUser, "USR003", "detail", "created_by", "Doyatama");
@@ -274,81 +277,90 @@ public class HBaseClientStructure {
          // Define the data
        List<Map<String, String>> usersToInsert = Arrays.asList(
             new HashMap<String, String>() {{
-                put("id", "Dosen1");
+                put("id", "guru1");
                 put("name", "Imam Fahrur Rozi, ST., MT");
                 put("username", "ImamFahrurRozi");
                 put("email", "ImamFahrurRozi@gmail.com");
                 put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
-                put("roles", "2");
+                 put("schoolId", "1");
+                put("roles", "3");
             }},
             new HashMap<String, String>() {{
-                put("id", "Dosen2");
+                put("id", "guru2");
                 put("name", "Frihandhika Permana SPd., MKom.");
                 put("username", "Frihandhika");
                 put("email", "FrihandhikaPermana@gmail.com");
                 put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
-                put("roles", "2");
+                 put("schoolId", "1");
+                put("roles", "3");
             }},
             new HashMap<String, String>() {{
-                put("id", "Dosen3");
+                put("id", "guru3");
                 put("name", "Milyun Ni’ma Shoumi, S.Kom., M.Kom.");
                 put("username", "MilyunNima");
                 put("email", "MilyunNi’maShoumi@gmail.com");
                 put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
-                put("roles", "2");
+                 put("schoolId", "1");
+                put("roles", "3");
             }},
              new HashMap<String, String>() {{
-                put("id", "Dosen4");
+                put("id", "guru4");
                 put("name", "Putra Prima Arhandi, ST., M.Kom.");
                 put("username", "PutraPrima");
                 put("email", "PutraPrima@gmail.com");
                 put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
-                put("roles", "2");
-                put("createdAt", null);
-            }},
-            new HashMap<String, String>() {{
-                put("id", "Dosen5");
-                put("name", "Muhammad Shulhan Khairy, S.Kom, M.Kom");
-                put("username", "MuhammadShulha");
-                put("email", "MuhammadShulhanKhairy@gmail.com");
-                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
-                put("roles", "2");
-                put("createdAt", null);
-            }},
-            new HashMap<String, String>() {{
-                put("id", "Dosen6");
-                put("name", "Gunawan Budiprasetyo, S.T., M.MT., Ph.D.");
-                put("username", "GunawanBudi");
-                put("email", "GunawanBudi@gmaill.com");
-                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
-                put("roles", "2");
-                put("createdAt", null);
-            }},
-            new HashMap<String, String>() {{
-                put("id", "Dosen7");
-                put("name", "Banni Satria Andoko, S. Kom., M.MSI");
-                put("username", "BanniSatria");
-                put("email", "BanniSatriaAndoko@gmail.com");
-                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
-                put("roles", "2");
-                put("createdAt", null);
-            }},
-            new HashMap<String, String>() {{
-                put("id", "Dosen8");
-                put("name", "Priska Choirina, S.S.T., M.Tr.T");
-                put("username", "PriskaChoirina");
-                put("email", "PriskaChoirina@gmail.com");
-                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
+                 put("schoolId", "1");
                 put("roles", "3");
                 put("createdAt", null);
             }},
             new HashMap<String, String>() {{
-               put("id", "Dosen10");
+                put("id", "guru5");
+                put("name", "Muhammad Shulhan Khairy, S.Kom, M.Kom");
+                put("username", "MuhammadShulha");
+                put("email", "MuhammadShulhanKhairy@gmail.com");
+                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
+                 put("schoolId", "1");
+                put("roles", "3");
+                put("createdAt", null);
+            }},
+            new HashMap<String, String>() {{
+                put("id", "guru6");
+                put("name", "Gunawan Budiprasetyo, S.T., M.MT., Ph.D.");
+                put("username", "GunawanBudi");
+                put("email", "GunawanBudi@gmaill.com");
+                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
+                 put("schoolId", "2");
+                put("roles", "3");
+                put("createdAt", null);
+            }},
+            new HashMap<String, String>() {{
+                put("id", "guru7");
+                put("name", "Banni Satria Andoko, S. Kom., M.MSI");
+                put("username", "BanniSatria");
+                put("email", "BanniSatriaAndoko@gmail.com");
+                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
+                 put("schoolId", "2");
+                put("roles", "3");
+                put("createdAt", null);
+            }},
+            new HashMap<String, String>() {{
+                put("id", "guru8");
+                put("name", "Priska Choirina, S.S.T., M.Tr.T");
+                put("username", "PriskaChoirina");
+                put("email", "PriskaChoirina@gmail.com");
+                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
+                 put("schoolId", "2");
+                put("roles", "3");
+                put("createdAt", null);
+            }},
+            new HashMap<String, String>() {{
+               put("id", "dudi1");
                put("name", "ranpo123");
                put("username", "ranpo123");
                put("email", "ranpo@gmail.com");
                put("password","$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
-               put("roles", "2");
+               put("schoolId", "1");
+               put("roles", "4");
                put("createdAt", null);
            }}
 
@@ -362,6 +374,7 @@ public class HBaseClientStructure {
            client.insertRecord(tableUser, user.get("id"), "main", "username", user.get("username"));
            client.insertRecord(tableUser, user.get("id"), "main", "email", user.get("email"));
            client.insertRecord(tableUser, user.get("id"), "main", "password", user.get("password"));
+           client.insertRecord(tableUser, user.get("id"), "main", "schoolId", user.get("schoolId"));
            client.insertRecord(tableUser, user.get("id"), "main", "roles", user.get("roles"));
            client.insertRecord(tableUser, user.get("id"), "detail", "created_by", "Doyatama");
        }

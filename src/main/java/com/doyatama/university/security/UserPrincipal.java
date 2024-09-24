@@ -14,6 +14,8 @@ public class UserPrincipal implements UserDetails {
     private String name;
 
     private String username;
+    
+    private String schoolId;
 
     private String roles;
 
@@ -25,10 +27,11 @@ public class UserPrincipal implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(String id, String name, String username, String email, String password, String roles) {
+    public UserPrincipal(String id, String name, String username, String schoolId, String email, String password, String roles) {
         this.id = id;
         this.name = name;
         this.username = username;
+        this.schoolId = schoolId;
         this.email = email;
         this.password = password;
         this.roles = roles;
@@ -40,6 +43,7 @@ public class UserPrincipal implements UserDetails {
                 user.getId(),
                 user.getName(),
                 user.getUsername(),
+                user.getSchoolId(),
                 user.getEmail(),
                 user.getPassword(),
                 user.getRoles().toString()
@@ -57,6 +61,11 @@ public class UserPrincipal implements UserDetails {
     public String getEmail() {
         return email;
     }
+
+    public String getSchoolId() {
+        return schoolId;
+    }
+    
 
     public String getRoles() {
         return roles;

@@ -30,10 +30,41 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/user/me")
-    public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName(), currentUser.getRoles().equalsIgnoreCase("1") ? "ROLE_ADMINISTRATOR" : currentUser.getRoles().equalsIgnoreCase("2") ? "ROLE_LECTURE" : "ROLE_STUDENT","", "");
-        return userSummary;
+public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
+    // Menentukan nama sekolah berdasarkan SchoolId
+    String schoolName = "";
+    if (currentUser.getSchoolId() != null) {
+        schoolName = currentUser.getSchoolId().equalsIgnoreCase("1") ? "SMK_1_TEMPEH" :
+                     currentUser.getSchoolId().equalsIgnoreCase("2") ? "SMK_1_ROWOKANGKUNG" : "";
+    } else {
+        schoolName = "";
     }
+
+    // Menentukan role berdasarkan roles
+    String role = "";
+    if (currentUser.getRoles() != null) {
+        role = currentUser.getRoles().equalsIgnoreCase("1") ? "ROLE_ADMINISTRATOR" :
+                currentUser.getRoles().equalsIgnoreCase("2") ? "ROLE_OPERATOR" :
+               currentUser.getRoles().equalsIgnoreCase("3") ? "ROLE_LECTURE" :
+                currentUser.getRoles().equalsIgnoreCase("4") ? "ROLE_LECTURE" : "ROLE_STUDENT";
+    } else {
+        role = "ROLE_STUDENT";  // Default role jika roles null
+    }
+
+    // Membuat UserSummary dengan informasi yang telah diolah
+    UserSummary userSummary = new UserSummary(
+        currentUser.getId(),
+        currentUser.getUsername(),
+        currentUser.getName(),
+        schoolName,
+        role,
+        "", // Kolom yang tidak jelas fungsinya dari kode awal
+        ""  // Kolom yang tidak jelas fungsinya dari kode awal
+    );
+
+    return userSummary;
+}
+
 
     
     @GetMapping("/users/{userId}")

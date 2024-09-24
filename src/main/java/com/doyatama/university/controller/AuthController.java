@@ -76,10 +76,20 @@ public class AuthController {
         ZoneId zoneId = ZoneId.of("Asia/Jakarta");
         ZonedDateTime zonedDateTime = ZonedDateTime.now(zoneId);
         Instant instant = zonedDateTime.toInstant();
+        
+         // Jika role bukan ADMIN, maka schoolId harus diisi
+    String schoolId = null;
+    if (!signUpRequest.getRoles().equalsIgnoreCase("1")) {
+        if (signUpRequest.getSchoolId() == null || signUpRequest.getSchoolId().isEmpty()) {
+            return new ResponseEntity(new ApiResponse(false, "School ID is required for non-administrator roles!"),
+                    HttpStatus.BAD_REQUEST);
+        }
+        schoolId = signUpRequest.getSchoolId();
+    }
 
         // Creating user's account
         User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),
-                signUpRequest.getEmail(), signUpRequest.getPassword(), signUpRequest.getRoles(), instant);
+                signUpRequest.getEmail(), signUpRequest.getPassword(),signUpRequest.getSchoolId(), signUpRequest.getRoles(), instant);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 

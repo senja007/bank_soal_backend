@@ -4,15 +4,17 @@ public class UserSummary {
     private String id;
     private String username;
     private String name;
+    private String schoolId;
     private String roles;
     private String description;
 
     private String avatar;
 
-    public UserSummary(String id, String username, String name, String roles, String description, String avatar) {
+    public UserSummary(String id, String username, String name,String schoolId, String roles, String description, String avatar) {
         this.id = id;
         this.username = username;
         this.name = name;
+        this.schoolId = schoolId;
         this.roles = roles;
         this.description = description;
         this.avatar = avatar;
@@ -40,6 +42,14 @@ public class UserSummary {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(String schoolId) {
+        this.schoolId = schoolId;
     }
 
     public String getRoles() {
