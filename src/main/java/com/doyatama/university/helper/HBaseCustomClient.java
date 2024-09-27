@@ -16,6 +16,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -227,6 +228,104 @@ public class HBaseCustomClient {
 
         return null;
     }
+    
+public <T> List<T> showListTableFiltered(String tablename, Map<String, String> columnMapping, Class<T> modelClass, int sizeLimit, String familyName, String columnName, String columnValue) {
+    ResultScanner rsObj = null;
+
+    try {
+        Table table = connection.getTable(TableName.valueOf(tablename));
+        Scan s = new Scan();
+        s.setCaching(100);
+
+        if (sizeLimit > 0) {
+            s.setLimit(sizeLimit);
+        }
+
+        // Menambahkan keluarga kolom
+        TableDescriptor tableDescriptor = connection.getAdmin().getDescriptor(TableName.valueOf(tablename));
+        ColumnFamilyDescriptor[] columnFamilies = tableDescriptor.getColumnFamilies();
+        for (ColumnFamilyDescriptor columnFamily : columnFamilies) {
+            byte[] family = columnFamily.getName();
+            s.addFamily(family);
+        }
+
+        // Memastikan bahwa familyName, columnName, dan columnValue tidak null
+        if (familyName != null && columnName != null && columnValue != null) {
+            Filter filter = new SingleColumnValueFilter(
+                Bytes.toBytes(familyName),
+                Bytes.toBytes(columnName),
+                CompareOperator.EQUAL,
+                Bytes.toBytes(columnValue)
+            );
+            s.setFilter(filter);
+        }
+
+        // Mengambil scanner
+        rsObj = table.getScanner(s);
+        List<T> objects = new ArrayList<>();
+
+        // Mengiterasi hasil
+        for (Result result : rsObj) {
+            T object = modelClass.getDeclaredConstructor().newInstance(); // Menggunakan Constructor
+
+            for (Cell cell : result.listCells()) {
+                String familyNameCell = Bytes.toString(CellUtil.cloneFamily(cell));
+                String columnNameCell = Bytes.toString(CellUtil.cloneQualifier(cell));
+                String variableName = columnMapping.get(columnNameCell);
+                String value = Bytes.toString(CellUtil.cloneValue(cell));
+
+                // Mengisi objek dengan data yang diambil
+                if (columnMapping.containsKey(familyNameCell)) {
+                    String subFieldName = columnNameCell.substring(columnNameCell.indexOf(".") + 1);
+                    Field familyField = object.getClass().getDeclaredField(familyNameCell);
+                    familyField.setAccessible(true);
+                    Object familyObject = familyField.get(object);
+
+                    if (familyObject == null) {
+                        if (familyField.getType() == List.class) {
+                            familyObject = new ArrayList<>();
+                            familyField.set(object, familyObject);
+                        } else {
+                            familyObject = familyField.getType().newInstance();
+                            familyField.set(object, familyObject);
+                        }
+                    }
+
+                    // Menangani pengisian field sub
+                    if (familyObject instanceof List) {
+                        ((List) familyObject).add(value);
+                    } else {
+                        Field subField = familyObject.getClass().getDeclaredField(subFieldName);
+                        subField.setAccessible(true);
+                        setField(subField, familyObject, value);
+                    }
+                } else {
+                    if (variableName != null) {
+                        Field field = object.getClass().getDeclaredField(variableName);
+                        field.setAccessible(true);
+                        setField(field, object, value);
+                    }
+                }
+            }
+            objects.add(object);
+        }
+
+        return objects;
+    } catch (IOException e) {
+        if (rsObj != null) rsObj.close();
+        e.printStackTrace();
+    } catch (InstantiationException | IllegalAccessException | NoSuchFieldException | InvocationTargetException | NoSuchMethodException e) {
+        throw new RuntimeException(e);
+    } finally {
+        if (rsObj != null) {
+            rsObj.close(); // Pastikan scanner ditutup di dalam finally
+        }
+    }
+
+    return null;
+}
+
+
 
     public <T> T showDataTable(String tablename, Map<String, String> columnMapping, String uuid, Class<T> modelClass) {
         Result result = null;

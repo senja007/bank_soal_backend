@@ -31,7 +31,7 @@ public class UserController {
 
     @GetMapping("/user/me")
 public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-    // Menentukan nama sekolah berdasarkan SchoolId
+    
     String schoolName = "";
     if (currentUser.getSchoolId() != null) {
         schoolName = currentUser.getSchoolId().equalsIgnoreCase("1") ? "SMK_1_TEMPEH" :
@@ -40,15 +40,15 @@ public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         schoolName = "";
     }
 
-    // Menentukan role berdasarkan roles
+    
     String role = "";
     if (currentUser.getRoles() != null) {
         role = currentUser.getRoles().equalsIgnoreCase("1") ? "ROLE_ADMINISTRATOR" :
                 currentUser.getRoles().equalsIgnoreCase("2") ? "ROLE_OPERATOR" :
                currentUser.getRoles().equalsIgnoreCase("3") ? "ROLE_LECTURE" :
-                currentUser.getRoles().equalsIgnoreCase("4") ? "ROLE_LECTURE" : "ROLE_STUDENT";
+                currentUser.getRoles().equalsIgnoreCase("4") ? "ROLE_DUDI" : "ROLE_STUDENT";
     } else {
-        role = "ROLE_STUDENT";  // Default role jika roles null
+        role = "ROLE_STUDENT";  
     }
 
     // Membuat UserSummary dengan informasi yang telah diolah
@@ -58,9 +58,10 @@ public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         currentUser.getName(),
         schoolName,
         role,
-        "", // Kolom yang tidak jelas fungsinya dari kode awal
-        ""  // Kolom yang tidak jelas fungsinya dari kode awal
+        "", 
+        ""  
     );
+logger.info("Current user: {}", currentUser);
 
     return userSummary;
 }

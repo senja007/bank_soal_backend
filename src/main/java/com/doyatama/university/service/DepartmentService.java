@@ -23,24 +23,43 @@ public class DepartmentService {
     private static final Logger logger = LoggerFactory.getLogger(DepartmentService.class);
 
 
-    public PagedResponse<Department> getAllDepartment(int page, int size) throws IOException {
+//    public PagedResponse<Department> getAllDepartment(int page, int size) throws IOException {
+//        validatePageNumberAndSize(page, size);
+//
+//        // Retrieve Polls
+//        List<Department> departmentResponse = departmentRepository.findAll(size);
+//
+//
+//        return new PagedResponse<>(departmentResponse, departmentResponse.size(), "Successfully get data", 200);
+//    }
+    
+    public PagedResponse<Department> getDepartments(String schoolId, int page, int size) throws IOException {
         validatePageNumberAndSize(page, size);
 
-        // Retrieve Polls
-        List<Department> departmentResponse = departmentRepository.findAll(size);
+        List<Department> departments;
 
+        if (schoolId != null && !schoolId.isEmpty()) {
+            departments = departmentRepository.findBySchoolId(schoolId, size);
+        } else {
+     
+            departments = departmentRepository.findAll(size);
+        }
 
-        return new PagedResponse<>(departmentResponse, departmentResponse.size(), "Successfully get data", 200);
+        return new PagedResponse<>(departments, departments.size(), "Successfully get data", 200);
     }
 
-    public Department createDepartment(DepartmentRequest departmentRequest) throws IOException {
+    public Department createDepartment(DepartmentRequest departmentRequest, String schoolID) throws IOException {
         Department department = new Department();
-
+        department.setSchoolID(schoolID);
         department.setName(departmentRequest.getName());
         department.setDescription(departmentRequest.getDescription());
 
         return departmentRepository.save(department);
     }
+    
+//     public List<Department> getDepartmentsBySchoolId(String schoolId, int size) throws IOException {
+//        return departmentRepository.findBySchoolId(schoolId, size);
+//    }
 
     public DefaultResponse<Department> getDepartmentById(String departmentId) throws IOException {
         // Retrieve Department
@@ -50,6 +69,14 @@ public class DepartmentService {
 
     public Department updateDepartment(String departmentId, DepartmentRequest departmentRequest) throws IOException {
         Department department = new Department();
+  
+    Department existingDepartment = departmentRepository.findById(departmentId);
+
+    if (existingDepartment == null) {
+        throw new ResourceNotFoundException("Department", "id", departmentId);
+    }
+    
+        department.setSchoolID(existingDepartment.getSchoolID());
         department.setName(departmentRequest.getName());
         department.setDescription(departmentRequest.getDescription());
 

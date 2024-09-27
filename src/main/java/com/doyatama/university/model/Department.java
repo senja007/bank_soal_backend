@@ -3,14 +3,16 @@ package com.doyatama.university.model;
 
 public class Department {
     private String id;
+    private String schoolID;
     private String name;
     private String description;
 
     public Department() {
     }
 
-    public Department(String id, String name, String description) {
+    public Department(String id, String schoolID, String name, String description) {
         this.id = id;
+        this.schoolID = schoolID;
         this.name = name;
         this.description = description;
     }
@@ -21,6 +23,14 @@ public class Department {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getSchoolID() {
+        return schoolID;
+    }
+
+    public void setSchoolID(String schoolID) {
+        this.schoolID = schoolID;
     }
 
     public String getName() {
