@@ -24,14 +24,24 @@ public class HBaseClientStructure {
         // ==============================================================================================
         // CREATE COLLECTION
         // ==============================================================================================
-
-
+        
+        // Create Table Sekolah
+        TableName tableSchool = TableName.valueOf("schools");
+        String[] school = { "main", "detail" };
+        client.deleteTable(tableSchool);
+        client.createTable(tableSchool, school);
+        
+        // Create Table Profil Sekolah
+        TableName tableSchoolProfile = TableName.valueOf("school-profiles");
+        String[] schoolprofile = { "main", "detail" };
+        client.deleteTable(tableSchoolProfile);
+        client.createTable(tableSchoolProfile, schoolprofile);
 
         // Create Tabel Mata Kuliah
         TableName tableSubject = TableName.valueOf("subjects");
         String[] subjects = { "main", "study_program", "subject_group", "detail" };
         client.deleteTable(tableSubject);
-     client.createTable(tableSubject, subjects);
+        client.createTable(tableSubject, subjects);
 
         // Create Tabel Bab
         TableName tableChapter = TableName.valueOf("chapters");
