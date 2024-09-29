@@ -173,6 +173,7 @@ public class UserRepository {
         client.insertRecord(tableUsers, rowKey, "main", "password", user.getPassword());
         if (user.getSchool() != null && user.getSchool().getId() != null) {
         client.insertRecord(tableUsers, rowKey, "school", "id", user.getSchool().getId());
+        client.insertRecord(tableUsers, rowKey, "school", "name", user.getSchool().getName());
         } else {
             System.out.println("School is null or has no ID");
         }
