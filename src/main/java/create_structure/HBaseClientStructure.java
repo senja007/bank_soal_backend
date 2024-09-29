@@ -111,7 +111,7 @@ public class HBaseClientStructure {
 
          //Create Table Users
          TableName tableUser = TableName.valueOf("users");
-         String[] users = { "main", "detail" };
+         String[] users = { "main", "school", "detail" };
          client.deleteTable(tableUser);
         client.createTable(tableUser, users);
 
@@ -261,133 +261,132 @@ public class HBaseClientStructure {
          client.insertRecord(tableUser, "USR001", "main", "email", "admin@gmail.com");
          client.insertRecord(tableUser, "USR001", "main", "username", "admin");
          client.insertRecord(tableUser, "USR001", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
-         client.insertRecord(tableUser, "USR001", "main", "schoolId", "");
          client.insertRecord(tableUser, "USR001", "main", "roles", "1");
          client.insertRecord(tableUser, "USR001", "main", "created_at", "2023-05-14T04:56:23.174Z");
          client.insertRecord(tableUser, "USR001", "detail", "created_by", "Doyatama");
 
-         client.insertRecord(tableUser, "USR002", "main", "id", "USR002");
-         client.insertRecord(tableUser, "USR002", "main", "email", "operator1@gmail.com");
-         client.insertRecord(tableUser, "USR002", "main", "username", "operator1");
-         client.insertRecord(tableUser, "USR002", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
-         client.insertRecord(tableUser, "USR002", "main", "schoolId", "1");
-         client.insertRecord(tableUser, "USR002", "main", "roles", "2");
-         client.insertRecord(tableUser, "USR002", "main", "created_at", "2023-05-14T04:56:23.174Z");
-         client.insertRecord(tableUser, "USR002", "detail", "created_by", "Doyatama");
-
-         client.insertRecord(tableUser, "USR003", "main", "id", "USR003");
-         client.insertRecord(tableUser, "USR003", "main", "email", "operator2@gmail.com");
-         client.insertRecord(tableUser, "USR003", "main", "username", "operator2");
-         client.insertRecord(tableUser, "USR003", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
-         client.insertRecord(tableUser, "USR003", "main", "schoolId", "2");
-         client.insertRecord(tableUser, "USR003", "main", "roles", "2");
-         client.insertRecord(tableUser, "USR003", "main", "created_at", "2023-05-14T04:56:23.174Z");
-         client.insertRecord(tableUser, "USR003", "detail", "created_by", "Doyatama");
+//         client.insertRecord(tableUser, "USR002", "main", "id", "USR002");
+//         client.insertRecord(tableUser, "USR002", "main", "email", "operator1@gmail.com");
+//         client.insertRecord(tableUser, "USR002", "main", "username", "operator1");
+//         client.insertRecord(tableUser, "USR002", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
+//         client.insertRecord(tableUser, "USR002", "main", "schoolId", "1");
+//         client.insertRecord(tableUser, "USR002", "main", "roles", "2");
+//         client.insertRecord(tableUser, "USR002", "main", "created_at", "2023-05-14T04:56:23.174Z");
+//         client.insertRecord(tableUser, "USR002", "detail", "created_by", "Doyatama");
+//
+//         client.insertRecord(tableUser, "USR003", "main", "id", "USR003");
+//         client.insertRecord(tableUser, "USR003", "main", "email", "operator2@gmail.com");
+//         client.insertRecord(tableUser, "USR003", "main", "username", "operator2");
+//         client.insertRecord(tableUser, "USR003", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
+//         client.insertRecord(tableUser, "USR003", "main", "schoolId", "2");
+//         client.insertRecord(tableUser, "USR003", "main", "roles", "2");
+//         client.insertRecord(tableUser, "USR003", "main", "created_at", "2023-05-14T04:56:23.174Z");
+//         client.insertRecord(tableUser, "USR003", "detail", "created_by", "Doyatama");
 
          // Define the data
-       List<Map<String, String>> usersToInsert = Arrays.asList(
-            new HashMap<String, String>() {{
-                put("id", "guru1");
-                put("name", "Imam Fahrur Rozi, ST., MT");
-                put("username", "ImamFahrurRozi");
-                put("email", "ImamFahrurRozi@gmail.com");
-                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
-                 put("schoolId", "1");
-                put("roles", "3");
-            }},
-            new HashMap<String, String>() {{
-                put("id", "guru2");
-                put("name", "Frihandhika Permana SPd., MKom.");
-                put("username", "Frihandhika");
-                put("email", "FrihandhikaPermana@gmail.com");
-                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
-                 put("schoolId", "1");
-                put("roles", "3");
-            }},
-            new HashMap<String, String>() {{
-                put("id", "guru3");
-                put("name", "Milyun Ni’ma Shoumi, S.Kom., M.Kom.");
-                put("username", "MilyunNima");
-                put("email", "MilyunNi’maShoumi@gmail.com");
-                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
-                 put("schoolId", "1");
-                put("roles", "3");
-            }},
-             new HashMap<String, String>() {{
-                put("id", "guru4");
-                put("name", "Putra Prima Arhandi, ST., M.Kom.");
-                put("username", "PutraPrima");
-                put("email", "PutraPrima@gmail.com");
-                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
-                 put("schoolId", "1");
-                put("roles", "3");
-                put("createdAt", null);
-            }},
-            new HashMap<String, String>() {{
-                put("id", "guru5");
-                put("name", "Muhammad Shulhan Khairy, S.Kom, M.Kom");
-                put("username", "MuhammadShulha");
-                put("email", "MuhammadShulhanKhairy@gmail.com");
-                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
-                 put("schoolId", "1");
-                put("roles", "3");
-                put("createdAt", null);
-            }},
-            new HashMap<String, String>() {{
-                put("id", "guru6");
-                put("name", "Gunawan Budiprasetyo, S.T., M.MT., Ph.D.");
-                put("username", "GunawanBudi");
-                put("email", "GunawanBudi@gmaill.com");
-                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
-                 put("schoolId", "2");
-                put("roles", "3");
-                put("createdAt", null);
-            }},
-            new HashMap<String, String>() {{
-                put("id", "guru7");
-                put("name", "Banni Satria Andoko, S. Kom., M.MSI");
-                put("username", "BanniSatria");
-                put("email", "BanniSatriaAndoko@gmail.com");
-                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
-                 put("schoolId", "2");
-                put("roles", "3");
-                put("createdAt", null);
-            }},
-            new HashMap<String, String>() {{
-                put("id", "guru8");
-                put("name", "Priska Choirina, S.S.T., M.Tr.T");
-                put("username", "PriskaChoirina");
-                put("email", "PriskaChoirina@gmail.com");
-                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
-                 put("schoolId", "2");
-                put("roles", "3");
-                put("createdAt", null);
-            }},
-            new HashMap<String, String>() {{
-               put("id", "dudi1");
-               put("name", "ranpo123");
-               put("username", "ranpo123");
-               put("email", "ranpo@gmail.com");
-               put("password","$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
-               put("schoolId", "1");
-               put("roles", "4");
-               put("createdAt", null);
-           }}
-
-
-       );
-
-       // Loop over the data and insert each user
-       for (Map<String, String> user : usersToInsert) {
-           client.insertRecord(tableUser, user.get("id"), "main", "id", user.get("id"));
-           client.insertRecord(tableUser, user.get("id"), "main", "name", user.get("name"));
-           client.insertRecord(tableUser, user.get("id"), "main", "username", user.get("username"));
-           client.insertRecord(tableUser, user.get("id"), "main", "email", user.get("email"));
-           client.insertRecord(tableUser, user.get("id"), "main", "password", user.get("password"));
-           client.insertRecord(tableUser, user.get("id"), "main", "schoolId", user.get("schoolId"));
-           client.insertRecord(tableUser, user.get("id"), "main", "roles", user.get("roles"));
-           client.insertRecord(tableUser, user.get("id"), "detail", "created_by", "Doyatama");
-       }
+//       List<Map<String, String>> usersToInsert = Arrays.asList(
+//            new HashMap<String, String>() {{
+//                put("id", "guru1");
+//                put("name", "Imam Fahrur Rozi, ST., MT");
+//                put("username", "ImamFahrurRozi");
+//                put("email", "ImamFahrurRozi@gmail.com");
+//                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
+//                 put("schoolId", "1");
+//                put("roles", "3");
+//            }},
+//            new HashMap<String, String>() {{
+//                put("id", "guru2");
+//                put("name", "Frihandhika Permana SPd., MKom.");
+//                put("username", "Frihandhika");
+//                put("email", "FrihandhikaPermana@gmail.com");
+//                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
+//                 put("schoolId", "1");
+//                put("roles", "3");
+//            }},
+//            new HashMap<String, String>() {{
+//                put("id", "guru3");
+//                put("name", "Milyun Ni’ma Shoumi, S.Kom., M.Kom.");
+//                put("username", "MilyunNima");
+//                put("email", "MilyunNi’maShoumi@gmail.com");
+//                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
+//                 put("schoolId", "1");
+//                put("roles", "3");
+//            }},
+//             new HashMap<String, String>() {{
+//                put("id", "guru4");
+//                put("name", "Putra Prima Arhandi, ST., M.Kom.");
+//                put("username", "PutraPrima");
+//                put("email", "PutraPrima@gmail.com");
+//                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
+//                 put("schoolId", "1");
+//                put("roles", "3");
+//                put("createdAt", null);
+//            }},
+//            new HashMap<String, String>() {{
+//                put("id", "guru5");
+//                put("name", "Muhammad Shulhan Khairy, S.Kom, M.Kom");
+//                put("username", "MuhammadShulha");
+//                put("email", "MuhammadShulhanKhairy@gmail.com");
+//                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
+//                 put("schoolId", "1");
+//                put("roles", "3");
+//                put("createdAt", null);
+//            }},
+//            new HashMap<String, String>() {{
+//                put("id", "guru6");
+//                put("name", "Gunawan Budiprasetyo, S.T., M.MT., Ph.D.");
+//                put("username", "GunawanBudi");
+//                put("email", "GunawanBudi@gmaill.com");
+//                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
+//                 put("schoolId", "2");
+//                put("roles", "3");
+//                put("createdAt", null);
+//            }},
+//            new HashMap<String, String>() {{
+//                put("id", "guru7");
+//                put("name", "Banni Satria Andoko, S. Kom., M.MSI");
+//                put("username", "BanniSatria");
+//                put("email", "BanniSatriaAndoko@gmail.com");
+//                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
+//                 put("schoolId", "2");
+//                put("roles", "3");
+//                put("createdAt", null);
+//            }},
+//            new HashMap<String, String>() {{
+//                put("id", "guru8");
+//                put("name", "Priska Choirina, S.S.T., M.Tr.T");
+//                put("username", "PriskaChoirina");
+//                put("email", "PriskaChoirina@gmail.com");
+//                put("password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2");
+//                 put("schoolId", "2");
+//                put("roles", "3");
+//                put("createdAt", null);
+//            }},
+//            new HashMap<String, String>() {{
+//               put("id", "dudi1");
+//               put("name", "ranpo123");
+//               put("username", "ranpo123");
+//               put("email", "ranpo@gmail.com");
+//               put("password","$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
+//               put("schoolId", "1");
+//               put("roles", "4");
+//               put("createdAt", null);
+//           }}
+//
+//
+//       );
+//
+//       // Loop over the data and insert each user
+//       for (Map<String, String> user : usersToInsert) {
+//           client.insertRecord(tableUser, user.get("id"), "main", "id", user.get("id"));
+//           client.insertRecord(tableUser, user.get("id"), "main", "name", user.get("name"));
+//           client.insertRecord(tableUser, user.get("id"), "main", "username", user.get("username"));
+//           client.insertRecord(tableUser, user.get("id"), "main", "email", user.get("email"));
+//           client.insertRecord(tableUser, user.get("id"), "main", "password", user.get("password"));
+//           client.insertRecord(tableUser, user.get("id"), "main", "schoolId", user.get("schoolId"));
+//           client.insertRecord(tableUser, user.get("id"), "main", "roles", user.get("roles"));
+//           client.insertRecord(tableUser, user.get("id"), "detail", "created_by", "Doyatama");
+//       }
         
         // Insert Religions
         client.insertRecord(tableReligion, "RLG001", "main", "id", "RLG001");

@@ -80,8 +80,7 @@ public class SignUpRequest {
     public void setSchoolId(String schoolId) {
         this.schoolId = schoolId;
     }
-
-
+    
     public String getRoles() {
         return roles;
     }

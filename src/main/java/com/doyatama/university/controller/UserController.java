@@ -30,42 +30,12 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/user/me")
-public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-    
-    String schoolName = "";
-    if (currentUser.getSchoolId() != null) {
-        schoolName = currentUser.getSchoolId().equalsIgnoreCase("1") ? "SMK_1_TEMPEH" :
-                     currentUser.getSchoolId().equalsIgnoreCase("2") ? "SMK_1_ROWOKANGKUNG" : "";
-    } else {
-        schoolName = "";
+    public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
+        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName(), currentUser.getSchoolId(), currentUser.getRoles().equalsIgnoreCase("1") ? "ROLE_ADMINISTRATOR" : 
+                currentUser.getRoles().equalsIgnoreCase("2") ? "ROLE_OPERATOR" : currentUser.getRoles().equalsIgnoreCase("3") ? "ROLE_TEACHER" : 
+                currentUser.getRoles().equalsIgnoreCase("4") ? "ROLE_DUDI" : "ROLE_STUDENT","", "");
+        return userSummary;
     }
-
-    
-    String role = "";
-    if (currentUser.getRoles() != null) {
-        role = currentUser.getRoles().equalsIgnoreCase("1") ? "ROLE_ADMINISTRATOR" :
-                currentUser.getRoles().equalsIgnoreCase("2") ? "ROLE_OPERATOR" :
-               currentUser.getRoles().equalsIgnoreCase("3") ? "ROLE_LECTURE" :
-                currentUser.getRoles().equalsIgnoreCase("4") ? "ROLE_DUDI" : "ROLE_STUDENT";
-    } else {
-        role = "ROLE_STUDENT";  
-    }
-
-    // Membuat UserSummary dengan informasi yang telah diolah
-    UserSummary userSummary = new UserSummary(
-        currentUser.getId(),
-        currentUser.getUsername(),
-        currentUser.getName(),
-        schoolName,
-        role,
-        "", 
-        ""  
-    );
-logger.info("Current user: {}", currentUser);
-
-    return userSummary;
-}
-
 
     
     @GetMapping("/users/{userId}")

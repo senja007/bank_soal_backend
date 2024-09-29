@@ -1,12 +1,19 @@
 package com.doyatama.university.controller;
 
+import com.doyatama.university.exception.ResourceNotFoundException;
+import com.doyatama.university.model.School;
 import com.doyatama.university.model.User;
 import com.doyatama.university.payload.ApiResponse;
+import com.doyatama.university.payload.DefaultResponse;
+import com.doyatama.university.payload.UserSummary;
 import com.doyatama.university.payload.auth.JwtAuthenticationResponse;
 import com.doyatama.university.payload.auth.LoginRequest;
 import com.doyatama.university.payload.auth.SignUpRequest;
+import com.doyatama.university.repository.SchoolRepository;
 import com.doyatama.university.repository.UserRepository;
 import com.doyatama.university.security.JwtTokenProvider;
+import com.doyatama.university.security.UserPrincipal;
+import com.doyatama.university.service.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +36,8 @@ import java.time.ZonedDateTime;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+    private SchoolService schoolService = new SchoolService();
+    private SchoolRepository schoolRepository = new SchoolRepository();
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -51,24 +60,24 @@ public class AuthController {
                         loginRequest.getPassword()
                 )
         );
-
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        UserSummary userSummary = new UserSummary(userPrincipal.getId(), userPrincipal.getUsername(), userPrincipal.getName(), userPrincipal.getSchoolId(), userPrincipal.getRoles().equalsIgnoreCase("1") ? "ROLE_ADMINISTRATOR" : 
+                userPrincipal.getRoles().equalsIgnoreCase("2") ? "ROLE_OPERATOR" : userPrincipal.getRoles().equalsIgnoreCase("3") ? "ROLE_TEACHER" : userPrincipal.getRoles().equalsIgnoreCase("4") ? "ROLE_DUDI" : "ROLE_STUDENT","", "");
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, userSummary));
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) throws IOException {
-//        SignUpRequest signUpRequest = new SignUpRequest(name, username, email, password, roles);
-        if(userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+            return new ResponseEntity<>(new ApiResponse(false, "Username is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
-
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+            return new ResponseEntity<>(new ApiResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
 
@@ -76,20 +85,24 @@ public class AuthController {
         ZoneId zoneId = ZoneId.of("Asia/Jakarta");
         ZonedDateTime zonedDateTime = ZonedDateTime.now(zoneId);
         Instant instant = zonedDateTime.toInstant();
-        
-         // Jika role bukan ADMIN, maka schoolId harus diisi
-    String schoolId = null;
-    if (!signUpRequest.getRoles().equalsIgnoreCase("1")) {
-        if (signUpRequest.getSchoolId() == null || signUpRequest.getSchoolId().isEmpty()) {
-            return new ResponseEntity(new ApiResponse(false, "School ID is required for non-administrator roles!"),
-                    HttpStatus.BAD_REQUEST);
-        }
-        schoolId = signUpRequest.getSchoolId();
-    }
 
-        // Creating user's account
-        User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),
-                signUpRequest.getEmail(), signUpRequest.getPassword(),signUpRequest.getSchoolId(), signUpRequest.getRoles(), instant);
+        // Mengambil objek School langsung menggunakan SchoolRepository
+        School school = schoolRepository.findById(signUpRequest.getSchoolId());
+        if (school == null) {
+            return new ResponseEntity<>(new ApiResponse(false, "School not found with ID: " + signUpRequest.getSchoolId()),
+                    HttpStatus.NOT_FOUND);
+        }
+
+        // Membuat user baru dengan objek School yang sudah diambil
+        User user = new User(
+                signUpRequest.getName(),
+                signUpRequest.getUsername(),
+                signUpRequest.getEmail(),
+                signUpRequest.getPassword(),
+                school,  
+                signUpRequest.getRoles(),
+                instant
+        );
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -101,4 +114,7 @@ public class AuthController {
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
+
+
+
 }

@@ -24,8 +24,7 @@ public class User {
     @Size(max = 100)
     private String password;
     
-    @NotBlank(message = "")
-    private String schoolId;
+    private School school;
     
     @NotBlank
     private String roles;
@@ -35,12 +34,12 @@ public class User {
     public User() {
 
     }
-    public User(String name, String username, String email, String password,String schoolId, String roles, Instant createdAt) {
+    public User(String name, String username, String email, String password, School school, String roles, Instant createdAt) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.schoolId = schoolId;
+        this.school = school;
         this.roles = roles;
         this.createdAt = createdAt;
     }
@@ -77,15 +76,14 @@ public class User {
         this.email = email;
     }
 
-    public String getSchoolId() {
-        return schoolId;
+    public School getSchool() {
+        return school;
     }
 
-    public void setSchoolId(String schoolId) {
-        this.schoolId = schoolId;
+    public void setSchool(School school) {
+        this.school = school;
     }
-
-
+    
     public String getPassword() {
         return password;
     }

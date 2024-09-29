@@ -31,7 +31,7 @@ public class UserRepository {
         columnMapping.put("username", "username");
         columnMapping.put("email", "email");
         columnMapping.put("password", "password");
-        columnMapping.put("schoolId", "schoolId");
+        columnMapping.put("school", "school");
         columnMapping.put("roles", "roles");
         return client.showListTable(tableUsers.toString(), columnMapping, User.class, size);
     }
@@ -48,7 +48,7 @@ public class UserRepository {
         columnMapping.put("username", "username");
         columnMapping.put("email", "email");
         columnMapping.put("password", "password");
-        columnMapping.put("schoolId", "schoolId");
+        columnMapping.put("school", "school");
         columnMapping.put("roles", "roles");
 
         // Get the list of all users
@@ -90,7 +90,7 @@ public class UserRepository {
         columnMapping.put("username", "username");
         columnMapping.put("email", "email");
         columnMapping.put("password", "password");
-        columnMapping.put("schoolId", "schoolId");
+        columnMapping.put("school", "school");
         columnMapping.put("roles", "roles");
 
         return client.getDataByColumn(tableUsers.toString(), columnMapping, "main", "username", username, User.class);
@@ -108,7 +108,7 @@ public class UserRepository {
         columnMapping.put("username", "username");
         columnMapping.put("email", "email");
         columnMapping.put("password", "password");
-        columnMapping.put("schoolId", "schoolId");
+        columnMapping.put("school", "school");
         columnMapping.put("roles", "roles");
 
         return client.showDataTable(tableUsers.toString(), columnMapping, id, User.class);
@@ -126,7 +126,7 @@ public class UserRepository {
         columnMapping.put("username", "username");
         columnMapping.put("email", "email");
         columnMapping.put("password", "password");
-        columnMapping.put("schoolId", "schoolId");
+        columnMapping.put("school", "school");
         columnMapping.put("roles", "roles");
 
         User user = client.getDataByColumn(tableUsers.toString(), columnMapping, "main", "username", username, User.class);
@@ -149,7 +149,7 @@ public class UserRepository {
         columnMapping.put("username", "username");
         columnMapping.put("email", "email");
         columnMapping.put("password", "password");
-        columnMapping.put("schoolId", "schoolId");
+        columnMapping.put("school", "school");
         columnMapping.put("roles", "roles");
 
         User user = client.getDataByColumn(tableUsers.toString(), columnMapping, "main", "email", email, User.class);
@@ -171,7 +171,11 @@ public class UserRepository {
         client.insertRecord(tableUsers, rowKey, "main", "username", user.getUsername());
         client.insertRecord(tableUsers, rowKey, "main", "email", user.getEmail());
         client.insertRecord(tableUsers, rowKey, "main", "password", user.getPassword());
-        client.insertRecord(tableUsers, rowKey, "main", "schoolId", user.getSchoolId());
+        if (user.getSchool() != null && user.getSchool().getId() != null) {
+        client.insertRecord(tableUsers, rowKey, "school", "id", user.getSchool().getId());
+        } else {
+            System.out.println("School is null or has no ID");
+        }
         client.insertRecord(tableUsers, rowKey, "main", "roles", user.getRoles());
         client.insertRecord(tableUsers, rowKey, "main", "created_at", user.getCreatedAt().toString());
         return user;

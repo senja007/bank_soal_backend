@@ -38,12 +38,12 @@ public class UserPrincipal implements UserDetails {
     }
 
     public static UserPrincipal create(User user) {
-
+        String schoolId = (user.getSchool() != null) ? user.getSchool().getId() : null;
         return new UserPrincipal(
                 user.getId(),
                 user.getName(),
                 user.getUsername(),
-                user.getSchoolId(),
+                schoolId,
                 user.getEmail(),
                 user.getPassword(),
                 user.getRoles().toString()
