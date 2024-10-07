@@ -25,6 +25,22 @@ public class HBaseClientStructure {
         // CREATE COLLECTION
         // ==============================================================================================
         
+        TableName tableKonsentrasiKeahlian = TableName.valueOf("konsentrasiKeahlians");
+        String[] konsentrasiKeahlian = { "main", "detail" };
+        client.deleteTable(tableKonsentrasiKeahlian);
+        client.createTable(tableKonsentrasiKeahlian, konsentrasiKeahlian);
+        
+        TableName tableProgramKeahlian = TableName.valueOf("programKeahlians");
+        String[] programKeahlian = { "main", "detail" };
+        client.deleteTable(tableProgramKeahlian);
+        client.createTable(tableProgramKeahlian, programKeahlian);
+        
+        // Create Table Bidang Keahlian
+        TableName tableBidangKeahlian = TableName.valueOf("bidangKeahlians");
+        String[] bidangKeahlian = { "main", "school", "detail" };
+        client.deleteTable(tableBidangKeahlian);
+        client.createTable(tableBidangKeahlian, bidangKeahlian);
+        
         // Create Table Sekolah
         TableName tableSchool = TableName.valueOf("schools");
         String[] school = { "main", "detail" };
@@ -230,31 +246,34 @@ public class HBaseClientStructure {
         ZonedDateTime zonedDateTime = ZonedDateTime.now(zoneId);
         Instant instant = zonedDateTime.toInstant();
 
-        // Insert Jurusan
-        client.insertRecord(tableDepartment, "DP001", "main", "id", "DP001");
-        client.insertRecord(tableDepartment, "DP001", "main", "name", "Jurusan Teknologi Informasi");
-        client.insertRecord(tableDepartment, "DP001", "main", "description", "Ini merupakan jurusan untuk mahasiswa informatika");
-        client.insertRecord(tableDepartment, "DP001", "detail", "created_by", "Doyatama");
-
-        client.insertRecord(tableDepartment, "DP002", "main", "id", "DP002");
-        client.insertRecord(tableDepartment, "DP002", "main", "name", "Jurusan Teknik Mesin");
-        client.insertRecord(tableDepartment, "DP002", "main", "description", "Ini merupakan jurusan untuk mahasiswa teknik mesin");
-        client.insertRecord(tableDepartment, "DP002", "detail", "created_by", "Doyatama");
-
-        // Insert Prodi
-        client.insertRecord(tableStudyProgram, "SP001", "main", "id", "SP001");
-        client.insertRecord(tableStudyProgram, "SP001", "main", "name", "D4 Teknik Informatika");
-        client.insertRecord(tableStudyProgram, "SP001", "main", "description", "Ini merupakan prodi untuk mahasiswa informatika");
-        client.insertRecord(tableStudyProgram, "SP001", "department", "id", "DP001");
-        client.insertRecord(tableStudyProgram, "SP001", "department", "name", "Jurusan Teknologi Informasi");
-        client.insertRecord(tableStudyProgram, "SP001", "detail", "created_by", "Doyatama");
-
-        client.insertRecord(tableStudyProgram, "SP002", "main", "id", "SP002");
-        client.insertRecord(tableStudyProgram, "SP002", "main", "name", "D3 Manajemen Informatika");
-        client.insertRecord(tableStudyProgram, "SP002", "main", "description", "Ini merupakan prodi untuk mahasiswa informatika");
-        client.insertRecord(tableStudyProgram, "SP002", "department", "id", "DP002");
-        client.insertRecord(tableStudyProgram, "SP002", "department", "name", "Jurusan Teknik Mesin");
-        client.insertRecord(tableStudyProgram, "SP002", "detail", "created_by", "Doyatama");
+        //insert school 
+        client.insertRecord(tableSchool, "RWK1", "main", "id", "RWK1");
+        
+//        // Insert Jurusan
+//        client.insertRecord(tableDepartment, "DP001", "main", "id", "DP001");
+//        client.insertRecord(tableDepartment, "DP001", "main", "name", "Jurusan Teknologi Informasi");
+//        client.insertRecord(tableDepartment, "DP001", "main", "description", "Ini merupakan jurusan untuk mahasiswa informatika");
+//        client.insertRecord(tableDepartment, "DP001", "detail", "created_by", "Doyatama");
+//
+//        client.insertRecord(tableDepartment, "DP002", "main", "id", "DP002");
+//        client.insertRecord(tableDepartment, "DP002", "main", "name", "Jurusan Teknik Mesin");
+//        client.insertRecord(tableDepartment, "DP002", "main", "description", "Ini merupakan jurusan untuk mahasiswa teknik mesin");
+//        client.insertRecord(tableDepartment, "DP002", "detail", "created_by", "Doyatama");
+//
+//        // Insert Prodi
+//        client.insertRecord(tableStudyProgram, "SP001", "main", "id", "SP001");
+//        client.insertRecord(tableStudyProgram, "SP001", "main", "name", "D4 Teknik Informatika");
+//        client.insertRecord(tableStudyProgram, "SP001", "main", "description", "Ini merupakan prodi untuk mahasiswa informatika");
+//        client.insertRecord(tableStudyProgram, "SP001", "department", "id", "DP001");
+//        client.insertRecord(tableStudyProgram, "SP001", "department", "name", "Jurusan Teknologi Informasi");
+//        client.insertRecord(tableStudyProgram, "SP001", "detail", "created_by", "Doyatama");
+//
+//        client.insertRecord(tableStudyProgram, "SP002", "main", "id", "SP002");
+//        client.insertRecord(tableStudyProgram, "SP002", "main", "name", "D3 Manajemen Informatika");
+//        client.insertRecord(tableStudyProgram, "SP002", "main", "description", "Ini merupakan prodi untuk mahasiswa informatika");
+//        client.insertRecord(tableStudyProgram, "SP002", "department", "id", "DP002");
+//        client.insertRecord(tableStudyProgram, "SP002", "department", "name", "Jurusan Teknik Mesin");
+//        client.insertRecord(tableStudyProgram, "SP002", "detail", "created_by", "Doyatama");
 
          //Insert Users
          client.insertRecord(tableUser, "USR001", "main", "id", "USR001");
@@ -265,15 +284,15 @@ public class HBaseClientStructure {
          client.insertRecord(tableUser, "USR001", "main", "created_at", "2023-05-14T04:56:23.174Z");
          client.insertRecord(tableUser, "USR001", "detail", "created_by", "Doyatama");
 
-//         client.insertRecord(tableUser, "USR002", "main", "id", "USR002");
-//         client.insertRecord(tableUser, "USR002", "main", "email", "operator1@gmail.com");
-//         client.insertRecord(tableUser, "USR002", "main", "username", "operator1");
-//         client.insertRecord(tableUser, "USR002", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
-//         client.insertRecord(tableUser, "USR002", "main", "schoolId", "1");
-//         client.insertRecord(tableUser, "USR002", "main", "roles", "2");
-//         client.insertRecord(tableUser, "USR002", "main", "created_at", "2023-05-14T04:56:23.174Z");
-//         client.insertRecord(tableUser, "USR002", "detail", "created_by", "Doyatama");
-//
+         client.insertRecord(tableUser, "USR002", "main", "id", "USR002");
+         client.insertRecord(tableUser, "USR002", "main", "email", "operator1@gmail.com");
+         client.insertRecord(tableUser, "USR002", "main", "username", "operator1");
+         client.insertRecord(tableUser, "USR002", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
+         client.insertRecord(tableUser, "USR002", "main", "schoolId", "1");
+         client.insertRecord(tableUser, "USR002", "main", "roles", "2");
+         client.insertRecord(tableUser, "USR002", "main", "created_at", "2023-05-14T04:56:23.174Z");
+         client.insertRecord(tableUser, "USR002", "detail", "created_by", "Doyatama");
+
 //         client.insertRecord(tableUser, "USR003", "main", "id", "USR003");
 //         client.insertRecord(tableUser, "USR003", "main", "email", "operator2@gmail.com");
 //         client.insertRecord(tableUser, "USR003", "main", "username", "operator2");
