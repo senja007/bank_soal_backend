@@ -34,6 +34,7 @@ public class ProgramKeahlianRepository {
         // Add the mappings to the HashMap
         columnMapping.put("id", "id");
         columnMapping.put("program", "program");
+        columnMapping.put("bidangKeahlian", "bidangKeahlian");
         return client.showListTable(tableProgramKeahlian.toString(), columnMapping, ProgramKeahlian.class, size);
     }
      
@@ -44,6 +45,8 @@ public class ProgramKeahlianRepository {
         TableName tableProgramKeahlian = TableName.valueOf(tableName);
         client.insertRecord(tableProgramKeahlian, rowKey, "main", "id", rowKey);
         client.insertRecord(tableProgramKeahlian, rowKey, "main", "program", programKeahlian.getProgram());
+        client.insertRecord(tableProgramKeahlian, rowKey, "bidangKeahlian", "id", programKeahlian.getBidangKeahlian().getId());
+        client.insertRecord(tableProgramKeahlian, rowKey, "bidangKeahlian", "bidang", programKeahlian.getBidangKeahlian().getBidang());
 
         client.insertRecord(tableProgramKeahlian, rowKey, "detail", "created_by", "Doyatama");
         return programKeahlian;
@@ -88,6 +91,8 @@ public class ProgramKeahlianRepository {
 
         TableName tableProgramKeahlian = TableName.valueOf(tableName);
         client.insertRecord(tableProgramKeahlian, BDGid, "main", "program", programKeahlian.getProgram());
+        client.insertRecord(tableProgramKeahlian, BDGid, "bidangKeahlian", "id", programKeahlian.getBidangKeahlian().getId());
+        client.insertRecord(tableProgramKeahlian, BDGid, "bidangKeahlian", "bidang", programKeahlian.getBidangKeahlian().getBidang());
         client.insertRecord(tableProgramKeahlian, BDGid, "detail", "created_by", "Doyatama");
         return programKeahlian;
     }

@@ -26,12 +26,12 @@ public class HBaseClientStructure {
         // ==============================================================================================
         
         TableName tableKonsentrasiKeahlian = TableName.valueOf("konsentrasiKeahlians");
-        String[] konsentrasiKeahlian = { "main", "detail" };
+        String[] konsentrasiKeahlian = { "main","programKeahlian", "detail" };
         client.deleteTable(tableKonsentrasiKeahlian);
         client.createTable(tableKonsentrasiKeahlian, konsentrasiKeahlian);
         
         TableName tableProgramKeahlian = TableName.valueOf("programKeahlians");
-        String[] programKeahlian = { "main", "detail" };
+        String[] programKeahlian = { "main","bidangKeahlian", "detail" };
         client.deleteTable(tableProgramKeahlian);
         client.createTable(tableProgramKeahlian, programKeahlian);
         
@@ -248,6 +248,15 @@ public class HBaseClientStructure {
 
         //insert school 
         client.insertRecord(tableSchool, "RWK1", "main", "id", "RWK1");
+        client.insertRecord(tableSchool, "RWK1", "main", "name", "SMPN 01 ROWOKANGKUNG");
+        client.insertRecord(tableSchool, "RWK1", "main", "address", "jl. raya rowokangkung");
+        client.insertRecord(tableSchool, "RWK1", "detail", "created_by", "Doyatama");
+        
+        
+        client.insertRecord(tableSchool, "TMP1", "main", "id", "TMP1");
+        client.insertRecord(tableSchool, "TMP1", "main", "name", "SMPN 01 TEMPEH");
+        client.insertRecord(tableSchool, "TMP1", "main", "address", "jl. raya tempeh");
+        client.insertRecord(tableSchool, "TMP1", "detail", "created_by", "Doyatama");
         
 //        // Insert Jurusan
 //        client.insertRecord(tableDepartment, "DP001", "main", "id", "DP001");
@@ -288,19 +297,21 @@ public class HBaseClientStructure {
          client.insertRecord(tableUser, "USR002", "main", "email", "operator1@gmail.com");
          client.insertRecord(tableUser, "USR002", "main", "username", "operator1");
          client.insertRecord(tableUser, "USR002", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
-         client.insertRecord(tableUser, "USR002", "main", "schoolId", "1");
+         client.insertRecord(tableUser, "USR002", "school", "id", "RWK1");
          client.insertRecord(tableUser, "USR002", "main", "roles", "2");
          client.insertRecord(tableUser, "USR002", "main", "created_at", "2023-05-14T04:56:23.174Z");
          client.insertRecord(tableUser, "USR002", "detail", "created_by", "Doyatama");
 
-//         client.insertRecord(tableUser, "USR003", "main", "id", "USR003");
-//         client.insertRecord(tableUser, "USR003", "main", "email", "operator2@gmail.com");
-//         client.insertRecord(tableUser, "USR003", "main", "username", "operator2");
-//         client.insertRecord(tableUser, "USR003", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
-//         client.insertRecord(tableUser, "USR003", "main", "schoolId", "2");
-//         client.insertRecord(tableUser, "USR003", "main", "roles", "2");
-//         client.insertRecord(tableUser, "USR003", "main", "created_at", "2023-05-14T04:56:23.174Z");
-//         client.insertRecord(tableUser, "USR003", "detail", "created_by", "Doyatama");
+         
+         client.insertRecord(tableUser, "USR003", "main", "id", "USR003");
+         client.insertRecord(tableUser, "USR003", "main", "email", "operator2@gmail.com");
+         client.insertRecord(tableUser, "USR003", "main", "username", "operator2");
+         client.insertRecord(tableUser, "USR003", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
+         client.insertRecord(tableUser, "USR003", "school", "id", "TMP1");
+         client.insertRecord(tableUser, "USR003", "main", "roles", "2");
+         client.insertRecord(tableUser, "USR003", "main", "created_at", "2023-05-14T04:56:23.174Z");
+         client.insertRecord(tableUser, "USR003", "detail", "created_by", "Doyatama");
+
 
          // Define the data
 //       List<Map<String, String>> usersToInsert = Arrays.asList(

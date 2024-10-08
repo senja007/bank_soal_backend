@@ -6,10 +6,12 @@ package com.doyatama.university.service;
 
 import com.doyatama.university.exception.BadRequestException;
 import com.doyatama.university.exception.ResourceNotFoundException;
+import com.doyatama.university.model.BidangKeahlian;
 import com.doyatama.university.model.ProgramKeahlian;
 import com.doyatama.university.payload.ProgramKeahlianRequest;
 import com.doyatama.university.payload.DefaultResponse;
 import com.doyatama.university.payload.PagedResponse;
+import com.doyatama.university.repository.BidangKeahlianRepository;
 import com.doyatama.university.repository.ProgramKeahlianRepository;
 import com.doyatama.university.util.AppConstants;
 import java.io.IOException;
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProgramKeahlianService {
     private ProgramKeahlianRepository programKeahlianRepository = new ProgramKeahlianRepository();
+    private BidangKeahlianRepository bidangKeahlianRepository = new BidangKeahlianRepository();
     
     private static final Logger logger = LoggerFactory.getLogger(ProgramKeahlianService.class);
 
@@ -44,9 +47,12 @@ public PagedResponse<ProgramKeahlian> getAllProgramKeahlian(int page, int size) 
     }
 
     public ProgramKeahlian createProgramKeahlian(ProgramKeahlianRequest programKeahlianRequest) throws IOException {
+       BidangKeahlian bidang = bidangKeahlianRepository.findById(programKeahlianRequest.getBidangKeahlian_id());
+        
         ProgramKeahlian programKeahlian = new ProgramKeahlian();
             programKeahlian.setId(programKeahlianRequest.getId());
             programKeahlian.setProgram(programKeahlianRequest.getProgram());
+          programKeahlian.setBidangKeahlian(bidang);
             return programKeahlianRepository.save(programKeahlian);
     }        
 

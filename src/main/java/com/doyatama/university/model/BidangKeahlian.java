@@ -1,11 +1,6 @@
 package com.doyatama.university.model;
 
-
-
-
 public class BidangKeahlian {
-    
-
     private String id;
     private String bidang;
     private School school;
@@ -43,14 +38,11 @@ public class BidangKeahlian {
         this.school = school;
     }
 
-    
-    
     public boolean isValid() {
         return this.id != null &&
                 this.bidang != null && 
                 this.school != null ;
     }
-
     public void set(String fieldName, String value) {
         switch (fieldName) {
             case "id":
@@ -59,7 +51,6 @@ public class BidangKeahlian {
             case "bidang":
                 this.bidang = value;  
                 break;
-         
             default:
                 throw new IllegalArgumentException("Invalid field name: " + fieldName);
         }

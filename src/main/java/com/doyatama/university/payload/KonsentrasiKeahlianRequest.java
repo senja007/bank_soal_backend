@@ -4,13 +4,15 @@ public class KonsentrasiKeahlianRequest {
     
     private String id;
     private String konsentrasi; 
+    private String programKeahlian_id;
     
     public KonsentrasiKeahlianRequest() {
     }
     
-    public KonsentrasiKeahlianRequest(String id, String konsentrasi) {
+    public KonsentrasiKeahlianRequest(String id, String konsentrasi, String programKeahlian_id) {
         this.id = id;
         this.konsentrasi = konsentrasi;
+        this.programKeahlian_id = programKeahlian_id;
     }
 
     public String getId() {
@@ -29,7 +31,13 @@ public class KonsentrasiKeahlianRequest {
         this.konsentrasi = konsentrasi;
     }
 
-  
+    public String getProgramKeahlian_id() {
+        return programKeahlian_id;
+    }
+
+    public void setProgramKeahlian_id(String programKeahlian_id) {
+        this.programKeahlian_id = programKeahlian_id;
+    }
 
     public boolean isValid() {
         return this.id != null && this.konsentrasi != null;
@@ -43,6 +51,8 @@ public class KonsentrasiKeahlianRequest {
             case "konsentrasi":
                 this.konsentrasi = value;  
                 break;
+            case "programKeahlian_id":
+                this.programKeahlian_id = value;
             default:
                 throw new IllegalArgumentException("Invalid field name: " + fieldName);
         }

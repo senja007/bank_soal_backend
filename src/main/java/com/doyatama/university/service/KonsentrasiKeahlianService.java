@@ -7,10 +7,12 @@ package com.doyatama.university.service;
 import com.doyatama.university.exception.BadRequestException;
 import com.doyatama.university.exception.ResourceNotFoundException;
 import com.doyatama.university.model.KonsentrasiKeahlian;
+import com.doyatama.university.model.ProgramKeahlian;
 import com.doyatama.university.payload.KonsentrasiKeahlianRequest;
 import com.doyatama.university.payload.DefaultResponse;
 import com.doyatama.university.payload.PagedResponse;
 import com.doyatama.university.repository.KonsentrasiKeahlianRepository;
+import com.doyatama.university.repository.ProgramKeahlianRepository;
 import com.doyatama.university.util.AppConstants;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class KonsentrasiKeahlianService {
     private KonsentrasiKeahlianRepository konsentrasiKeahlianRepository = new KonsentrasiKeahlianRepository();
+    private ProgramKeahlianRepository programKeahlianRepository = new ProgramKeahlianRepository();
     
     private static final Logger logger = LoggerFactory.getLogger(KonsentrasiKeahlianService.class);
 
@@ -44,9 +47,12 @@ public PagedResponse<KonsentrasiKeahlian> getAllKonsentrasiKeahlian(int page, in
     }
 
     public KonsentrasiKeahlian createKonsentrasiKeahlian(KonsentrasiKeahlianRequest konsentrasiKeahlianRequest) throws IOException {
+       ProgramKeahlian program = programKeahlianRepository.findById(konsentrasiKeahlianRequest.getProgramKeahlian_id());
+        
         KonsentrasiKeahlian konsentrasiKeahlian = new KonsentrasiKeahlian();
             konsentrasiKeahlian.setId(konsentrasiKeahlianRequest.getId());
             konsentrasiKeahlian.setKonsentrasi(konsentrasiKeahlianRequest.getKonsentrasi());
+            konsentrasiKeahlian.setProgramKeahlian(program);
             return konsentrasiKeahlianRepository.save(konsentrasiKeahlian);
     }        
 

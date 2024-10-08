@@ -34,13 +34,9 @@ public class BidangKeahlianRequest {
     public String getSchool_id() {
         return school_id;
     }
-
     public void setSchool_id(String school_id) {
         this.school_id = school_id;
     }
-
-  
-
     public boolean isValid() {
         return this.id != null && this.bidang != null;
     }

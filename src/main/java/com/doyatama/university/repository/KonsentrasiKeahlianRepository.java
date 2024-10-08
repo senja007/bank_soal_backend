@@ -34,6 +34,7 @@ public class KonsentrasiKeahlianRepository {
         // Add the mappings to the HashMap
         columnMapping.put("id", "id");
         columnMapping.put("konsentrasi", "konsentrasi");
+        columnMapping.put("programKeahlian", "programKeahlian");
         return client.showListTable(tableKonsentrasiKeahlian.toString(), columnMapping, KonsentrasiKeahlian.class, size);
     }
      
@@ -44,6 +45,8 @@ public class KonsentrasiKeahlianRepository {
         TableName tableKonsentrasiKeahlian = TableName.valueOf(tableName);
         client.insertRecord(tableKonsentrasiKeahlian, rowKey, "main", "id", rowKey);
         client.insertRecord(tableKonsentrasiKeahlian, rowKey, "main", "konsentrasi", konsentrasiKeahlian.getKonsentrasi());
+        client.insertRecord(tableKonsentrasiKeahlian, rowKey, "programKeahlian", "id", konsentrasiKeahlian.getProgramKeahlian().getId());
+        client.insertRecord(tableKonsentrasiKeahlian, rowKey, "programKeahlian", "program", konsentrasiKeahlian.getProgramKeahlian().getProgram());
 
         client.insertRecord(tableKonsentrasiKeahlian, rowKey, "detail", "created_by", "Doyatama");
         return konsentrasiKeahlian;
@@ -88,7 +91,12 @@ public class KonsentrasiKeahlianRepository {
 
         TableName tableKonsentrasiKeahlian = TableName.valueOf(tableName);
         client.insertRecord(tableKonsentrasiKeahlian, BDGid, "main", "konsentrasi", konsentrasiKeahlian.getKonsentrasi());
+         client.insertRecord(tableKonsentrasiKeahlian, BDGid, "programKeahlian", "id", konsentrasiKeahlian.getProgramKeahlian().getId());
+        client.insertRecord(tableKonsentrasiKeahlian, BDGid, "programKeahlian", "program", konsentrasiKeahlian.getProgramKeahlian().getProgram());
         client.insertRecord(tableKonsentrasiKeahlian, BDGid, "detail", "created_by", "Doyatama");
+       
+
+        
         return konsentrasiKeahlian;
     }
         
