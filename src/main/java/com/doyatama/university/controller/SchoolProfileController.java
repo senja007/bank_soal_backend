@@ -30,8 +30,9 @@ public class SchoolProfileController {
 
     @GetMapping
     public PagedResponse<SchoolProfile> getSchoolProfiles(@RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
-                                            @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) throws IOException {
-        return schoolProfileService.getAllProfile(page, size);
+                                            @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size,
+                                            @RequestParam(value = "schoolId", defaultValue = "*") String schoolId) throws IOException {
+        return schoolProfileService.getAllProfile(page, size, schoolId);
     }
     
     @PostMapping

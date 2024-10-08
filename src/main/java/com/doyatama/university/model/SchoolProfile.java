@@ -8,25 +8,16 @@ public class SchoolProfile {
     
     private String title;
     private String description;
-    private String schoolId;
-    private ProfileType type;
+    private School school;
     private String file_path;
-    
-    public enum ProfileType{
-        IMAGE,
-        AUDIO,
-        VIDEO,
-        NORMAL,
-    }
     
     public SchoolProfile(){}
 
-    public SchoolProfile(String id, String title, String description, String schoolId, ProfileType type, String file_path) {
+    public SchoolProfile(String id, String title, String description, School school,  String file_path) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.schoolId = schoolId;
-        this.type = type;
+        this.school = school;
         this.file_path = file_path;
     }
 
@@ -54,20 +45,12 @@ public class SchoolProfile {
         this.description = description;
     }
 
-    public String getSchoolId() {
-        return schoolId;
+    public School getSchool() {
+        return school;
     }
 
-    public void setSchoolId(String schoolId) {
-        this.schoolId = schoolId;
-    }
-
-    public ProfileType getType() {
-        return type;
-    }
-
-    public void setType(ProfileType type) {
-        this.type = type;
+    public void setSchool(School school) {
+        this.school = school;
     }
 
     public String getFile_path() {
@@ -81,8 +64,7 @@ public class SchoolProfile {
     public boolean isValid(){
         return this.id != null &&
                this.title != null &&
-               this.description != null &&
-               this.schoolId != null;
+               this.description != null;
     }
     
     public void set(String fieldName, String value) {
@@ -95,12 +77,6 @@ public class SchoolProfile {
                 break;
             case "description":
                 this.description = value;
-                break;
-            case "schoolId":
-                this.schoolId = value;
-                break;
-            case "type":
-                this.type = ProfileType.valueOf(value);
                 break;
             case "file_path":
                 this.file_path = value;

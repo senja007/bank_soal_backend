@@ -22,7 +22,7 @@ public class SchoolProfileRepository {
         columnMapping.put("id", "id");
         columnMapping.put("title", "title");
         columnMapping.put("description", "description");
-        columnMapping.put("type", "type");
+        columnMapping.put("school", "school");
         columnMapping.put("file_path", "file_path");
         return client.showListTable(profile.toString(), columnMapping, SchoolProfile.class, size);
     }
@@ -35,7 +35,8 @@ public class SchoolProfileRepository {
         client.insertRecord(tableProfile, rowKey, "main", "id", rowKey);
         client.insertRecord(tableProfile, rowKey, "main", "title", profile.getTitle());
         client.insertRecord(tableProfile, rowKey, "main", "description", profile.getDescription());
-        client.insertRecord(tableProfile, rowKey, "main", "type", profile.getType().toString());
+        client.insertRecord(tableProfile, rowKey, "school", "id", profile.getSchool().getId());
+        client.insertRecord(tableProfile, rowKey, "school", "name", profile.getSchool().getName());
         client.insertRecord(tableProfile, rowKey, "main", "file_path", profile.getFile_path());
         client.insertRecord(tableProfile, rowKey, "detail", "created_by", "Doyatama");
         return profile;
@@ -51,7 +52,7 @@ public class SchoolProfileRepository {
         columnMapping.put("id", "id");
         columnMapping.put("title", "title");
         columnMapping.put("description", "description");
-        columnMapping.put("type", "type");
+        columnMapping.put("school", "school");
         columnMapping.put("file_path", "file_path");
 
         return client.showDataTable(tableProfile.toString(), columnMapping, profileId, SchoolProfile.class);
@@ -66,10 +67,8 @@ public class SchoolProfileRepository {
         columnMapping.put("id", "id");
         columnMapping.put("title", "title");
         columnMapping.put("description", "description");
-        columnMapping.put("type", "type");
-        columnMapping.put("is_right", "is_right");
+        columnMapping.put("school", "school");
         columnMapping.put("file_path", "file_path");
-
         List<SchoolProfile> profiles = new ArrayList<>();
         for (String profileId : profileIds) {
             SchoolProfile profile = client.showDataTable(tableProfile.toString(), columnMapping, profileId, SchoolProfile.class);
@@ -81,13 +80,31 @@ public class SchoolProfileRepository {
         return profiles;
     }
     
+    public List<SchoolProfile> findSchoolProfileBySchool(String schoolId, int size) throws IOException {
+        HBaseCustomClient client = new HBaseCustomClient(conf);
+
+        TableName tableProfile = TableName.valueOf(tableName);
+        Map<String, String> columnMapping = new HashMap<>();
+
+        columnMapping.put("id", "id");
+        columnMapping.put("title", "title");
+        columnMapping.put("description", "description");
+        columnMapping.put("school", "school");
+        columnMapping.put("file_path", "file_path");
+
+        List<SchoolProfile> profile = client.getDataListByColumn(tableProfile.toString(), columnMapping, "school", "id", schoolId, SchoolProfile.class, size);
+
+        return profile;
+    }
+    
     public SchoolProfile update(String profileId, SchoolProfile profile) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
         TableName tableProfile = TableName.valueOf(tableName);
         client.insertRecord(tableProfile, profileId, "main", "title", profile.getTitle());
         client.insertRecord(tableProfile, profileId, "main", "description", profile.getDescription());
-        client.insertRecord(tableProfile, profileId, "main", "type", profile.getType().toString());
+        client.insertRecord(tableProfile, profileId, "school", "id", profile.getSchool().getId());
+        client.insertRecord(tableProfile, profileId, "school", "name", profile.getSchool().getName());
         client.insertRecord(tableProfile, profileId, "main", "file_path", profile.getFile_path());
         client.insertRecord(tableProfile, profileId, "detail", "created_by", "Doyatama");
         return profile;

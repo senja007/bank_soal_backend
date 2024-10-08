@@ -6,17 +6,16 @@ public class SchoolProfileRequest {
     
     private String title;
     private String description;
-    private String schoolId;
-    private String type;
+    private String school_id;
 
     public SchoolProfileRequest() {
     }
 
-    public SchoolProfileRequest(String id, String title, String description, String type) {
+    public SchoolProfileRequest(String id, String title, String description, String school_id) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.type = type;
+        this.school_id = school_id;
     }
 
     public String getId() {
@@ -43,12 +42,12 @@ public class SchoolProfileRequest {
         this.description = description;
     }
 
-    public String getType() {
-        return type;
+    public String getSchool_id() {
+        return school_id;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setSchool_id(String school_id) {
+        this.school_id = school_id;
     }
     
     public void set(String fieldName, String value) {
@@ -62,8 +61,8 @@ public class SchoolProfileRequest {
             case "description":
                 this.description = value;
                 break;
-            case "type":
-                this.type = value;
+            case "school_id":
+                this.school_id = value;
                 break;
             default:
                 throw new IllegalArgumentException("Invalid field name: " + fieldName);

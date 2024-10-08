@@ -3,10 +3,12 @@ package com.doyatama.university.service;
 import com.doyatama.university.exception.BadRequestException;
 import com.doyatama.university.exception.ResourceNotFoundException;
 import com.doyatama.university.model.SchoolProfile;
+import com.doyatama.university.model.School;
 import com.doyatama.university.payload.DefaultResponse;
 import com.doyatama.university.payload.SchoolProfileRequest;
 import com.doyatama.university.payload.PagedResponse;
 import com.doyatama.university.repository.SchoolProfileRepository;
+import com.doyatama.university.repository.SchoolRepository;
 import com.doyatama.university.util.AppConstants;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -19,17 +21,22 @@ import java.util.List;
 @Service
 public class SchoolProfileService {
     private SchoolProfileRepository schoolProfileRepository = new SchoolProfileRepository();
+    private SchoolRepository schoolRepository = new SchoolRepository();
     
     private static final Logger logger = LoggerFactory.getLogger(SchoolProfileService.class);
     
-    public PagedResponse<SchoolProfile> getAllProfile(int page, int size) throws IOException {
+    public PagedResponse<SchoolProfile> getAllProfile(int page, int size, String schoolId) throws IOException {
         validatePageNumberAndSize(page, size);
 
         // Retrieve Polls
         List<SchoolProfile> profileResponse = new ArrayList<>();
 
         
+        if(schoolId.equalsIgnoreCase("*")){
             profileResponse = schoolProfileRepository.findAll(size);
+        }else{
+            profileResponse = schoolProfileRepository.findSchoolProfileBySchool(schoolId, size);
+        }
         
 
         return new PagedResponse<>(profileResponse, profileResponse.size(), "Successfully get data", 200);
@@ -37,11 +44,13 @@ public class SchoolProfileService {
     
     public SchoolProfile createSchoolProfile(SchoolProfileRequest profileRequest, String savePath) throws IOException {
         SchoolProfile profile = new SchoolProfile();
+        School schoolResponse = schoolRepository.findById(profileRequest.getSchool_id().toString());
             profile.setTitle(profileRequest.getTitle());
             profile.setDescription(profileRequest.getDescription());
-            profile.setType(SchoolProfile.ProfileType.valueOf(profileRequest.getType()));
+            profile.setSchool(schoolResponse);
             profile.setFile_path(savePath);
             return schoolProfileRepository.save(profile);
+        
     }
     
     public DefaultResponse<SchoolProfile> getSchoolProfileById(String profileId) throws IOException {
@@ -52,9 +61,10 @@ public class SchoolProfileService {
     
     public SchoolProfile updateSchoolProfile(String profileId, SchoolProfileRequest profileRequest, String savePath) throws IOException {
         SchoolProfile profile = new SchoolProfile();
+        School schoolResponse = schoolRepository.findById(profileRequest.getSchool_id().toString());
             profile.setTitle(profileRequest.getTitle());
             profile.setDescription(profileRequest.getDescription());
-            profile.setType(SchoolProfile.ProfileType.valueOf(profileRequest.getType()));
+            profile.setSchool(schoolResponse);
             profile.setFile_path(savePath);
             return schoolProfileRepository.update(profileId, profile);
     }
