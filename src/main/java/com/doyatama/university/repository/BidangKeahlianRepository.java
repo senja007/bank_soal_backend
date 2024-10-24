@@ -62,6 +62,7 @@ public class BidangKeahlianRepository {
         // Add the mappings to the HashMap
         columnMapping.put("id", "id");
         columnMapping.put("bidang", "bidang");
+        columnMapping.put("school", "school");
 
         return client.showDataTable(tableBidangKeahlian.toString(), columnMapping, BDGid, BidangKeahlian.class);
     }

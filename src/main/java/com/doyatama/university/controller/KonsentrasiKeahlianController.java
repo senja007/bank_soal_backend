@@ -39,8 +39,9 @@ public class KonsentrasiKeahlianController {
 
     @GetMapping
     public PagedResponse<KonsentrasiKeahlian> getKonsentrasiKeahlians(@RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
-                                                    @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) throws IOException {
-        return konsentrasiKeahlianService.getAllKonsentrasiKeahlian(page, size);
+                                                    @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size,
+                                                    @RequestParam(value = "programId", defaultValue = "*") String programId) throws IOException {
+        return konsentrasiKeahlianService.getAllKonsentrasiKeahlian(page, size, programId);
     }
 
     @PostMapping

@@ -32,15 +32,19 @@ public class ProgramKeahlianService {
     private BidangKeahlianRepository bidangKeahlianRepository = new BidangKeahlianRepository();
     
     private static final Logger logger = LoggerFactory.getLogger(ProgramKeahlianService.class);
-
-public PagedResponse<ProgramKeahlian> getAllProgramKeahlian(int page, int size) throws IOException {
+    
+    public PagedResponse<ProgramKeahlian> getAllProgramKeahlian(int page, int size, String bidangId) throws IOException {
         validatePageNumberAndSize(page, size);
 
         // Retrieve Polls
         List<ProgramKeahlian> programKeahlianResponse = new ArrayList<>();
 
         
+        if(bidangId.equalsIgnoreCase("*")){
             programKeahlianResponse = programKeahlianRepository.findAll(size);
+        }else{
+            programKeahlianResponse = programKeahlianRepository.findProgramByBidang(bidangId, size);
+        }
         
 
         return new PagedResponse<>(programKeahlianResponse, programKeahlianResponse.size(), "Successfully get data", 200);

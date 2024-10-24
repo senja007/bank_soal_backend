@@ -45,8 +45,14 @@ public class SchoolProfileService {
     public SchoolProfile createSchoolProfile(SchoolProfileRequest profileRequest, String savePath) throws IOException {
         SchoolProfile profile = new SchoolProfile();
         School schoolResponse = schoolRepository.findById(profileRequest.getSchool_id().toString());
-            profile.setTitle(profileRequest.getTitle());
-            profile.setDescription(profileRequest.getDescription());
+            profile.setNpsn(profileRequest.getNpsn());
+            profile.setStatus(profileRequest.getStatus());
+            profile.setBentukKependidikan(profileRequest.getBentukKependidikan());
+            profile.setKepemilikan(profileRequest.getKepemilikan());
+            profile.setSKPendirianSekolah(profileRequest.getSKPendirianSekolah());
+            profile.setTglSKPendirian(profileRequest.getTglSKPendirian());
+            profile.setSKIzinOperasional(profileRequest.getSKIzinOperasional());
+            profile.setTglSKOperasional(profileRequest.getTglSKOperasional());
             profile.setSchool(schoolResponse);
             profile.setFile_path(savePath);
             return schoolProfileRepository.save(profile);
@@ -62,8 +68,14 @@ public class SchoolProfileService {
     public SchoolProfile updateSchoolProfile(String profileId, SchoolProfileRequest profileRequest, String savePath) throws IOException {
         SchoolProfile profile = new SchoolProfile();
         School schoolResponse = schoolRepository.findById(profileRequest.getSchool_id().toString());
-            profile.setTitle(profileRequest.getTitle());
-            profile.setDescription(profileRequest.getDescription());
+            profile.setNpsn(profileRequest.getNpsn());
+            profile.setStatus(profileRequest.getStatus());
+            profile.setBentukKependidikan(profileRequest.getBentukKependidikan());
+            profile.setKepemilikan(profileRequest.getKepemilikan());
+            profile.setSKPendirianSekolah(profileRequest.getSKPendirianSekolah());
+            profile.setTglSKPendirian(profileRequest.getTglSKPendirian());
+            profile.setSKIzinOperasional(profileRequest.getSKIzinOperasional());
+            profile.setTglSKOperasional(profileRequest.getTglSKOperasional());
             profile.setSchool(schoolResponse);
             profile.setFile_path(savePath);
             return schoolProfileRepository.update(profileId, profile);

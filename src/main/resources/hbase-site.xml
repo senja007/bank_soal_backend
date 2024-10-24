@@ -4,7 +4,7 @@
 <configuration>
     <property>
         <name>hbase.rootdir</name>
-        <value>hdfs://h-primary:9000/hbase</value>
+        <value>hdfs://hadoop-primary:9000/hbase</value>
     </property>
     <property>
         <name>hbase.cluster.distributed</name>
@@ -12,11 +12,11 @@
     </property>
     <property>
         <name>hbase.zookeeper.property.dataDir</name>
-        <value>/var/lib/zookeeper</value>
+        <value>hdfs://hadoop-primary:9000/zookeeper</value>
     </property>
     <property>
         <name>hbase.zookeeper.quorum</name>
-        <value>zookeeper1</value>
+        <value>hadoop-primary, hbase-secondary1</value>
     </property>
     <property>
         <name>hbase.zookeeper.property.clientPort</name>
@@ -24,6 +24,15 @@
     </property>
     <property>
         <name>hbase.master</name>
-        <value>h-primary:16020</value>
+        <value>hadoop-primary:16020</value>
     </property>
+<!--    <property>
+    <name>dfs.permissions.enabled</name>
+    <value>false</value>
+</property>-->
+<property>
+  <name>dfs.webhdfs.enabled</name>
+  <value>true</value>
+</property>
+
 </configuration>

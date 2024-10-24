@@ -33,14 +33,18 @@ public class KonsentrasiKeahlianService {
     
     private static final Logger logger = LoggerFactory.getLogger(KonsentrasiKeahlianService.class);
 
-public PagedResponse<KonsentrasiKeahlian> getAllKonsentrasiKeahlian(int page, int size) throws IOException {
+    public PagedResponse<KonsentrasiKeahlian> getAllKonsentrasiKeahlian(int page, int size, String programId) throws IOException {
         validatePageNumberAndSize(page, size);
 
         // Retrieve Polls
         List<KonsentrasiKeahlian> konsentrasiKeahlianResponse = new ArrayList<>();
 
         
+        if(programId.equalsIgnoreCase("*")){
             konsentrasiKeahlianResponse = konsentrasiKeahlianRepository.findAll(size);
+        }else{
+            konsentrasiKeahlianResponse = konsentrasiKeahlianRepository.findKonsentrasiByProgram(programId, size);
+        }
         
 
         return new PagedResponse<>(konsentrasiKeahlianResponse, konsentrasiKeahlianResponse.size(), "Successfully get data", 200);

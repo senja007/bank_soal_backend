@@ -84,7 +84,22 @@ public class ProgramKeahlianRepository {
         }
 
         return programKeahlians;
-    }
+        }
+             
+        public List<ProgramKeahlian> findProgramByBidang(String bidangId, int size) throws IOException {
+            HBaseCustomClient client = new HBaseCustomClient(conf);
+
+            TableName tableProfile = TableName.valueOf(tableName);
+            Map<String, String> columnMapping = new HashMap<>();
+
+            columnMapping.put("id", "id");
+            columnMapping.put("program", "program");
+            columnMapping.put("bidangKeahlian", "bidangKeahlian");
+
+            List<ProgramKeahlian> program = client.getDataListByColumn(tableProfile.toString(), columnMapping, "bidangKeahlian", "id", bidangId, ProgramKeahlian.class, size);
+
+            return program;
+        }
              
         public ProgramKeahlian update(String BDGid, ProgramKeahlian programKeahlian) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);

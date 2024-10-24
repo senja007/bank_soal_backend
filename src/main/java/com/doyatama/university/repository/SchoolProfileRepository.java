@@ -20,8 +20,14 @@ public class SchoolProfileRepository {
 
         // Add the mappings to the HashMap
         columnMapping.put("id", "id");
-        columnMapping.put("title", "title");
-        columnMapping.put("description", "description");
+        columnMapping.put("npsn", "npsn");
+        columnMapping.put("status", "status");
+        columnMapping.put("bentukKependidikan", "bentukKependidikan");
+        columnMapping.put("kepemilikan", "kepemilikan");
+        columnMapping.put("SKPendirianSekolah", "SKPendirianSekolah");
+        columnMapping.put("tglSKPendirian", "tglSKPendirian");
+        columnMapping.put("SKIzinOperasional", "SKIzinOperasional");
+        columnMapping.put("tglSKOperasional", "tglSKOperasional");
         columnMapping.put("school", "school");
         columnMapping.put("file_path", "file_path");
         return client.showListTable(profile.toString(), columnMapping, SchoolProfile.class, size);
@@ -33,8 +39,14 @@ public class SchoolProfileRepository {
         String rowKey = UUID.randomUUID().toString();
         TableName tableProfile = TableName.valueOf(tableName);
         client.insertRecord(tableProfile, rowKey, "main", "id", rowKey);
-        client.insertRecord(tableProfile, rowKey, "main", "title", profile.getTitle());
-        client.insertRecord(tableProfile, rowKey, "main", "description", profile.getDescription());
+        client.insertRecord(tableProfile, rowKey, "main", "npsn", profile.getNpsn());
+        client.insertRecord(tableProfile, rowKey, "main", "status", profile.getStatus());
+        client.insertRecord(tableProfile, rowKey, "main", "bentukKependidikan", profile.getBentukKependidikan());
+        client.insertRecord(tableProfile, rowKey, "main", "kepemilikan", profile.getKepemilikan());
+        client.insertRecord(tableProfile, rowKey, "main", "SKPendirianSekolah", profile.getSKPendirianSekolah());
+        client.insertRecord(tableProfile, rowKey, "main", "tglSKPendirian", profile.getTglSKPendirian());
+        client.insertRecord(tableProfile, rowKey, "main", "SKIzinOperasional", profile.getSKIzinOperasional());
+        client.insertRecord(tableProfile, rowKey, "main", "tglSKOperasional", profile.getTglSKOperasional());
         client.insertRecord(tableProfile, rowKey, "school", "id", profile.getSchool().getId());
         client.insertRecord(tableProfile, rowKey, "school", "name", profile.getSchool().getName());
         client.insertRecord(tableProfile, rowKey, "main", "file_path", profile.getFile_path());
@@ -50,8 +62,14 @@ public class SchoolProfileRepository {
 
         // Add the mappings to the HashMap
         columnMapping.put("id", "id");
-        columnMapping.put("title", "title");
-        columnMapping.put("description", "description");
+        columnMapping.put("npsn", "npsn");
+        columnMapping.put("status", "status");
+        columnMapping.put("bentukKependidikan", "bentukKependidikan");
+        columnMapping.put("kepemilikan", "kepemilikan");
+        columnMapping.put("SKPendirianSekolah", "SKPendirianSekolah");
+        columnMapping.put("tglSKPendirian", "tglSKPendirian");
+        columnMapping.put("SKIzinOperasional", "SKIzinOperasional");
+        columnMapping.put("tglSKOperasional", "tglSKOperasional");
         columnMapping.put("school", "school");
         columnMapping.put("file_path", "file_path");
 
@@ -65,8 +83,14 @@ public class SchoolProfileRepository {
         Map<String, String> columnMapping = new HashMap<>();
         // Add the mappings to the HashMap
         columnMapping.put("id", "id");
-        columnMapping.put("title", "title");
-        columnMapping.put("description", "description");
+        columnMapping.put("npsn", "npsn");
+        columnMapping.put("status", "status");
+        columnMapping.put("bentukKependidikan", "bentukKependidikan");
+        columnMapping.put("kepemilikan", "kepemilikan");
+        columnMapping.put("SKPendirianSekolah", "SKPendirianSekolah");
+        columnMapping.put("tglSKPendirian", "tglSKPendirian");
+        columnMapping.put("SKIzinOperasional", "SKIzinOperasional");
+        columnMapping.put("tglSKOperasional", "tglSKOperasional");
         columnMapping.put("school", "school");
         columnMapping.put("file_path", "file_path");
         List<SchoolProfile> profiles = new ArrayList<>();
@@ -87,8 +111,14 @@ public class SchoolProfileRepository {
         Map<String, String> columnMapping = new HashMap<>();
 
         columnMapping.put("id", "id");
-        columnMapping.put("title", "title");
-        columnMapping.put("description", "description");
+        columnMapping.put("npsn", "npsn");
+        columnMapping.put("status", "status");
+        columnMapping.put("bentukKependidikan", "bentukKependidikan");
+        columnMapping.put("kepemilikan", "kepemilikan");
+        columnMapping.put("SKPendirianSekolah", "SKPendirianSekolah");
+        columnMapping.put("tglSKPendirian", "tglSKPendirian");
+        columnMapping.put("SKIzinOperasional", "SKIzinOperasional");
+        columnMapping.put("tglSKOperasional", "tglSKOperasional");
         columnMapping.put("school", "school");
         columnMapping.put("file_path", "file_path");
 
@@ -101,8 +131,14 @@ public class SchoolProfileRepository {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
         TableName tableProfile = TableName.valueOf(tableName);
-        client.insertRecord(tableProfile, profileId, "main", "title", profile.getTitle());
-        client.insertRecord(tableProfile, profileId, "main", "description", profile.getDescription());
+        client.insertRecord(tableProfile, profileId, "main", "npsn", profile.getNpsn());
+        client.insertRecord(tableProfile, profileId, "main", "status", profile.getStatus());
+        client.insertRecord(tableProfile, profileId, "main", "bentukKependidikan", profile.getBentukKependidikan());
+        client.insertRecord(tableProfile, profileId, "main", "kepemilikan", profile.getKepemilikan());
+        client.insertRecord(tableProfile, profileId, "main", "SKPendirianSekolah", profile.getSKPendirianSekolah());
+        client.insertRecord(tableProfile, profileId, "main", "tglSKPendirian", profile.getTglSKPendirian());
+        client.insertRecord(tableProfile, profileId, "main", "SKIzinOperasional", profile.getSKIzinOperasional());
+        client.insertRecord(tableProfile, profileId, "main", "tglSKOperasional", profile.getTglSKOperasional());
         client.insertRecord(tableProfile, profileId, "school", "id", profile.getSchool().getId());
         client.insertRecord(tableProfile, profileId, "school", "name", profile.getSchool().getName());
         client.insertRecord(tableProfile, profileId, "main", "file_path", profile.getFile_path());

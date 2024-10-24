@@ -52,7 +52,7 @@ public class KonsentrasiKeahlianRepository {
         return konsentrasiKeahlian;
     } 
      
-         public KonsentrasiKeahlian findById(String BDGid) throws IOException {
+    public KonsentrasiKeahlian findById(String BDGid) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
         TableName tableKonsentrasiKeahlian = TableName.valueOf(tableName);
@@ -65,28 +65,43 @@ public class KonsentrasiKeahlianRepository {
         return client.showDataTable(tableKonsentrasiKeahlian.toString(), columnMapping, BDGid, KonsentrasiKeahlian.class);
     }
          
-             public List<KonsentrasiKeahlian> findAllById(List<String> BDGids) throws IOException {
-        HBaseCustomClient client = new HBaseCustomClient(conf);
+    public List<KonsentrasiKeahlian> findAllById(List<String> BDGids) throws IOException {
+       HBaseCustomClient client = new HBaseCustomClient(conf);
 
-        TableName tableKonsentrasiKeahlian = TableName.valueOf(tableName);
-        Map<String, String> columnMapping = new HashMap<>();
-        // Add the mappings to the HashMap
-        columnMapping.put("id", "id");
-        columnMapping.put("konsentrasi", "konsentrasi");
+       TableName tableKonsentrasiKeahlian = TableName.valueOf(tableName);
+       Map<String, String> columnMapping = new HashMap<>();
+       // Add the mappings to the HashMap
+       columnMapping.put("id", "id");
+       columnMapping.put("konsentrasi", "konsentrasi");
 
 
-        List<KonsentrasiKeahlian> konsentrasiKeahlians = new ArrayList<>();
-        for (String BDGid : BDGids) {
-            KonsentrasiKeahlian konsentrasiKeahlian = client.showDataTable(tableKonsentrasiKeahlian.toString(), columnMapping, BDGid, KonsentrasiKeahlian.class);
-            if (konsentrasiKeahlian != null) {
-                konsentrasiKeahlians.add(konsentrasiKeahlian);
-            }
-        }
+       List<KonsentrasiKeahlian> konsentrasiKeahlians = new ArrayList<>();
+       for (String BDGid : BDGids) {
+           KonsentrasiKeahlian konsentrasiKeahlian = client.showDataTable(tableKonsentrasiKeahlian.toString(), columnMapping, BDGid, KonsentrasiKeahlian.class);
+           if (konsentrasiKeahlian != null) {
+               konsentrasiKeahlians.add(konsentrasiKeahlian);
+           }
+       }
 
-        return konsentrasiKeahlians;
+       return konsentrasiKeahlians;
+   }
+    
+    public List<KonsentrasiKeahlian> findKonsentrasiByProgram(String programId, int size) throws IOException {
+            HBaseCustomClient client = new HBaseCustomClient(conf);
+
+            TableName tableProfile = TableName.valueOf(tableName);
+            Map<String, String> columnMapping = new HashMap<>();
+
+            columnMapping.put("id", "id");
+            columnMapping.put("konsentrasi", "konsentrasi");
+            columnMapping.put("programKeahlian", "programKeahlian");
+
+            List<KonsentrasiKeahlian> konsentrasi = client.getDataListByColumn(tableProfile.toString(), columnMapping, "programKeahlian", "id", programId, KonsentrasiKeahlian.class, size);
+
+            return konsentrasi;
     }
              
-        public KonsentrasiKeahlian update(String BDGid, KonsentrasiKeahlian konsentrasiKeahlian) throws IOException {
+    public KonsentrasiKeahlian update(String BDGid, KonsentrasiKeahlian konsentrasiKeahlian) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
         TableName tableKonsentrasiKeahlian = TableName.valueOf(tableName);

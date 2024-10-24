@@ -49,7 +49,7 @@ public class HBaseClientStructure {
         
         // Create Table Profil Sekolah
         TableName tableSchoolProfile = TableName.valueOf("school-profiles");
-        String[] schoolprofile = { "main", "detail" };
+        String[] schoolprofile = { "main", "school", "detail" };
         client.deleteTable(tableSchoolProfile);
         client.createTable(tableSchoolProfile, schoolprofile);
 
@@ -247,16 +247,16 @@ public class HBaseClientStructure {
         Instant instant = zonedDateTime.toInstant();
 
         //insert school 
-        client.insertRecord(tableSchool, "RWK1", "main", "id", "RWK1");
-        client.insertRecord(tableSchool, "RWK1", "main", "name", "SMPN 01 ROWOKANGKUNG");
-        client.insertRecord(tableSchool, "RWK1", "main", "address", "jl. raya rowokangkung");
-        client.insertRecord(tableSchool, "RWK1", "detail", "created_by", "Doyatama");
+        client.insertRecord(tableSchool, "RWK001", "main", "id", "RWK001");
+        client.insertRecord(tableSchool, "RWK001", "main", "name", "SMK Negeri 01 ROWOKANGKUNG");
+        client.insertRecord(tableSchool, "RWK001", "main", "address", "jl. raya rowokangkung");
+        client.insertRecord(tableSchool, "RWK001", "detail", "created_by", "Doyatama");
         
         
-        client.insertRecord(tableSchool, "TMP1", "main", "id", "TMP1");
-        client.insertRecord(tableSchool, "TMP1", "main", "name", "SMPN 01 TEMPEH");
-        client.insertRecord(tableSchool, "TMP1", "main", "address", "jl. raya tempeh");
-        client.insertRecord(tableSchool, "TMP1", "detail", "created_by", "Doyatama");
+        client.insertRecord(tableSchool, "TMP001", "main", "id", "TMP001");
+        client.insertRecord(tableSchool, "TMP001", "main", "name", "SMK Negeri 01 TEMPEH");
+        client.insertRecord(tableSchool, "TMP001", "main", "address", "jl. raya tempeh");
+        client.insertRecord(tableSchool, "TMP001", "detail", "created_by", "Doyatama");
         
 //        // Insert Jurusan
 //        client.insertRecord(tableDepartment, "DP001", "main", "id", "DP001");
@@ -287,6 +287,7 @@ public class HBaseClientStructure {
          //Insert Users
          client.insertRecord(tableUser, "USR001", "main", "id", "USR001");
          client.insertRecord(tableUser, "USR001", "main", "email", "admin@gmail.com");
+         client.insertRecord(tableUser, "USR001", "main", "name", "Administrator");
          client.insertRecord(tableUser, "USR001", "main", "username", "admin");
          client.insertRecord(tableUser, "USR001", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
          client.insertRecord(tableUser, "USR001", "main", "roles", "1");
@@ -295,9 +296,11 @@ public class HBaseClientStructure {
 
          client.insertRecord(tableUser, "USR002", "main", "id", "USR002");
          client.insertRecord(tableUser, "USR002", "main", "email", "operator1@gmail.com");
+         client.insertRecord(tableUser, "USR002", "main", "name", "Operator1");
          client.insertRecord(tableUser, "USR002", "main", "username", "operator1");
          client.insertRecord(tableUser, "USR002", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
-         client.insertRecord(tableUser, "USR002", "school", "id", "RWK1");
+         client.insertRecord(tableUser, "USR002", "school", "id", "RWK001");
+         client.insertRecord(tableUser, "USR002", "school", "name", "SMK Negeri 01 ROWOKANGKUNG");
          client.insertRecord(tableUser, "USR002", "main", "roles", "2");
          client.insertRecord(tableUser, "USR002", "main", "created_at", "2023-05-14T04:56:23.174Z");
          client.insertRecord(tableUser, "USR002", "detail", "created_by", "Doyatama");
@@ -305,9 +308,11 @@ public class HBaseClientStructure {
          
          client.insertRecord(tableUser, "USR003", "main", "id", "USR003");
          client.insertRecord(tableUser, "USR003", "main", "email", "operator2@gmail.com");
+         client.insertRecord(tableUser, "USR003", "main", "name", "Operator2");
          client.insertRecord(tableUser, "USR003", "main", "username", "operator2");
          client.insertRecord(tableUser, "USR003", "main", "password", "$2a$10$SDRWMUk.2fnli0GTmqodJexjRksTw0En98dU8fdKsw7nTbZzMrj.2"); // password
-         client.insertRecord(tableUser, "USR003", "school", "id", "TMP1");
+         client.insertRecord(tableUser, "USR003", "school", "id", "TMP001");
+         client.insertRecord(tableUser, "USR003", "school", "name", "SMK Negeri 01 TEMPEH");
          client.insertRecord(tableUser, "USR003", "main", "roles", "2");
          client.insertRecord(tableUser, "USR003", "main", "created_at", "2023-05-14T04:56:23.174Z");
          client.insertRecord(tableUser, "USR003", "detail", "created_by", "Doyatama");
