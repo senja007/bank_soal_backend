@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.doyatama.university.controller;
 
 import com.doyatama.university.model.Mapel;
@@ -38,7 +35,7 @@ public class MapelController {
     private MapelService mapelService = new MapelService();
 
     @GetMapping
-    public PagedResponse<Mapel> getMapels(@RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+    public PagedResponse<Mapel> getMapel(@RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                                     @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size,
                                                     @RequestParam(value = "kstId", defaultValue = "*") String kstId) throws IOException {
         return mapelService.getAllMapel(page, size, kstId);
