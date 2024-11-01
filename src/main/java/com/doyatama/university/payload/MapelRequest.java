@@ -1,33 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.doyatama.university.payload;
 
-/**
- *
- * @author senja
- */
 public class MapelRequest {
-    private String id;
+    private String idMapel;
     private String name;
     private String konsentrasiKeahlian_id;
 
     public MapelRequest() {
     }
 
-    public MapelRequest(String id, String name, String konsentrasiKeahlian_id) {
-        this.id = id;
+    public MapelRequest(String idMapel, String name, String konsentrasiKeahlian_id) {
+        this.idMapel = idMapel;
         this.name = name;
         this.konsentrasiKeahlian_id = konsentrasiKeahlian_id;
     }
 
-    public String getId() {
-        return id;
+    public String getIdMapel() {
+        return idMapel;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdMapel(String idMapel) {
+        this.idMapel = idMapel;
     }
 
     public String getName() {
@@ -50,8 +43,8 @@ public class MapelRequest {
     
      public void set(String fieldName, String value) {
         switch (fieldName) {
-            case "id":
-                this.id = value;
+            case "idMapel":
+                this.idMapel = value;
                 break;
             case "name":
                 this.name = value;  

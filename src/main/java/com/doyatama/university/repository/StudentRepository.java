@@ -66,7 +66,7 @@ public class StudentRepository {
     public Student save(Student student) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
-        String rowKey = UUID.randomUUID().toString();
+        String rowKey = student.getId();
 
         TableName tableStudent = TableName.valueOf(tableName);
         client.insertRecord(tableStudent, rowKey, "main", "id", rowKey);

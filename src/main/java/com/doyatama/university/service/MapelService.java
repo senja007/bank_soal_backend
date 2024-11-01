@@ -33,47 +33,50 @@ public class MapelService {
     
     private static final Logger logger = LoggerFactory.getLogger(MapelService.class);
 
-public PagedResponse<Mapel> getAllMapel(int page, int size) throws IOException {
+    public PagedResponse<Mapel> getAllMapel(int page, int size, String kstId) throws IOException {
         validatePageNumberAndSize(page, size);
 
         // Retrieve Polls
         List<Mapel> mapelResponse = new ArrayList<>();
 
-        
+        if(kstId.equalsIgnoreCase("*")){
             mapelResponse = mapelRepository.findAll(size);
+        }else{
+            mapelResponse = mapelRepository.findMapelByKonsentrasi(kstId, size);
+        }
         
 
         return new PagedResponse<>(mapelResponse, mapelResponse.size(), "Successfully get data", 200);
     }
 
     public Mapel createMapel(MapelRequest mapelRequest) throws IOException {
-       KonsentrasiKeahlian bidang = konsentrasiKeahlianRepository.findById(mapelRequest.getKonsentrasiKeahlian_id());
+       KonsentrasiKeahlian konsentrasi = konsentrasiKeahlianRepository.findById(mapelRequest.getKonsentrasiKeahlian_id());
         
         Mapel mapel = new Mapel();
-            mapel.setId(mapelRequest.getId());
+            mapel.setIdMapel(mapelRequest.getIdMapel());
             mapel.setName(mapelRequest.getName());
-          mapel.setKonsentrasiKeahlian(bidang);
+          mapel.setKonsentrasiKeahlian(konsentrasi);
             return mapelRepository.save(mapel);
     }        
 
-    public DefaultResponse<Mapel> getMapelById(String BDGid) throws IOException {
+    public DefaultResponse<Mapel> getMapelById(String mplId) throws IOException {
         // Retrieve Mapel
-        Mapel mapel = mapelRepository.findById(BDGid);
+        Mapel mapel = mapelRepository.findById(mplId);
         return new DefaultResponse<>(mapel.isValid() ? mapel : null, mapel.isValid() ? 1 : 0, "Successfully get data");
     }
     
-        public Mapel updateMapel(String BDGid, MapelRequest mapelRequest) throws IOException {
+    public Mapel updateMapel(String mplId, MapelRequest mapelRequest) throws IOException {
         Mapel mapel = new Mapel();
             mapel.setName(mapelRequest.getName());
-            return mapelRepository.update(BDGid, mapel);
+            return mapelRepository.update(mplId, mapel);
     }
     
-    public void deleteMapelById(String BDGid) throws IOException {
-        Mapel mapelResponse = mapelRepository.findById(BDGid);
+    public void deleteMapelById(String mplId) throws IOException {
+        Mapel mapelResponse = mapelRepository.findById(mplId);
         if(mapelResponse.isValid()){
-            mapelRepository.deleteById(BDGid);
+            mapelRepository.deleteById(mplId);
         }else{
-            throw new ResourceNotFoundException("Mapel", "id", BDGid);
+            throw new ResourceNotFoundException("Mapel", "id", mplId);
         }
     }
 

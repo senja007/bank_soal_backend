@@ -58,6 +58,30 @@ public class HBaseClientStructure {
         String[] subjects = { "main", "study_program", "subject_group", "detail" };
         client.deleteTable(tableSubject);
         client.createTable(tableSubject, subjects);
+        
+        // Create Tabel Mata Pelajaran
+        TableName tableMapel = TableName.valueOf("mapels");
+        String[] mapel = { "main", "konsentrasiKeahlian", "detail" };
+        client.deleteTable(tableMapel);
+        client.createTable(tableMapel, mapel);
+        
+        // Create Tabel Kelas
+        TableName tableKelas = TableName.valueOf("kelas");
+        String[] kelas = { "main", "detail" };
+        client.deleteTable(tableKelas);
+        client.createTable(tableKelas, kelas);
+        
+        // Create Tabel Tahun Ajaran
+        TableName tableTahun = TableName.valueOf("tahunAjaran");
+        String[] tahun = { "main", "detail" };
+        client.deleteTable(tableTahun);
+        client.createTable(tableTahun, tahun);
+        
+        // Create Tabel Season
+        TableName tableSeason = TableName.valueOf("season");
+        String[] season = { "main", "bidangKeahlian", "programKeahlian", "konsentrasiKeahlian", "kelas", "tahunAjaran", "student", "mapel", "lecture", "detail" };
+        client.deleteTable(tableSeason);
+        client.createTable(tableSeason, season);
 
         // Create Tabel Bab
         TableName tableChapter = TableName.valueOf("chapters");

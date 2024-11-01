@@ -9,25 +9,25 @@ package com.doyatama.university.model;
  * @author senja
  */
 public class Mapel {
-    private String id;
+    private String idMapel;
     private String name;
     private KonsentrasiKeahlian konsentrasiKeahlian;
     
     public Mapel(){   
     }
 
-    public Mapel(String id, String name, KonsentrasiKeahlian konsentrasiKeahlian) {
-        this.id = id;
+    public Mapel(String idMapel, String name, KonsentrasiKeahlian konsentrasiKeahlian) {
+        this.idMapel = idMapel;
         this.name = name;
         this.konsentrasiKeahlian = konsentrasiKeahlian;
     }
 
-    public String getId() {
-        return id;
+    public String getIdMapel() {
+        return idMapel;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdMapel(String idMapel) {
+        this.idMapel = idMapel;
     }
 
     public String getName() {
@@ -47,13 +47,13 @@ public class Mapel {
     }
     
       public boolean isValid() {
-        return this.id != null && this.konsentrasiKeahlian != null;
+        return this.idMapel != null && this.konsentrasiKeahlian != null;
     }
 
     public void set(String fieldName, String value) {
         switch (fieldName) {
-            case "id":
-                this.id = value;
+            case "idMapel":
+                this.idMapel = value;
                 break;
             case "name":
                 this.name = value;  

@@ -49,6 +49,7 @@ public class StudentService {
         StudyProgram studyProgramResponse = studyProgramRepository.findById(studentRequest.getStudy_program_id() != "" ? studentRequest.getStudy_program_id() : "0");
 
         if (religionResponse.getName() != null && userResponse.getName() != null && studyProgramResponse.getName() != null) {
+            student.setId(studentRequest.getId());
             student.setNim(studentRequest.getNim());
             student.setName(studentRequest.getName());
             student.setPlace_born(studentRequest.getPlace_born());

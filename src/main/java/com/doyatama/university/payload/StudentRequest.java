@@ -7,6 +7,7 @@ import com.doyatama.university.model.User;
 import java.time.LocalDate;
 
 public class StudentRequest {
+    private String id;
     private String nim;
     private String name;
     private String gender;
@@ -21,7 +22,8 @@ public class StudentRequest {
     public StudentRequest() {
     }
 
-    public StudentRequest(String nim, String name, String gender, String phone, String religion_id, String user_id, String study_program_id, String birth_date, String place_born, String address) {
+    public StudentRequest(String id, String nim, String name, String gender, String phone, String religion_id, String user_id, String study_program_id, String birth_date, String place_born, String address) {
+        this.id = id;
         this.nim = nim;
         this.name = name;
         this.gender = gender;
@@ -32,6 +34,14 @@ public class StudentRequest {
         this.birth_date = birth_date;
         this.place_born = place_born;
         this.address = address;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNim() {
@@ -114,8 +124,13 @@ public class StudentRequest {
         this.address = address;
     }
 
+    
+
     public void set(String fieldName, String value) {
         switch (fieldName) {
+            case "id":
+                this.id = value;
+                break;
             case "nim":
                 this.nim = value;
                 break;

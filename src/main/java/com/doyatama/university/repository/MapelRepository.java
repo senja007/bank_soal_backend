@@ -25,25 +25,25 @@ public class MapelRepository {
      Configuration conf = HBaseConfiguration.create();
     String tableName = "mapels";
     
-     public List<Mapel> findAll(int size) throws IOException {
+    public List<Mapel> findAll(int size) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
         TableName tableMapel = TableName.valueOf(tableName);
         Map<String, String> columnMapping = new HashMap<>();
 
         // Add the mappings to the HashMap
-        columnMapping.put("id", "id");
+        columnMapping.put("idMapel", "idMapel");
         columnMapping.put("name", "name");
         columnMapping.put("konsentrasiKeahlian", "konsentrasiKeahlian");
         return client.showListTable(tableMapel.toString(), columnMapping, Mapel.class, size);
     }
      
-     public Mapel save(Mapel mapel) throws IOException {
+    public Mapel save(Mapel mapel) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
-        String rowKey = mapel.getId();
+        String rowKey = mapel.getIdMapel();
         TableName tableMapel = TableName.valueOf(tableName);
-        client.insertRecord(tableMapel, rowKey, "main", "id", rowKey);
+        client.insertRecord(tableMapel, rowKey, "main", "idMapel", rowKey);
         client.insertRecord(tableMapel, rowKey, "main", "name", mapel.getName());
         client.insertRecord(tableMapel, rowKey, "konsentrasiKeahlian", "id", mapel.getKonsentrasiKeahlian().getId());
         client.insertRecord(tableMapel, rowKey, "konsentrasiKeahlian", "konsentrasi", mapel.getKonsentrasiKeahlian().getKonsentrasi());
@@ -52,32 +52,48 @@ public class MapelRepository {
         return mapel;
     } 
      
-         public Mapel findById(String BDGid) throws IOException {
+    public Mapel findById(String mplId) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
         TableName tableMapel = TableName.valueOf(tableName);
         Map<String, String> columnMapping = new HashMap<>();
 
         // Add the mappings to the HashMap
-        columnMapping.put("id", "id");
+        columnMapping.put("idMapel", "idMapel");
         columnMapping.put("name", "name");
+        columnMapping.put("konsentrasiKeahlian", "konsentrasiKeahlian");
 
-        return client.showDataTable(tableMapel.toString(), columnMapping, BDGid, Mapel.class);
+        return client.showDataTable(tableMapel.toString(), columnMapping, mplId, Mapel.class);
+    }
+    
+    public List<Mapel> findMapelByKonsentrasi(String kstId, int size) throws IOException {
+            HBaseCustomClient client = new HBaseCustomClient(conf);
+
+            TableName tableMapel = TableName.valueOf(tableName);
+            Map<String, String> columnMapping = new HashMap<>();
+
+            columnMapping.put("id", "id");
+            columnMapping.put("konsentrasi", "konsentrasi");
+            columnMapping.put("programKeahlian", "programKeahlian");
+
+            List<Mapel> mapel = client.getDataListByColumn(tableMapel.toString(), columnMapping, "konsentrasiKeahlian", "id", kstId, Mapel.class, size);
+
+            return mapel;
     }
          
-             public List<Mapel> findAllById(List<String> BDGids) throws IOException {
+    public List<Mapel> findAllById(List<String> mplIds) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
         TableName tableMapel = TableName.valueOf(tableName);
         Map<String, String> columnMapping = new HashMap<>();
-        // Add the mappings to the HashMap
-        columnMapping.put("id", "id");
+        columnMapping.put("idMapel", "idMapel");
         columnMapping.put("name", "name");
+        columnMapping.put("konsentrasiKeahlian", "konsentrasiKeahlian");
 
 
         List<Mapel> mapels = new ArrayList<>();
-        for (String BDGid : BDGids) {
-            Mapel mapel = client.showDataTable(tableMapel.toString(), columnMapping, BDGid, Mapel.class);
+        for (String mplId : mplIds) {
+            Mapel mapel = client.showDataTable(tableMapel.toString(), columnMapping, mplId, Mapel.class);
             if (mapel != null) {
                 mapels.add(mapel);
             }
@@ -86,21 +102,21 @@ public class MapelRepository {
         return mapels;
     }
              
-        public Mapel update(String BDGid, Mapel mapel) throws IOException {
+    public Mapel update(String mplId, Mapel mapel) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
         TableName tableMapel = TableName.valueOf(tableName);
-        client.insertRecord(tableMapel, BDGid, "main", "name", mapel.getName());
-        client.insertRecord(tableMapel, BDGid, "konsentrasiKeahlian", "id", mapel.getKonsentrasiKeahlian().getId());
-        client.insertRecord(tableMapel, BDGid, "konsentrasiKeahlian", "konsentrasi", mapel.getKonsentrasiKeahlian().getKonsentrasi());
-        client.insertRecord(tableMapel, BDGid, "detail", "created_by", "Doyatama");
+        client.insertRecord(tableMapel, mplId, "main", "name", mapel.getName());
+        client.insertRecord(tableMapel, mplId, "konsentrasiKeahlian", "id", mapel.getKonsentrasiKeahlian().getId());
+        client.insertRecord(tableMapel, mplId, "konsentrasiKeahlian", "konsentrasi", mapel.getKonsentrasiKeahlian().getKonsentrasi());
+        client.insertRecord(tableMapel, mplId, "detail", "created_by", "Doyatama");
         return mapel;
     }
         
         
-       public boolean deleteById(String BDGid) throws IOException {
+    public boolean deleteById(String mplId) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
-        client.deleteRecord(tableName, BDGid);
+        client.deleteRecord(tableName, mplId);
         return true;
     }  
 }
