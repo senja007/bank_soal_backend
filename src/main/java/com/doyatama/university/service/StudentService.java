@@ -23,34 +23,29 @@ import java.util.List;
 public class StudentService {
     private StudentRepository studentRepository = new StudentRepository();
     private ReligionRepository religionRepository = new ReligionRepository();
-    private StudyProgramRepository studyProgramRepository = new StudyProgramRepository();
-    private UserRepository userRepository = new UserRepository();
+    private BidangKeahlianRepository bidangKeahlianRepository = new BidangKeahlianRepository();
+    private ProgramKeahlianRepository programKeahlianRepository = new ProgramKeahlianRepository();
+    private KonsentrasiKeahlianRepository konsentrasiKeahlianRepository = new KonsentrasiKeahlianRepository();
 
     private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
 
-    public PagedResponse<Student> getAllStudent(int page, int size, String userID) throws IOException {
+    public PagedResponse<Student> getAllStudent(int page, int size) throws IOException {
         validatePageNumberAndSize(page, size);
-        List<Student> studentResponse = new ArrayList<>();
-
-        if(userID.equalsIgnoreCase("*")) studentResponse = studentRepository.findAll(size);
-        if(!userID.equalsIgnoreCase("*")) studentResponse = studentRepository.findAllByUserID(userID, size);
+        List<Student> studentResponse = studentRepository.findAll(size);
 
         return new PagedResponse<>(studentResponse, studentResponse.size(), "Successfully get data", 200);
     }
 
     public Student createStudent(StudentRequest studentRequest) throws IOException {
-        Student student = new Student();
-        if(studentRepository.existsByUserID(studentRequest.getUser_id())) {
-            return null;
-        }
+        BidangKeahlian bidang = bidangKeahlianRepository.findById(studentRequest.getBidangKeahlian_id());
+        ProgramKeahlian program = programKeahlianRepository.findById(studentRequest.getProgramKeahlian_id());
+        KonsentrasiKeahlian konsentrasi = konsentrasiKeahlianRepository.findById(studentRequest.getKonsentrasiKeahlian_id());
         Religion religionResponse = religionRepository.findById(studentRequest.getReligion_id() != "" ? studentRequest.getReligion_id() : "0");
-        User userResponse = userRepository.findById(studentRequest.getUser_id() != "" ? studentRequest.getUser_id() : "0");
-        StudyProgram studyProgramResponse = studyProgramRepository.findById(studentRequest.getStudy_program_id() != "" ? studentRequest.getStudy_program_id() : "0");
-
-        if (religionResponse.getName() != null && userResponse.getName() != null && studyProgramResponse.getName() != null) {
+        Student student = new Student();
+        if (religionResponse.getName() != null) {
             student.setId(studentRequest.getId());
-            student.setNim(studentRequest.getNim());
+            student.setNisn(studentRequest.getNisn());
             student.setName(studentRequest.getName());
             student.setPlace_born(studentRequest.getPlace_born());
             student.setBirth_date(studentRequest.getBirth_date());
@@ -58,8 +53,9 @@ public class StudentService {
             student.setPhone(studentRequest.getPhone());
             student.setAddress(studentRequest.getAddress());
             student.setReligion(religionResponse);
-            student.setUser(userResponse);
-            student.setStudyProgram(studyProgramResponse);
+            student.setBidangKeahlian(bidang);
+            student.setProgramKeahlian(program);
+            student.setKonsentrasiKeahlian(konsentrasi);
             return studentRepository.save(student);
         } else {
             return null;
@@ -73,14 +69,14 @@ public class StudentService {
     }
 
     public Student updateStudent(String studentId, StudentRequest studentRequest) throws IOException {
-        Student student = new Student();
+        BidangKeahlian bidang = bidangKeahlianRepository.findById(studentRequest.getBidangKeahlian_id());
+        ProgramKeahlian program = programKeahlianRepository.findById(studentRequest.getProgramKeahlian_id());
+        KonsentrasiKeahlian konsentrasi = konsentrasiKeahlianRepository.findById(studentRequest.getKonsentrasiKeahlian_id());
         Religion religionResponse = religionRepository.findById(studentRequest.getReligion_id() != "" ? studentRequest.getReligion_id() : "0");
-        User userResponse = userRepository.findById(studentRequest.getUser_id() != "" ? studentRequest.getUser_id() : "0");
-        StudyProgram studyProgramResponse = studyProgramRepository.findById(studentRequest.getStudy_program_id() != "" ? studentRequest.getStudy_program_id() : "0");
-
-        if (religionResponse.getName() != null && userResponse.getName() != null && studyProgramResponse.getName() != null) {
-            student.setNim(studentRequest.getNim());
-            student.setNim(studentRequest.getNim());
+        Student student = new Student();
+        if (religionResponse.getName() != null) {
+            student.setId(studentRequest.getId());
+            student.setNisn(studentRequest.getNisn());
             student.setName(studentRequest.getName());
             student.setPlace_born(studentRequest.getPlace_born());
             student.setBirth_date(studentRequest.getBirth_date());
@@ -88,8 +84,9 @@ public class StudentService {
             student.setPhone(studentRequest.getPhone());
             student.setAddress(studentRequest.getAddress());
             student.setReligion(religionResponse);
-            student.setUser(userResponse);
-            student.setStudyProgram(studyProgramResponse);
+            student.setBidangKeahlian(bidang);
+            student.setProgramKeahlian(program);
+            student.setKonsentrasiKeahlian(konsentrasi);
             return studentRepository.update(studentId, student);
         } else {
             return null;

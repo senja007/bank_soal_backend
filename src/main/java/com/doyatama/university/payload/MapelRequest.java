@@ -4,15 +4,13 @@ package com.doyatama.university.payload;
 public class MapelRequest {
     private String idMapel;
     private String name;
-    private String konsentrasiKeahlian_id;
 
     public MapelRequest() {
     }
 
-    public MapelRequest(String idMapel, String name, String konsentrasiKeahlian_id) {
+    public MapelRequest(String idMapel, String name) {
         this.idMapel = idMapel;
         this.name = name;
-        this.konsentrasiKeahlian_id = konsentrasiKeahlian_id;
     }
 
     public String getIdMapel() {
@@ -31,14 +29,6 @@ public class MapelRequest {
         this.name = name;
     }
 
-    public String getKonsentrasiKeahlian_id() {
-        return konsentrasiKeahlian_id;
-    }
-
-    public void setKonsentrasiKeahlian_id(String konsentrasiKeahlian_id) {
-        this.konsentrasiKeahlian_id = konsentrasiKeahlian_id;
-    }
-
  
     
      public void set(String fieldName, String value) {
@@ -49,8 +39,6 @@ public class MapelRequest {
             case "name":
                 this.name = value;  
                 break;
-            case "konsentrasiKeahlianKeahlian_id":
-                this.konsentrasiKeahlian_id = value;
             default:
                 throw new IllegalArgumentException("Invalid field name: " + fieldName);
         }

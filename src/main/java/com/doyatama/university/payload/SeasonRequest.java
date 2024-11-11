@@ -1,5 +1,7 @@
 package com.doyatama.university.payload;
 
+import java.util.List;
+
 
 public class SeasonRequest {
     private String idSeason;
@@ -7,28 +9,26 @@ public class SeasonRequest {
     private String programKeahlian_id;
     private String konsentrasiKeahlian_id;
     private String kelas_id;
-    private String tahunAjaran_id;
-    private String student_id;
-    private String mapel_id;
     private String lecture_id;
+    private String tahunAjaran_id;
+    private List<List<String>> student_id;
+    private List<List<String>> jadPel_id;
 
-    public SeasonRequest() {
-    }
+    public SeasonRequest() {}
 
     public SeasonRequest(String idSeason, String bidangKeahlian_id, String programKeahlian_id, 
-            String konsentrasiKeahlian_id, String kelas_id, String tahunAjaran_id, String student_id, String mapel_id, String lecture_id) {
+            String konsentrasiKeahlian_id, String kelas_id, String lecture_id, String tahunAjaran_id, 
+            List<List<String>> student_id, List<List<String>> jadPel_id) {
         this.idSeason = idSeason;
         this.bidangKeahlian_id = bidangKeahlian_id;
         this.programKeahlian_id = programKeahlian_id;
         this.konsentrasiKeahlian_id = konsentrasiKeahlian_id;
         this.kelas_id = kelas_id;
+        this.lecture_id = lecture_id;
         this.tahunAjaran_id = tahunAjaran_id;
         this.student_id = student_id;
-        this.mapel_id = mapel_id;
-        this.lecture_id = lecture_id;
+        this.jadPel_id = jadPel_id;
     }
-
-    
 
     public String getIdSeason() {
         return idSeason;
@@ -70,6 +70,14 @@ public class SeasonRequest {
         this.kelas_id = kelas_id;
     }
 
+    public String getLecture_id() {
+        return lecture_id;
+    }
+
+    public void setLecture_id(String lecture_id) {
+        this.lecture_id = lecture_id;
+    }
+
     public String getTahunAjaran_id() {
         return tahunAjaran_id;
     }
@@ -78,28 +86,20 @@ public class SeasonRequest {
         this.tahunAjaran_id = tahunAjaran_id;
     }
 
-    public String getMapel_id() {
-        return mapel_id;
-    }
-
-    public void setMapel_id(String mapel_id) {
-        this.mapel_id = mapel_id;
-    }
-
-    public String getStudent_id() {
+    public List<List<String>> getStudent_id() {
         return student_id;
     }
 
-    public void setStudent_id(String student_id) {
+    public void setStudent_id(List<List<String>> student_id) {
         this.student_id = student_id;
     }
 
-    public String getLecture_id() {
-        return lecture_id;
+    public List<List<String>> getJadPel_id() {
+        return jadPel_id;
     }
 
-    public void setLecture_id(String lecture_id) {
-        this.lecture_id = lecture_id;
+    public void setJadPel_id(List<List<String>> jadPel_id) {
+        this.jadPel_id = jadPel_id;
     }
     
     public void set(String fieldName, String value) {
@@ -121,15 +121,6 @@ public class SeasonRequest {
                 break;
             case "tahunAjaran_id":
                 this.tahunAjaran_id = value;
-                break;
-            case "student_id":
-                this.student_id = value;
-                break;
-            case "mapel_id":
-                this.mapel_id = value;
-                break;
-            case "lecture_id":
-                this.lecture_id = value;
                 break;
             default:
                 throw new IllegalArgumentException("Invalid field name: " + fieldName);

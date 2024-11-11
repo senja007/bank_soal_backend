@@ -4,32 +4,37 @@ import java.time.LocalDate;
 
 public class Student {
     private String id;
-    private String nim;
+    private String nisn;
     private String name;
     private String gender;
     private String phone;
-    private Religion religion;
-    private User user;
-    private StudyProgram study_program;
     private String birth_date;
     private String place_born;
     private String address;
+    
+    private Religion religion;
+    private BidangKeahlian bidangKeahlian;
+    private ProgramKeahlian programKeahlian;
+    private KonsentrasiKeahlian konsentrasiKeahlian;
 
     public Student() {
     }
 
-    public Student(String id, String nim, String name, String gender, String phone, Religion religion, User user, StudyProgram study_program, String birth_date, String place_born, String address) {
+    public Student(String id, String nisn, String name, String gender, String phone, 
+            String birth_date, String place_born, String address, Religion religion, 
+            BidangKeahlian bidangKeahlian, ProgramKeahlian programKeahlian, KonsentrasiKeahlian konsentrasiKeahlian) {
         this.id = id;
-        this.nim = nim;
+        this.nisn = nisn;
         this.name = name;
         this.gender = gender;
         this.phone = phone;
-        this.religion = religion;
-        this.user = user;
-        this.study_program = study_program;
         this.birth_date = birth_date;
         this.place_born = place_born;
         this.address = address;
+        this.religion = religion;
+        this.bidangKeahlian = bidangKeahlian;
+        this.programKeahlian = programKeahlian;
+        this.konsentrasiKeahlian = konsentrasiKeahlian;
     }
 
     public String getId() {
@@ -40,12 +45,12 @@ public class Student {
         this.id = id;
     }
 
-    public String getNim() {
-        return nim;
+    public String getNisn() {
+        return nisn;
     }
 
-    public void setNim(String nim) {
-        this.nim = nim;
+    public void setNisn(String nisn) {
+        this.nisn = nisn;
     }
 
     public String getName() {
@@ -72,30 +77,6 @@ public class Student {
         this.phone = phone;
     }
 
-    public Religion getReligion() {
-        return religion;
-    }
-
-    public void setReligion(Religion religion) {
-        this.religion = religion;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public StudyProgram getStudyProgram() {
-        return study_program;
-    }
-
-    public void setStudyProgram(StudyProgram study_program) {
-        this.study_program = study_program;
-    }
-
     public String getBirth_date() {
         return birth_date;
     }
@@ -120,15 +101,45 @@ public class Student {
         this.address = address;
     }
 
+    public Religion getReligion() {
+        return religion;
+    }
+
+    public void setReligion(Religion religion) {
+        this.religion = religion;
+    }
+
+    public BidangKeahlian getBidangKeahlian() {
+        return bidangKeahlian;
+    }
+
+    public void setBidangKeahlian(BidangKeahlian bidangKeahlian) {
+        this.bidangKeahlian = bidangKeahlian;
+    }
+
+    public ProgramKeahlian getProgramKeahlian() {
+        return programKeahlian;
+    }
+
+    public void setProgramKeahlian(ProgramKeahlian programKeahlian) {
+        this.programKeahlian = programKeahlian;
+    }
+
+    public KonsentrasiKeahlian getKonsentrasiKeahlian() {
+        return konsentrasiKeahlian;
+    }
+
+    public void setKonsentrasiKeahlian(KonsentrasiKeahlian konsentrasiKeahlian) {
+        this.konsentrasiKeahlian = konsentrasiKeahlian;
+    }
+    
     public boolean isValid() {
         return this.id != null &&
-                this.nim != null &&
+                this.nisn != null &&
                 this.name != null &&
                 this.gender != null &&
                 this.phone != null &&
                 this.religion != null &&
-                this.user != null &&
-                this.study_program != null &&
                 this.birth_date != null &&
                 this.place_born != null &&
                 this.address != null;
@@ -139,8 +150,8 @@ public class Student {
             case "id":
                 this.id = value;
                 break;
-            case "nim":
-                this.nim = value;
+            case "nisn":
+                this.nisn = value;
                 break;
             case "name":
                 this.name = value;

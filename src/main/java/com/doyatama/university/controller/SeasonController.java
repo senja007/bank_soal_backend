@@ -32,11 +32,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequestMapping("/api/season")
 public class SeasonController {
-    private SeasonService seasonService = new SeasonService();
+    private final SeasonService seasonService;
+
+    public SeasonController(SeasonService seasonService) {
+        this.seasonService = seasonService;
+    }
 
     @GetMapping
     public PagedResponse<Season> getSeason(@RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
-                                                    @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) throws IOException {
+                                           @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) throws IOException {
         return seasonService.getAllSeason(page, size);
     }
 
@@ -57,10 +61,9 @@ public class SeasonController {
         return seasonService.getSeasonById(seasonId);
     }
 
-
     @PutMapping("/{seasonId}")
     public ResponseEntity<?> updateSeason(@PathVariable String seasonId,
-                                              @Valid @RequestBody SeasonRequest seasonRequest) throws IOException {
+                                          @Valid @RequestBody SeasonRequest seasonRequest) throws IOException {
         Season season = seasonService.updateSeason(seasonId, seasonRequest);
 
         URI location = ServletUriComponentsBuilder
@@ -72,8 +75,9 @@ public class SeasonController {
     }
 
     @DeleteMapping("/{seasonId}")
-    public HttpStatus deleteSeason(@PathVariable (value = "seasonId") String seasonId) throws IOException {
+    public HttpStatus deleteSeason(@PathVariable String seasonId) throws IOException {
         seasonService.deleteSeasonById(seasonId);
-        return HttpStatus.FORBIDDEN;
+        return HttpStatus.NO_CONTENT;
     }
 }
+

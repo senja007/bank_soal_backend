@@ -36,9 +36,8 @@ public class MapelController {
 
     @GetMapping
     public PagedResponse<Mapel> getMapel(@RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
-                                                    @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size,
-                                                    @RequestParam(value = "kstId", defaultValue = "*") String kstId) throws IOException {
-        return mapelService.getAllMapel(page, size, kstId);
+                                                    @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) throws IOException {
+        return mapelService.getAllMapel(page, size);
     }
 
     @PostMapping

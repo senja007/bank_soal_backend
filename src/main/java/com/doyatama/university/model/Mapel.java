@@ -11,15 +11,13 @@ package com.doyatama.university.model;
 public class Mapel {
     private String idMapel;
     private String name;
-    private KonsentrasiKeahlian konsentrasiKeahlian;
     
     public Mapel(){   
     }
 
-    public Mapel(String idMapel, String name, KonsentrasiKeahlian konsentrasiKeahlian) {
+    public Mapel(String idMapel, String name) {
         this.idMapel = idMapel;
         this.name = name;
-        this.konsentrasiKeahlian = konsentrasiKeahlian;
     }
 
     public String getIdMapel() {
@@ -37,17 +35,9 @@ public class Mapel {
     public void setName(String name) {
         this.name = name;
     }
-
-    public KonsentrasiKeahlian getKonsentrasiKeahlian() {
-        return konsentrasiKeahlian;
-    }
-
-    public void setKonsentrasiKeahlian(KonsentrasiKeahlian konsentrasiKeahlian) {
-        this.konsentrasiKeahlian = konsentrasiKeahlian;
-    }
-    
-      public boolean isValid() {
-        return this.idMapel != null && this.konsentrasiKeahlian != null;
+     
+    public boolean isValid() {
+        return this.idMapel != null;
     }
 
     public void set(String fieldName, String value) {

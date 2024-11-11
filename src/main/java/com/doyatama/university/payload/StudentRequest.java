@@ -8,13 +8,14 @@ import java.time.LocalDate;
 
 public class StudentRequest {
     private String id;
-    private String nim;
+    private String nisn;
     private String name;
     private String gender;
     private String phone;
     private String religion_id;
-    private String user_id;
-    private String study_program_id;
+    private String bidangKeahlian_id;
+    private String programKeahlian_id;
+    private String konsentrasiKeahlian_id;
     private String birth_date;
     private String place_born;
     private String address;
@@ -22,15 +23,18 @@ public class StudentRequest {
     public StudentRequest() {
     }
 
-    public StudentRequest(String id, String nim, String name, String gender, String phone, String religion_id, String user_id, String study_program_id, String birth_date, String place_born, String address) {
+    public StudentRequest(String id, String nisn, String name, String gender, String phone, 
+            String religion_id, String bidangKeahlian_id, String programKeahlian_id, 
+            String konsentrasiKeahlian_id, String birth_date, String place_born, String address) {
         this.id = id;
-        this.nim = nim;
+        this.nisn = nisn;
         this.name = name;
         this.gender = gender;
         this.phone = phone;
         this.religion_id = religion_id;
-        this.user_id = user_id;
-        this.study_program_id = study_program_id;
+        this.bidangKeahlian_id = bidangKeahlian_id;
+        this.programKeahlian_id = programKeahlian_id;
+        this.konsentrasiKeahlian_id = konsentrasiKeahlian_id;
         this.birth_date = birth_date;
         this.place_born = place_born;
         this.address = address;
@@ -44,12 +48,12 @@ public class StudentRequest {
         this.id = id;
     }
 
-    public String getNim() {
-        return nim;
+    public String getNisn() {
+        return nisn;
     }
 
-    public void setNim(String nim) {
-        this.nim = nim;
+    public void setNisn(String nisn) {
+        this.nisn = nisn;
     }
 
     public String getName() {
@@ -84,20 +88,28 @@ public class StudentRequest {
         this.religion_id = religion_id;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getBidangKeahlian_id() {
+        return bidangKeahlian_id;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setBidangKeahlian_id(String bidangKeahlian_id) {
+        this.bidangKeahlian_id = bidangKeahlian_id;
     }
 
-    public String getStudy_program_id() {
-        return study_program_id;
+    public String getProgramKeahlian_id() {
+        return programKeahlian_id;
     }
 
-    public void setStudy_program_id(String study_program_id) {
-        this.study_program_id = study_program_id;
+    public void setProgramKeahlian_id(String programKeahlian_id) {
+        this.programKeahlian_id = programKeahlian_id;
+    }
+
+    public String getKonsentrasiKeahlian_id() {
+        return konsentrasiKeahlian_id;
+    }
+
+    public void setKonsentrasiKeahlian_id(String konsentrasiKeahlian_id) {
+        this.konsentrasiKeahlian_id = konsentrasiKeahlian_id;
     }
 
     public String getBirth_date() {
@@ -124,15 +136,13 @@ public class StudentRequest {
         this.address = address;
     }
 
-    
-
     public void set(String fieldName, String value) {
         switch (fieldName) {
             case "id":
                 this.id = value;
                 break;
-            case "nim":
-                this.nim = value;
+            case "nisn":
+                this.nisn = value;
                 break;
             case "name":
                 this.name = value;
@@ -152,14 +162,17 @@ public class StudentRequest {
             case "address":
                 this.address = value;
                 break;
-            case "user_id":
-                this.user_id = value;
-                break;
             case "religion_id":
                 this.religion_id = value;
                 break;
-            case "study_program_id":
-                this.study_program_id = value;
+            case "bidangKeahlian_id":
+                this.bidangKeahlian_id = value;
+                break;
+            case "programKeahlian_id":
+                this.programKeahlian_id = value;
+                break;
+            case "konsentrasiKeahlian_id":
+                this.konsentrasiKeahlian_id = value;
                 break;
             default:
                 throw new IllegalArgumentException("Invalid field name: " + fieldName);

@@ -1,5 +1,7 @@
 package com.doyatama.university.model;
 
+import java.util.List;
+
 
 public class Season {
     private String idSeason;
@@ -7,28 +9,26 @@ public class Season {
     private ProgramKeahlian programKeahlian;
     private KonsentrasiKeahlian konsentrasiKeahlian;
     private Kelas kelas;
-    private TahunAjaran tahunAjaran;
-    private Student student;
-    private Mapel mapel;
     private Lecture lecture;
+    private TahunAjaran tahunAjaran;
+    private List<List<Student>> student;
+    private List<List<JadPel>> jadPel;
 
-    public Season() {
-    }
+    public Season() {}
 
     public Season(String idSeason, BidangKeahlian bidangKeahlian, ProgramKeahlian programKeahlian, 
-            KonsentrasiKeahlian konsentrasiKeahlian, Kelas kelas, TahunAjaran tahunAjaran, Student student, Mapel mapel, Lecture lecture) {
+            KonsentrasiKeahlian konsentrasiKeahlian, Kelas kelas, Lecture lecture, TahunAjaran tahunAjaran, 
+            List<List<Student>> student, List<List<JadPel>> jadPel) {
         this.idSeason = idSeason;
         this.bidangKeahlian = bidangKeahlian;
         this.programKeahlian = programKeahlian;
         this.konsentrasiKeahlian = konsentrasiKeahlian;
         this.kelas = kelas;
+        this.lecture = lecture;
         this.tahunAjaran = tahunAjaran;
         this.student = student;
-        this.mapel = mapel;
-        this.lecture = lecture;
+        this.jadPel = jadPel;
     }
-
-    
 
     public String getIdSeason() {
         return idSeason;
@@ -70,22 +70,6 @@ public class Season {
         this.kelas = kelas;
     }
 
-    public TahunAjaran getTahunAjaran() {
-        return tahunAjaran;
-    }
-
-    public void setTahunAjaran(TahunAjaran tahunAjaran) {
-        this.tahunAjaran = tahunAjaran;
-    }
-    
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
     public Lecture getLecture() {
         return lecture;
     }
@@ -94,12 +78,28 @@ public class Season {
         this.lecture = lecture;
     }
 
-    public Mapel getMapel() {
-        return mapel;
+    public TahunAjaran getTahunAjaran() {
+        return tahunAjaran;
     }
 
-    public void setMapel(Mapel mapel) {
-        this.mapel = mapel;
+    public void setTahunAjaran(TahunAjaran tahunAjaran) {
+        this.tahunAjaran = tahunAjaran;
+    }
+
+    public List<List<Student>> getStudent() {
+        return student;
+    }
+
+    public void setStudent(List<List<Student>> student) {
+        this.student = student;
+    }
+
+    public List<List<JadPel>> getJadPel() {
+        return jadPel;
+    }
+
+    public void setJadPel(List<List<JadPel>> jadPel) {
+        this.jadPel = jadPel;
     }
     
     public boolean isValid() {

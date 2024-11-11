@@ -3,41 +3,45 @@ package com.doyatama.university.payload;
 import com.doyatama.university.model.Religion;
 
 public class LectureRequest {
-    private String nidn;
+    private String nip;
     private String name;
     private String place_born;
     private String date_born;
     private String gender;
     private String status;
     private String religion_id;
-    private String user_id;
-    private String study_program_id;
+    private String bidangKeahlian_id;
+    private String programKeahlian_id;
+    private String konsentrasiKeahlian_id;
     private String address;
     private String phone;
 
     public LectureRequest() {
     }
 
-    public LectureRequest(String nidn, String name, String place_born, String date_born, String gender, String status, String religion_id, String user_id, String study_program_id, String address, String phone) {
-        this.nidn = nidn;
+    public LectureRequest(String nip, String name, String place_born, String date_born, 
+            String gender, String status, String religion_id, String bidangKeahlian_id, 
+            String programKeahlian_id, String konsentrasiKeahlian_id, String address, String phone) {
+        this.nip = nip;
         this.name = name;
         this.place_born = place_born;
         this.date_born = date_born;
         this.gender = gender;
         this.status = status;
         this.religion_id = religion_id;
-        this.user_id = user_id;
-        this.study_program_id = study_program_id;
+        this.bidangKeahlian_id = bidangKeahlian_id;
+        this.programKeahlian_id = programKeahlian_id;
+        this.konsentrasiKeahlian_id = konsentrasiKeahlian_id;
         this.address = address;
         this.phone = phone;
     }
 
-    public String getNidn() {
-        return nidn;
+    public String getNip() {
+        return nip;
     }
 
-    public void setNidn(String nidn) {
-        this.nidn = nidn;
+    public void setNip(String nip) {
+        this.nip = nip;
     }
 
     public String getName() {
@@ -88,20 +92,28 @@ public class LectureRequest {
         this.religion_id = religion_id;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getBidangKeahlian_id() {
+        return bidangKeahlian_id;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setBidangKeahlian_id(String bidangKeahlian_id) {
+        this.bidangKeahlian_id = bidangKeahlian_id;
     }
 
-    public String getStudy_program_id() {
-        return study_program_id;
+    public String getProgramKeahlian_id() {
+        return programKeahlian_id;
     }
 
-    public void setStudy_program_id(String study_program_id) {
-        this.study_program_id = study_program_id;
+    public void setProgramKeahlian_id(String programKeahlian_id) {
+        this.programKeahlian_id = programKeahlian_id;
+    }
+
+    public String getKonsentrasiKeahlian_id() {
+        return konsentrasiKeahlian_id;
+    }
+
+    public void setKonsentrasiKeahlian_id(String konsentrasiKeahlian_id) {
+        this.konsentrasiKeahlian_id = konsentrasiKeahlian_id;
     }
 
     public String getAddress() {
@@ -122,8 +134,8 @@ public class LectureRequest {
 
     public void set(String fieldName, String value) {
         switch (fieldName) {
-            case "nidn":
-                this.nidn = value;
+            case "nip":
+                this.nip = value;
                 break;
             case "name":
                 this.name = value;
@@ -146,8 +158,14 @@ public class LectureRequest {
             case "user_id":
                 this.religion_id = value;
                 break;
-            case "study_program_id":
-                this.study_program_id = value;
+            case "bidangKeahlian_id":
+                this.bidangKeahlian_id = value;
+                break;
+            case "programKeahlian_id":
+                this.programKeahlian_id = value;
+                break;
+            case "konsentrasiKeahlian_id":
+                this.konsentrasiKeahlian_id = value;
                 break;
             case "address":
                 this.address = value;

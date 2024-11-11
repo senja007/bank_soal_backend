@@ -3,6 +3,7 @@ package com.doyatama.university.service;
 import com.doyatama.university.exception.BadRequestException;
 import com.doyatama.university.exception.ResourceNotFoundException;
 import com.doyatama.university.model.BidangKeahlian;
+import com.doyatama.university.model.JadPel;
 import com.doyatama.university.model.Kelas;
 import com.doyatama.university.model.KonsentrasiKeahlian;
 import com.doyatama.university.model.Lecture;
@@ -15,6 +16,7 @@ import com.doyatama.university.payload.SeasonRequest;
 import com.doyatama.university.payload.DefaultResponse;
 import com.doyatama.university.payload.PagedResponse;
 import com.doyatama.university.repository.BidangKeahlianRepository;
+import com.doyatama.university.repository.JadPelRepository;
 import com.doyatama.university.repository.KelasRepository;
 import com.doyatama.university.repository.KonsentrasiKeahlianRepository;
 import com.doyatama.university.repository.LectureRepository;
@@ -41,7 +43,7 @@ public class SeasonService {
     private KelasRepository kelasRepository = new KelasRepository();
     private TahunAjaranRepository tahunRepository = new TahunAjaranRepository();
     private StudentRepository studentRepository = new StudentRepository();
-    private MapelRepository mapelRepository = new MapelRepository();
+    private JadPelRepository jadPelRepository = new JadPelRepository();
     private LectureRepository lectureRepository = new LectureRepository();
     
     
@@ -51,10 +53,7 @@ public class SeasonService {
         validatePageNumberAndSize(page, size);
 
         // Retrieve Polls
-        List<Season> seasonResponse = new ArrayList<>();
-        seasonResponse = seasonRepository.findAll(size);
-        
-
+        List<Season> seasonResponse = seasonRepository.findAll(size);
         return new PagedResponse<>(seasonResponse, seasonResponse.size(), "Successfully get data", 200);
     }
 
@@ -63,21 +62,22 @@ public class SeasonService {
         ProgramKeahlian program = programKeahlianRepository.findById(seasonRequest.getProgramKeahlian_id());
         KonsentrasiKeahlian konsentrasi = konsentrasiKeahlianRepository.findById(seasonRequest.getKonsentrasiKeahlian_id());
         Kelas kelas = kelasRepository.findById(seasonRequest.getKelas_id());
+        Lecture lecture = lectureRepository.findById(seasonRequest.getLecture_id());
         TahunAjaran tahun = tahunRepository.findById(seasonRequest.getTahunAjaran_id());
-        Student siswa = studentRepository.findById(seasonRequest.getStudent_id());
-        Mapel mapel = mapelRepository.findById(seasonRequest.getMapel_id());
-        Lecture guru = lectureRepository.findById(seasonRequest.getLecture_id());
-        
+        List<List<Student>> students = studentRepository.findAllById2D(seasonRequest.getStudent_id());
+        List<List<JadPel>> jadwal = jadPelRepository.findAllById2D(seasonRequest.getJadPel_id());
         Season season = new Season();
+        logger.info("Data student: " + students);
+        logger.info("Data jadPel: " + jadwal);
             season.setIdSeason(seasonRequest.getIdSeason());
             season.setBidangKeahlian(bidang);
             season.setProgramKeahlian(program);
             season.setKonsentrasiKeahlian(konsentrasi);
             season.setKelas(kelas);
+            season.setLecture(lecture);
             season.setTahunAjaran(tahun);
-            season.setStudent(siswa);
-            season.setMapel(mapel);
-            season.setLecture(guru);
+            season.setStudent(students);
+            season.setJadPel(jadwal);
             
             return seasonRepository.save(season);
     }        
@@ -93,20 +93,21 @@ public class SeasonService {
         ProgramKeahlian program = programKeahlianRepository.findById(seasonRequest.getProgramKeahlian_id());
         KonsentrasiKeahlian konsentrasi = konsentrasiKeahlianRepository.findById(seasonRequest.getKonsentrasiKeahlian_id());
         Kelas kelas = kelasRepository.findById(seasonRequest.getKelas_id());
+        Lecture lecture = lectureRepository.findById(seasonRequest.getLecture_id());
         TahunAjaran tahun = tahunRepository.findById(seasonRequest.getTahunAjaran_id());
-        Student siswa = studentRepository.findById(seasonRequest.getStudent_id());
-        Mapel mapel = mapelRepository.findById(seasonRequest.getMapel_id());
-        Lecture guru = lectureRepository.findById(seasonRequest.getLecture_id());
+        List<List<Student>> students = studentRepository.findAllById2D(seasonRequest.getStudent_id());
+        List<List<JadPel>> jadwal = jadPelRepository.findAllById2D(seasonRequest.getJadPel_id());
         
         Season season = new Season();
+            season.setIdSeason(seasonRequest.getIdSeason());
             season.setBidangKeahlian(bidang);
             season.setProgramKeahlian(program);
             season.setKonsentrasiKeahlian(konsentrasi);
             season.setKelas(kelas);
+            season.setLecture(lecture);
             season.setTahunAjaran(tahun);
-            season.setStudent(siswa);
-            season.setMapel(mapel);
-            season.setLecture(guru);
+            season.setStudent(students);
+            season.setJadPel(jadwal);
             return seasonRepository.update(seasonId, season);
     }
     

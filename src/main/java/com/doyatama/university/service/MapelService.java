@@ -6,16 +6,13 @@ package com.doyatama.university.service;
 
 import com.doyatama.university.exception.BadRequestException;
 import com.doyatama.university.exception.ResourceNotFoundException;
-import com.doyatama.university.model.KonsentrasiKeahlian;
 import com.doyatama.university.model.Mapel;
 import com.doyatama.university.payload.MapelRequest;
 import com.doyatama.university.payload.DefaultResponse;
 import com.doyatama.university.payload.PagedResponse;
-import com.doyatama.university.repository.KonsentrasiKeahlianRepository;
 import com.doyatama.university.repository.MapelRepository;
 import com.doyatama.university.util.AppConstants;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,33 +26,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class MapelService {
     private MapelRepository mapelRepository = new MapelRepository();
-    private KonsentrasiKeahlianRepository konsentrasiKeahlianRepository = new KonsentrasiKeahlianRepository();
     
     private static final Logger logger = LoggerFactory.getLogger(MapelService.class);
 
-    public PagedResponse<Mapel> getAllMapel(int page, int size, String kstId) throws IOException {
+    public PagedResponse<Mapel> getAllMapel(int page, int size) throws IOException {
         validatePageNumberAndSize(page, size);
 
         // Retrieve Polls
-        List<Mapel> mapelResponse = new ArrayList<>();
-
-        if(kstId.equalsIgnoreCase("*")){
-            mapelResponse = mapelRepository.findAll(size);
-        }else{
-            mapelResponse = mapelRepository.findMapelByKonsentrasi(kstId, size);
-        }
-        
+        List<Mapel> mapelResponse = mapelRepository.findAll(size);
 
         return new PagedResponse<>(mapelResponse, mapelResponse.size(), "Successfully get data", 200);
     }
 
     public Mapel createMapel(MapelRequest mapelRequest) throws IOException {
-       KonsentrasiKeahlian konsentrasi = konsentrasiKeahlianRepository.findById(mapelRequest.getKonsentrasiKeahlian_id());
         
         Mapel mapel = new Mapel();
             mapel.setIdMapel(mapelRequest.getIdMapel());
             mapel.setName(mapelRequest.getName());
-          mapel.setKonsentrasiKeahlian(konsentrasi);
             return mapelRepository.save(mapel);
     }        
 
@@ -79,8 +66,6 @@ public class MapelService {
             throw new ResourceNotFoundException("Mapel", "id", mplId);
         }
     }
-
-
 
     private void validatePageNumberAndSize(int page, int size) {
         if(page < 0) {

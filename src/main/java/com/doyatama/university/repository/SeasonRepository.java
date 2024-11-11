@@ -5,13 +5,19 @@
 package com.doyatama.university.repository;
 
 import com.doyatama.university.helper.HBaseCustomClient;
+import com.doyatama.university.model.JadPel;
+import com.doyatama.university.model.Lecture;
+import com.doyatama.university.model.Mapel;
 import com.doyatama.university.model.Season;
+import com.doyatama.university.model.Student;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
@@ -38,10 +44,10 @@ public class SeasonRepository {
         columnMapping.put("programKeahlian", "programKeahlian");
         columnMapping.put("konsentrasiKeahlian", "konsentrasiKeahlian");
         columnMapping.put("kelas", "kelas");
+        columnMapping.put("lecture", "lecture");
         columnMapping.put("tahunAjaran", "tahunAjaran");
         columnMapping.put("student", "student");
-        columnMapping.put("mapel", "mapel");
-        columnMapping.put("lecture", "lecture");
+        columnMapping.put("jadwalPelajaran", "jadwalPelajaran");
         return client.showListTable(tableSeason.toString(), columnMapping, Season.class, size);
     }
      
@@ -61,14 +67,35 @@ public class SeasonRepository {
         client.insertRecord(tableSeason, rowKey, "kelas", "namaKelas", season.getKelas().getNamaKelas());
         client.insertRecord(tableSeason, rowKey, "tahunAjaran", "idTahun", season.getTahunAjaran().getIdTahun());
         client.insertRecord(tableSeason, rowKey, "tahunAjaran", "tahunAjaran", season.getTahunAjaran().getTahunAjaran());
-        client.insertRecord(tableSeason, rowKey, "student", "id", season.getStudent().getId());
-        client.insertRecord(tableSeason, rowKey, "student", "nim", season.getStudent().getNim());
-        client.insertRecord(tableSeason, rowKey, "student", "name", season.getStudent().getName());
-        client.insertRecord(tableSeason, rowKey, "mapel", "idMapel", season.getMapel().getIdMapel());
-        client.insertRecord(tableSeason, rowKey, "mapel", "name", season.getMapel().getName());
         client.insertRecord(tableSeason, rowKey, "lecture", "id", season.getLecture().getId());
-        client.insertRecord(tableSeason, rowKey, "lecture", "nidn", season.getLecture().getNidn());
         client.insertRecord(tableSeason, rowKey, "lecture", "name", season.getLecture().getName());
+        client.insertRecord(tableSeason, rowKey, "lecture", "nip", season.getLecture().getNip());
+
+            for (List<Student> studentRow : season.getStudent()) {
+                if (!studentRow.isEmpty()) {
+                    List<String> studentIds = studentRow.stream()
+                        .map(Student::getId)
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList());
+                    if (!studentIds.isEmpty()) {
+                        client.insertListRecord(tableSeason, rowKey, "student", "id", studentIds);
+                    }
+                }
+            }
+            for (List<JadPel> jadPelRow : season.getJadPel()) {
+                if (!jadPelRow.isEmpty()) {
+                    List<String> jadwalIds = jadPelRow.stream()
+                        .map(JadPel::getIdJadwal)
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList());
+                    if (!jadwalIds.isEmpty()) {
+                        client.insertListRecord(tableSeason, rowKey, "jadwalPelajaran", "idJadwal", jadwalIds);
+                    }
+                }
+            }
+
+
+
 
         client.insertRecord(tableSeason, rowKey, "detail", "created_by", "Doyatama");
         return season;
@@ -86,12 +113,13 @@ public class SeasonRepository {
         columnMapping.put("programKeahlian", "programKeahlian");
         columnMapping.put("konsentrasiKeahlian", "konsentrasiKeahlian");
         columnMapping.put("kelas", "kelas");
+        columnMapping.put("lecture", "lecture");
         columnMapping.put("tahunAjaran", "tahunAjaran");
         columnMapping.put("student", "student");
-        columnMapping.put("mapel", "mapel");
-        columnMapping.put("lecture", "lecture");
+        columnMapping.put("jadwalPelajaran", "jadwalPelajaran");
 
         return client.showDataTable(tableSeason.toString(), columnMapping, seasonId, Season.class);
+        
     }
          
     public List<Season> findAllById(List<String> seasonIds) throws IOException {
@@ -104,10 +132,10 @@ public class SeasonRepository {
         columnMapping.put("programKeahlian", "programKeahlian");
         columnMapping.put("konsentrasiKeahlian", "konsentrasiKeahlian");
         columnMapping.put("kelas", "kelas");
+        columnMapping.put("lecture", "lecture");
         columnMapping.put("tahunAjaran", "tahunAjaran");
         columnMapping.put("student", "student");
-        columnMapping.put("mapel", "mapel");
-        columnMapping.put("lecture", "lecture");
+        columnMapping.put("jadwalPelajaran", "jadwalPelajaran");
 
 
         List<Season> seasons = new ArrayList<>();
@@ -136,14 +164,43 @@ public class SeasonRepository {
         client.insertRecord(tableSeason, seasonId, "kelas", "namaKelas", season.getKelas().getNamaKelas());
         client.insertRecord(tableSeason, seasonId, "tahunAjaran", "idTahun", season.getTahunAjaran().getIdTahun());
         client.insertRecord(tableSeason, seasonId, "tahunAjaran", "tahunAjaran", season.getTahunAjaran().getTahunAjaran());
-        client.insertRecord(tableSeason, seasonId, "student", "id", season.getStudent().getId());
-        client.insertRecord(tableSeason, seasonId, "student", "nim", season.getStudent().getNim());
-        client.insertRecord(tableSeason, seasonId, "student", "name", season.getStudent().getName());
-        client.insertRecord(tableSeason, seasonId, "mapel", "idMapel", season.getMapel().getIdMapel());
-        client.insertRecord(tableSeason, seasonId, "mapel", "name", season.getMapel().getName());
         client.insertRecord(tableSeason, seasonId, "lecture", "id", season.getLecture().getId());
-        client.insertRecord(tableSeason, seasonId, "lecture", "nidn", season.getLecture().getNidn());
         client.insertRecord(tableSeason, seasonId, "lecture", "name", season.getLecture().getName());
+        client.insertRecord(tableSeason, seasonId, "lecture", "nip", season.getLecture().getNip());
+
+        if (season.getStudent() != null) {
+            for (List<Student> studentRow : season.getStudent()) {
+                for (Student student : studentRow) {
+                    if (student != null) {
+                        client.insertRecord(tableSeason, seasonId, "student", "id", student.getId());
+                        client.insertRecord(tableSeason, seasonId, "student", "nisn", student.getNisn());
+                        client.insertRecord(tableSeason, seasonId, "student", "name", student.getName());
+                        client.insertRecord(tableSeason, seasonId, "student", "gender", student.getGender());
+                        client.insertRecord(tableSeason, seasonId, "student", "phone", student.getPhone());
+                        client.insertRecord(tableSeason, seasonId, "student", "birth_date", student.getBirth_date());
+                        client.insertRecord(tableSeason, seasonId, "student", "place_born", student.getPlace_born());
+                        client.insertRecord(tableSeason, seasonId, "student", "address", student.getAddress());
+                        client.insertRecord(tableSeason, seasonId, "student", "religion", student.getReligion().getName());
+                    }
+                }
+            }
+        }
+
+        if (season.getJadPel() != null) {
+            for (List<JadPel> jadPelRow : season.getJadPel()) {
+                for (JadPel jadPel : jadPelRow) {
+                    if (jadPel != null) {
+                        client.insertRecord(tableSeason, seasonId, "jadwalPelajaran", "idJadwal", jadPel.getIdJadwal());
+                        client.insertRecord(tableSeason, seasonId, "jadwalPelajaran", "lecture", jadPel.getLecture().getId());
+                        client.insertRecord(tableSeason, seasonId, "jadwalPelajaran", "lecture", jadPel.getLecture().getName());
+                        client.insertRecord(tableSeason, seasonId, "jadwalPelajaran", "lecture", jadPel.getLecture().getNip());
+                        client.insertRecord(tableSeason, seasonId, "jadwalPelajaran", "jabatan", jadPel.getJabatan());
+                        client.insertRecord(tableSeason, seasonId, "jadwalPelajaran", "mapel", jadPel.getMapel().getName());
+                        client.insertRecord(tableSeason, seasonId, "jadwalPelajaran", "jmlJam", jadPel.getJmlJam());
+                    }
+                }
+            }
+        }
         client.insertRecord(tableSeason, seasonId, "detail", "created_by", "Doyatama");
         return season;
     }

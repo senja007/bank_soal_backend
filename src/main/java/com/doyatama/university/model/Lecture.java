@@ -4,34 +4,38 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Lecture {
     private String id;
-    private String nidn;
+    private String nip;
     private String name;
     private String place_born;
     private String date_born;
     private String gender;
     private String status;
-    private Religion religion;
-    private User user;
-    private StudyProgram study_program;
     private String address;
     private String phone;
-
+    
+    private Religion religion;
+    private BidangKeahlian bidangKeahlian;
+    private ProgramKeahlian programKeahlian;
+    private KonsentrasiKeahlian konsentrasiKeahlian;
     public Lecture() {
     }
 
-    public Lecture(String id, String nidn, String name, String place_born, String date_born, String gender, String status, Religion religion, User user, StudyProgram study_program, String address, String phone) {
+    public Lecture(String id, String nip, String name, String place_born, String date_born, 
+            String gender, String status, String address, String phone, Religion religion, 
+            BidangKeahlian bidangKeahlian, ProgramKeahlian programKeahlian, KonsentrasiKeahlian konsentrasiKeahlian) {
         this.id = id;
-        this.nidn = nidn;
+        this.nip = nip;
         this.name = name;
         this.place_born = place_born;
         this.date_born = date_born;
         this.gender = gender;
         this.status = status;
-        this.religion = religion;
-        this.user = user;
-        this.study_program = study_program;
         this.address = address;
         this.phone = phone;
+        this.religion = religion;
+        this.bidangKeahlian = bidangKeahlian;
+        this.programKeahlian = programKeahlian;
+        this.konsentrasiKeahlian = konsentrasiKeahlian;
     }
 
     public String getId() {
@@ -42,12 +46,12 @@ public class Lecture {
         this.id = id;
     }
 
-    public String getNidn() {
-        return nidn;
+    public String getNip() {
+        return nip;
     }
 
-    public void setNidn(String nidn) {
-        this.nidn = nidn;
+    public void setNip(String nip) {
+        this.nip = nip;
     }
 
     public String getName() {
@@ -90,30 +94,6 @@ public class Lecture {
         this.status = status;
     }
 
-    public Religion getReligion() {
-        return religion;
-    }
-
-    public void setReligion(Religion religion) {
-        this.religion = religion;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public StudyProgram getStudyProgram() {
-        return study_program;
-    }
-
-    public void setStudyProgram(StudyProgram study_program) {
-        this.study_program = study_program;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -130,8 +110,50 @@ public class Lecture {
         this.phone = phone;
     }
 
+    public Religion getReligion() {
+        return religion;
+    }
+
+    public void setReligion(Religion religion) {
+        this.religion = religion;
+    }
+
+    public BidangKeahlian getBidangKeahlian() {
+        return bidangKeahlian;
+    }
+
+    public void setBidangKeahlian(BidangKeahlian bidangKeahlian) {
+        this.bidangKeahlian = bidangKeahlian;
+    }
+
+    public ProgramKeahlian getProgramKeahlian() {
+        return programKeahlian;
+    }
+
+    public void setProgramKeahlian(ProgramKeahlian programKeahlian) {
+        this.programKeahlian = programKeahlian;
+    }
+
+    public KonsentrasiKeahlian getKonsentrasiKeahlian() {
+        return konsentrasiKeahlian;
+    }
+
+    public void setKonsentrasiKeahlian(KonsentrasiKeahlian konsentrasiKeahlian) {
+        this.konsentrasiKeahlian = konsentrasiKeahlian;
+    }
+
+    
+
     public boolean isValid() {
-        return this.id != null && this.nidn != null && this.name != null && this.place_born != null && this.date_born != null && this.gender != null && this.status != null && this.address != null && this.phone != null;
+        return this.id != null && 
+               this.nip != null && 
+               this.name != null && 
+               this.place_born != null && 
+               this.date_born != null && 
+               this.gender != null && 
+               this.status != null && 
+               this.address != null && 
+               this.phone != null;
     }
 
     public void set(String fieldName, String value) {
@@ -139,8 +161,8 @@ public class Lecture {
             case "id":
                 this.id = value;
                 break;
-            case "nidn":
-                this.nidn = value;
+            case "nip":
+                this.nip = value;
                 break;
             case "name":
                 this.name = value;

@@ -26,7 +26,7 @@ public class LectureRepository {
 
         // Add the mappings to the HashMap
         columnMapping.put("id", "id");
-        columnMapping.put("nidn", "nidn");
+        columnMapping.put("nip", "nip");
         columnMapping.put("name", "name");
         columnMapping.put("place_born", "place_born");
         columnMapping.put("date_born", "date_born");
@@ -35,8 +35,9 @@ public class LectureRepository {
         columnMapping.put("address", "address");
         columnMapping.put("phone", "phone");
         columnMapping.put("religion", "religion");
-        columnMapping.put("user", "user");
-        columnMapping.put("study_program", "study_program");
+        columnMapping.put("bidangKeahlian", "bidangKeahlian");
+        columnMapping.put("programKeahlian", "programKeahlian");
+        columnMapping.put("konsentrasiKeahlian", "konsentrasiKeahlian");
         return client.showListTable(tableUsers.toString(), columnMapping, Lecture.class, size);
     }
 
@@ -47,7 +48,7 @@ public class LectureRepository {
 
         TableName tableLecture = TableName.valueOf(tableName);
         client.insertRecord(tableLecture, rowKey, "main", "id", rowKey);
-        client.insertRecord(tableLecture, rowKey, "main", "nidn", lecture.getNidn());
+        client.insertRecord(tableLecture, rowKey, "main", "nip", lecture.getNip());
         client.insertRecord(tableLecture, rowKey, "main", "name", lecture.getName());
         client.insertRecord(tableLecture, rowKey, "main", "place_born", lecture.getPlace_born());
         client.insertRecord(tableLecture, rowKey, "main", "date_born", lecture.getDate_born());
@@ -57,12 +58,12 @@ public class LectureRepository {
         client.insertRecord(tableLecture, rowKey, "main", "address", lecture.getAddress());
         client.insertRecord(tableLecture, rowKey, "religion", "id", lecture.getReligion().getId());
         client.insertRecord(tableLecture, rowKey, "religion", "name", lecture.getReligion().getName());
-        client.insertRecord(tableLecture, rowKey, "study_program", "id", lecture.getStudyProgram().getId());
-        client.insertRecord(tableLecture, rowKey, "study_program", "name", lecture.getStudyProgram().getName());
-        client.insertRecord(tableLecture, rowKey, "user", "id", lecture.getUser().getId());
-        client.insertRecord(tableLecture, rowKey, "user", "name", lecture.getUser().getName());
-        client.insertRecord(tableLecture, rowKey, "user", "username", lecture.getUser().getUsername());
-        client.insertRecord(tableLecture, rowKey, "user", "email", lecture.getUser().getEmail());
+        client.insertRecord(tableLecture, rowKey, "bidangKeahlian", "id", lecture.getBidangKeahlian().getId());
+        client.insertRecord(tableLecture, rowKey, "bidangKeahlian", "bidang", lecture.getBidangKeahlian().getBidang());
+        client.insertRecord(tableLecture, rowKey, "programKeahlian", "id", lecture.getProgramKeahlian().getId());
+        client.insertRecord(tableLecture, rowKey, "programKeahlian", "program", lecture.getProgramKeahlian().getProgram());
+        client.insertRecord(tableLecture, rowKey, "konsentrasiKeahlian", "id", lecture.getKonsentrasiKeahlian().getId());
+        client.insertRecord(tableLecture, rowKey, "konsentrasiKeahlian", "konsentrasi", lecture.getKonsentrasiKeahlian().getKonsentrasi());
         client.insertRecord(tableLecture, rowKey, "detail", "created_by", "Doyatama");
         return lecture;
     }
@@ -75,7 +76,7 @@ public class LectureRepository {
 
         // Add the mappings to the HashMap
         columnMapping.put("id", "id");
-        columnMapping.put("nidn", "nidn");
+        columnMapping.put("nip", "nip");
         columnMapping.put("name", "name");
         columnMapping.put("place_born", "place_born");
         columnMapping.put("date_born", "date_born");
@@ -84,8 +85,9 @@ public class LectureRepository {
         columnMapping.put("address", "address");
         columnMapping.put("phone", "phone");
         columnMapping.put("religion", "religion");
-        columnMapping.put("user", "user");
-        columnMapping.put("study_program", "study_program");
+        columnMapping.put("bidangKeahlian", "bidangKeahlian");
+        columnMapping.put("programKeahlian", "programKeahlian");
+        columnMapping.put("konsentrasiKeahlian", "konsentrasiKeahlian");
 
         return client.showDataTable(tableUsers.toString(), columnMapping, lectureId, Lecture.class);
     }
@@ -97,7 +99,7 @@ public class LectureRepository {
         Map<String, String> columnMapping = new HashMap<>();
         // Add the mappings to the HashMap
         columnMapping.put("id", "id");
-        columnMapping.put("nidn", "nidn");
+        columnMapping.put("nip", "nip");
         columnMapping.put("name", "name");
         columnMapping.put("place_born", "place_born");
         columnMapping.put("date_born", "date_born");
@@ -106,8 +108,9 @@ public class LectureRepository {
         columnMapping.put("address", "address");
         columnMapping.put("phone", "phone");
         columnMapping.put("religion", "religion");
-        columnMapping.put("user", "user");
-        columnMapping.put("study_program", "study_program");
+        columnMapping.put("bidangKeahlian", "bidangKeahlian");
+        columnMapping.put("programKeahlian", "programKeahlian");
+        columnMapping.put("konsentrasiKeahlian", "konsentrasiKeahlian");
 
         List<Lecture> lectures = new ArrayList<>();
         for (String lectureId : lectureIds) {
@@ -119,6 +122,40 @@ public class LectureRepository {
 
         return lectures;
     }
+    
+    public List<Lecture> findAllByIds(List<List<String>> lectureIdsList) throws IOException {
+        HBaseCustomClient client = new HBaseCustomClient(conf);
+        TableName table = TableName.valueOf(tableName);
+        Map<String, String> columnMapping = new HashMap<>();
+            columnMapping.put("id", "id");
+            columnMapping.put("nip", "nip");
+            columnMapping.put("name", "name");
+            columnMapping.put("place_born", "place_born");
+            columnMapping.put("date_born", "date_born");
+            columnMapping.put("gender", "gender");
+            columnMapping.put("status", "status");
+            columnMapping.put("address", "address");
+            columnMapping.put("phone", "phone");
+            columnMapping.put("religion", "religion");
+            columnMapping.put("bidangKeahlian", "bidangKeahlian");
+            columnMapping.put("programKeahlian", "programKeahlian");
+            columnMapping.put("konsentrasiKeahlian", "konsentrasiKeahlian");
+
+        List<Lecture> lectures = new ArrayList<>();
+
+        // Iterate through each List<String> inside List<List<String>>
+        for (List<String> lectureIds : lectureIdsList) {
+            for (String lectureId : lectureIds) {
+                Lecture lecture = client.showDataTable(table.toString(), columnMapping, lectureId, Lecture.class);
+                if (lecture != null) {
+                    lectures.add(lecture);
+                }
+            }
+        }
+
+        return lectures;
+    }
+
 
     public List<Lecture> findRelationById(List<String> lectureIds) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
@@ -127,7 +164,7 @@ public class LectureRepository {
         Map<String, String> columnMapping = new HashMap<>();
         // Add the mappings to the HashMap
         columnMapping.put("id", "id");
-        columnMapping.put("nidn", "nidn");
+        columnMapping.put("nip", "nip");
         columnMapping.put("name", "name");
         columnMapping.put("place_born", "place_born");
         columnMapping.put("date_born", "date_born");
@@ -135,6 +172,10 @@ public class LectureRepository {
         columnMapping.put("status", "status");
         columnMapping.put("address", "address");
         columnMapping.put("phone", "phone");
+        columnMapping.put("religion", "religion");
+        columnMapping.put("bidangKeahlian", "bidangKeahlian");
+        columnMapping.put("programKeahlian", "programKeahlian");
+        columnMapping.put("konsentrasiKeahlian", "konsentrasiKeahlian");
 
         List<Lecture> lectures = new ArrayList<>();
         for (String lectureId : lectureIds) {
@@ -152,7 +193,7 @@ public class LectureRepository {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
         TableName tableLecture = TableName.valueOf(tableName);
-        client.insertRecord(tableLecture, lectureId, "main", "nidn", lecture.getNidn());
+        client.insertRecord(tableLecture, lectureId, "main", "nip", lecture.getNip());
         client.insertRecord(tableLecture, lectureId, "main", "name", lecture.getName());
         client.insertRecord(tableLecture, lectureId, "main", "place_born", lecture.getPlace_born());
         client.insertRecord(tableLecture, lectureId, "main", "date_born", lecture.getDate_born());
@@ -162,30 +203,13 @@ public class LectureRepository {
         client.insertRecord(tableLecture, lectureId, "main", "address", lecture.getAddress());
         client.insertRecord(tableLecture, lectureId, "religion", "id", lecture.getReligion().getId());
         client.insertRecord(tableLecture, lectureId, "religion", "name", lecture.getReligion().getName());
-        client.insertRecord(tableLecture, lectureId, "study_program", "id", lecture.getStudyProgram().getId());
-        client.insertRecord(tableLecture, lectureId, "study_program", "name", lecture.getStudyProgram().getName());
-        client.insertRecord(tableLecture, lectureId, "user", "id", lecture.getUser().getId());
-        client.insertRecord(tableLecture, lectureId, "user", "name", lecture.getUser().getName());
-        client.insertRecord(tableLecture, lectureId, "user", "username", lecture.getUser().getUsername());
-        client.insertRecord(tableLecture, lectureId, "user", "email", lecture.getUser().getEmail());
+        client.insertRecord(tableLecture, lectureId, "bidangKeahlian", "id", lecture.getBidangKeahlian().getId());
+        client.insertRecord(tableLecture, lectureId, "bidangKeahlian", "bidang", lecture.getBidangKeahlian().getBidang());
+        client.insertRecord(tableLecture, lectureId, "programKeahlian", "id", lecture.getProgramKeahlian().getId());
+        client.insertRecord(tableLecture, lectureId, "programKeahlian", "program", lecture.getProgramKeahlian().getProgram());
+        client.insertRecord(tableLecture, lectureId, "konsentrasiKeahlian", "id", lecture.getKonsentrasiKeahlian().getId());
+        client.insertRecord(tableLecture, lectureId, "konsentrasiKeahlian", "konsentrasi", lecture.getKonsentrasiKeahlian().getKonsentrasi());
         return lecture;
-    }
-
-    public boolean existsByUserID(String UID) throws IOException {
-        HBaseCustomClient client = new HBaseCustomClient(conf);
-
-        TableName tableUsers = TableName.valueOf(tableName);
-        Map<String, String> columnMapping = new HashMap<>();
-
-        // Add the mappings to the HashMap
-        columnMapping.put("id", "id");
-
-        Lecture lecture = client.getDataByColumn(tableUsers.toString(), columnMapping, "user", "id", UID, Lecture.class);
-        if(lecture.getId() != null){
-            return true;
-        }else{
-            return false;
-        }
     }
 
 

@@ -25,9 +25,8 @@ public class StudentController {
 
     @GetMapping
     public PagedResponse<Student> getStudents(@RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
-                                              @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size,
-                                              @RequestParam(value = "userID", defaultValue = "*") String userID) throws IOException {
-        return studentService.getAllStudent(page, size, userID);
+                                              @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) throws IOException {
+        return studentService.getAllStudent(page, size);
     }
 
     @PostMapping
