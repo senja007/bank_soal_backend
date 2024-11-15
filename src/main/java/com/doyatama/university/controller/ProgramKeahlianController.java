@@ -60,6 +60,8 @@ public class ProgramKeahlianController {
     public DefaultResponse<ProgramKeahlian> getProgramKeahlianById(@PathVariable String programKeahlianId) throws IOException {
         return programKeahlianService.getProgramKeahlianById(programKeahlianId);
     }
+    
+
 
 
     @PutMapping("/{programKeahlianId}")
@@ -81,3 +83,18 @@ public class ProgramKeahlianController {
         return HttpStatus.FORBIDDEN;
     }
 }
+
+
+
+//    @PutMapping("/{programKeahlianId}")
+//public ResponseEntity<?> updateProgramKeahlian(@PathVariable String programKeahlianid,
+//                                              @Valid @RequestBody ProgramKeahlianRequest programKeahlianRequest) throws IOException {
+//    ProgramKeahlian updatedProgramKeahlian = programKeahlianService.updateProgramKeahlian(programKeahlianid, programKeahlianRequest);
+//    return ResponseEntity.ok(new ApiResponse(true, "ProgramKeahlian Updated Successfully"));
+//}
+//
+//@DeleteMapping("/{programKeahlianId}")
+//public ResponseEntity<?> deleteProgramKeahlian(@PathVariable String programKeahlianId) throws IOException {
+//    programKeahlianService.deleteProgramKeahlianById(programKeahlianId);
+//    return new ResponseEntity<>(new ApiResponse(true, "ProgramKeahlian Deleted Successfully"), HttpStatus.OK);
+//}

@@ -1,7 +1,7 @@
 package com.doyatama.university.repository;
 
 import com.doyatama.university.helper.HBaseCustomClient;
-import com.doyatama.university.model.JadPel;
+import com.doyatama.university.model.JadwalPelajaran;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,11 +13,11 @@ import org.apache.hadoop.hbase.TableName;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class JadPelRepository {
+public class JadwalPelajaranRepository {
     Configuration conf = HBaseConfiguration.create();
-    String tableName = "jadwalPelajaran";
+    String tableName = "jadwalPelajarans";
     
-    public List<JadPel> findAll(int size) throws IOException {
+    public List<JadwalPelajaran> findAll(int size) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
         TableName tableJadPel = TableName.valueOf(tableName);
@@ -29,15 +29,15 @@ public class JadPelRepository {
         columnMapping.put("jabatan", "jabatan");
         columnMapping.put("mapel", "mapel");
         columnMapping.put("jmlJam", "jmlJam");
-        return client.showListTable(tableJadPel.toString(), columnMapping, JadPel.class, size);
+        return client.showListTable(tableJadPel.toString(), columnMapping, JadwalPelajaran.class, size);
     }
      
-    public JadPel save(JadPel jadpel) throws IOException {
+    public JadwalPelajaran save(JadwalPelajaran jadpel) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
         String rowKey = jadpel.getIdJadwal();
         TableName tableJadPel = TableName.valueOf(tableName);
-        client.insertRecord(tableJadPel, rowKey, "main", "idJadPel", rowKey);
+        client.insertRecord(tableJadPel, rowKey, "main", "idJadwal", rowKey);
         client.insertRecord(tableJadPel, rowKey, "main", "jabatan", jadpel.getJabatan());
         client.insertRecord(tableJadPel, rowKey, "main", "jmlJam", jadpel.getJmlJam());
         client.insertRecord(tableJadPel, rowKey, "lecture", "id", jadpel.getLecture().getId());
@@ -49,7 +49,7 @@ public class JadPelRepository {
         return jadpel;
     } 
      
-    public JadPel findById(String jadwalId) throws IOException {
+    public JadwalPelajaran findById(String jadwalId) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
         TableName tableJadPel = TableName.valueOf(tableName);
@@ -62,10 +62,10 @@ public class JadPelRepository {
         columnMapping.put("mapel", "mapel");
         columnMapping.put("jmlJam", "jmlJam");
 
-        return client.showDataTable(tableJadPel.toString(), columnMapping, jadwalId, JadPel.class);
+        return client.showDataTable(tableJadPel.toString(), columnMapping, jadwalId, JadwalPelajaran.class);
     }
          
-    public List<JadPel> findAllById(List<String> jadwalIds) throws IOException {
+    public List<JadwalPelajaran> findAllById(List<String> jadwalIds) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
         TableName tableJadPel = TableName.valueOf(tableName);
@@ -76,9 +76,9 @@ public class JadPelRepository {
         columnMapping.put("mapel", "mapel");
         columnMapping.put("jmlJam", "jmlJam");
         
-        List<JadPel> jadpels = new ArrayList<>();
+        List<JadwalPelajaran> jadpels = new ArrayList<>();
         for (String jadwalId : jadwalIds) {
-            JadPel jadpel = client.showDataTable(tableJadPel.toString(), columnMapping, jadwalId, JadPel.class);
+            JadwalPelajaran jadpel = client.showDataTable(tableJadPel.toString(), columnMapping, jadwalId, JadwalPelajaran.class);
             if (jadpel != null) {
                 jadpels.add(jadpel);
             }
@@ -87,7 +87,7 @@ public class JadPelRepository {
         return jadpels;
     }
     
-    public List<List<JadPel>> findAllById2D(List<List<String>> jadwalIdGroups) throws IOException {
+    public List<List<JadwalPelajaran>> findAllById2D(List<List<String>> jadwalIdGroups) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
         TableName tableJadPel = TableName.valueOf(tableName);
 
@@ -98,12 +98,12 @@ public class JadPelRepository {
         columnMapping.put("mapel", "mapel");
         columnMapping.put("jmlJam", "jmlJam");
 
-        List<List<JadPel>> jadwals2D = new ArrayList<>();
+        List<List<JadwalPelajaran>> jadwals2D = new ArrayList<>();
 
         for (List<String> jadwalIds : jadwalIdGroups) {
-            List<JadPel> jadwalRow = new ArrayList<>();
+            List<JadwalPelajaran> jadwalRow = new ArrayList<>();
             for (String jadwalId : jadwalIds) {
-                JadPel jadpel = client.showDataTable(tableJadPel.toString(), columnMapping, jadwalId, JadPel.class);
+                JadwalPelajaran jadpel = client.showDataTable(tableJadPel.toString(), columnMapping, jadwalId, JadwalPelajaran.class);
                 if (jadpel != null) {
                     jadwalRow.add(jadpel);
                 }
@@ -115,7 +115,7 @@ public class JadPelRepository {
     }
 
              
-    public JadPel update(String jadwalId, JadPel jadpel) throws IOException {
+    public JadwalPelajaran update(String jadwalId, JadwalPelajaran jadpel) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
         TableName tableJadPel = TableName.valueOf(tableName);

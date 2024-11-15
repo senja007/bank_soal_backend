@@ -1,12 +1,12 @@
 
 package com.doyatama.university.controller;
 
-import com.doyatama.university.model.JadPel;
+import com.doyatama.university.model.JadwalPelajaran;
 import com.doyatama.university.payload.ApiResponse;
-import com.doyatama.university.payload.JadPelRequest;
+import com.doyatama.university.payload.JadwalPelajaranRequest;
 import com.doyatama.university.payload.DefaultResponse;
 import com.doyatama.university.payload.PagedResponse;
-import com.doyatama.university.service.JadPelService;
+import com.doyatama.university.service.JadwalPelajaranService;
 import com.doyatama.university.util.AppConstants;
 import java.io.IOException;
 import java.net.URI;
@@ -31,18 +31,18 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/jadwal-pelajaran")
-public class JadPelController {
-    private JadPelService jadwalService = new JadPelService();
+public class JadwalPelajaranController {
+    private JadwalPelajaranService jadwalService = new JadwalPelajaranService();
 
     @GetMapping
-    public PagedResponse<JadPel> getJadPel(@RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+    public PagedResponse<JadwalPelajaran> getJadPel(@RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                                     @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) throws IOException {
         return jadwalService.getAllJadPel(page, size);
     }
 
     @PostMapping
-    public ResponseEntity<?> createJadPel(@Valid @RequestBody JadPelRequest jadwalRequest) throws IOException {
-        JadPel jadwal = jadwalService.createJadPel(jadwalRequest);
+    public ResponseEntity<?> createJadPel(@Valid @RequestBody JadwalPelajaranRequest jadwalRequest) throws IOException {
+        JadwalPelajaran jadwal = jadwalService.createJadPel(jadwalRequest);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{jadwalId}")
@@ -53,15 +53,15 @@ public class JadPelController {
     }
 
     @GetMapping("/{jadwalId}")
-    public DefaultResponse<JadPel> getJadPelById(@PathVariable String jadwalId) throws IOException {
+    public DefaultResponse<JadwalPelajaran> getJadPelById(@PathVariable String jadwalId) throws IOException {
         return jadwalService.getJadPelById(jadwalId);
     }
 
 
     @PutMapping("/{jadwalId}")
     public ResponseEntity<?> updateJadPel(@PathVariable String jadwalId,
-                                              @Valid @RequestBody JadPelRequest jadwalRequest) throws IOException {
-        JadPel jadwal = jadwalService.updateJadPel(jadwalId, jadwalRequest);
+                                              @Valid @RequestBody JadwalPelajaranRequest jadwalRequest) throws IOException {
+        JadwalPelajaran jadwal = jadwalService.updateJadPel(jadwalId, jadwalRequest);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{jadwalId}")

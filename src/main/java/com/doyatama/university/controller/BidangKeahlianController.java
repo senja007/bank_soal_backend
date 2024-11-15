@@ -61,22 +61,35 @@ public class BidangKeahlianController {
     }
 
 
+//    @PutMapping("/{bidangKeahlianId}")
+//    public ResponseEntity<?> updateBidangKeahlian(@PathVariable String bidangKeahlianId,
+//                                              @Valid @RequestBody BidangKeahlianRequest bidangKeahlianRequest) throws IOException {
+//        BidangKeahlian bidangKeahlian = bidangKeahlianService.updateBidangKeahlian(bidangKeahlianId, bidangKeahlianRequest);
+//
+//        URI location = ServletUriComponentsBuilder
+//                .fromCurrentRequest().path("/{bidangKeahlianId}")
+//                .buildAndExpand(bidangKeahlian.getId()).toUri();
+//
+//        return ResponseEntity.created(location)
+//                .body(new ApiResponse(true, "BidangKeahlian Updated Successfully"));
+//    }
+//
+//    @DeleteMapping("/{bidangKeahlianId}")
+//    public HttpStatus deleteBidangKeahlian(@PathVariable (value = "bidangKeahlianId") String bidangKeahlianId) throws IOException {
+//        bidangKeahlianService.deleteBidangKeahlianById(bidangKeahlianId);
+//        return HttpStatus.FORBIDDEN;
+//    }
     @PutMapping("/{bidangKeahlianId}")
-    public ResponseEntity<?> updateBidangKeahlian(@PathVariable String bidangKeahlianId,
+public ResponseEntity<?> updateBidangKeahlian(@PathVariable String bidangKeahlianId,
                                               @Valid @RequestBody BidangKeahlianRequest bidangKeahlianRequest) throws IOException {
-        BidangKeahlian bidangKeahlian = bidangKeahlianService.updateBidangKeahlian(bidangKeahlianId, bidangKeahlianRequest);
+    BidangKeahlian updatedBidangKeahlian = bidangKeahlianService.updateBidangKeahlian(bidangKeahlianId, bidangKeahlianRequest);
+    return ResponseEntity.ok(new ApiResponse(true, "BidangKeahlian Updated Successfully"));
+}
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{bidangKeahlianId}")
-                .buildAndExpand(bidangKeahlian.getId()).toUri();
+@DeleteMapping("/{bidangKeahlianId}")
+public ResponseEntity<?> deleteBidangKeahlian(@PathVariable String bidangKeahlianId) throws IOException {
+    bidangKeahlianService.deleteBidangKeahlianById(bidangKeahlianId);
+    return new ResponseEntity<>(new ApiResponse(true, "BidangKeahlian Deleted Successfully"), HttpStatus.OK);
+}
 
-        return ResponseEntity.created(location)
-                .body(new ApiResponse(true, "BidangKeahlian Updated Successfully"));
-    }
-
-    @DeleteMapping("/{bidangKeahlianId}")
-    public HttpStatus deleteBidangKeahlian(@PathVariable (value = "bidangKeahlianId") String bidangKeahlianId) throws IOException {
-        bidangKeahlianService.deleteBidangKeahlianById(bidangKeahlianId);
-        return HttpStatus.FORBIDDEN;
-    }
 }

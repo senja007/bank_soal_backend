@@ -2,13 +2,13 @@
 package com.doyatama.university.service;
 import com.doyatama.university.exception.BadRequestException;
 import com.doyatama.university.exception.ResourceNotFoundException;
-import com.doyatama.university.model.JadPel;
+import com.doyatama.university.model.JadwalPelajaran;
 import com.doyatama.university.model.Lecture;
 import com.doyatama.university.model.Mapel;
-import com.doyatama.university.payload.JadPelRequest;
+import com.doyatama.university.payload.JadwalPelajaranRequest;
 import com.doyatama.university.payload.DefaultResponse;
 import com.doyatama.university.payload.PagedResponse;
-import com.doyatama.university.repository.JadPelRepository;
+import com.doyatama.university.repository.JadwalPelajaranRepository;
 import com.doyatama.university.repository.LectureRepository;
 import com.doyatama.university.repository.MapelRepository;
 import com.doyatama.university.util.AppConstants;
@@ -19,26 +19,26 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JadPelService {
-    private JadPelRepository jadPelRepository = new JadPelRepository();
+public class JadwalPelajaranService {
+    private JadwalPelajaranRepository jadPelRepository = new JadwalPelajaranRepository();
     private MapelRepository mapelRepository = new MapelRepository();
     private LectureRepository lectureRepository = new LectureRepository();
     
-    private static final Logger logger = LoggerFactory.getLogger(JadPelService.class);
+    private static final Logger logger = LoggerFactory.getLogger(JadwalPelajaranService.class);
 
-    public PagedResponse<JadPel> getAllJadPel(int page, int size) throws IOException {
+    public PagedResponse<JadwalPelajaran> getAllJadPel(int page, int size) throws IOException {
         validatePageNumberAndSize(page, size);
 
         // Retrieve Polls
-        List<JadPel> jadPelResponse = jadPelRepository.findAll(size);
+        List<JadwalPelajaran> jadPelResponse = jadPelRepository.findAll(size);
 
         return new PagedResponse<>(jadPelResponse, jadPelResponse.size(), "Successfully get data", 200);
     }
 
-    public JadPel createJadPel(JadPelRequest jadPelRequest) throws IOException {
+    public JadwalPelajaran createJadPel(JadwalPelajaranRequest jadPelRequest) throws IOException {
         Lecture lecture = lectureRepository.findById(jadPelRequest.getLecture_id());
         Mapel mapel = mapelRepository.findById(jadPelRequest.getMapel_id());
-        JadPel jadPel = new JadPel();
+        JadwalPelajaran jadPel = new JadwalPelajaran();
             jadPel.setIdJadwal(jadPelRequest.getIdJadwal());
             jadPel.setLecture(lecture);
             jadPel.setJabatan(jadPelRequest.getJabatan());
@@ -48,16 +48,16 @@ public class JadPelService {
             return jadPelRepository.save(jadPel);
     }        
 
-    public DefaultResponse<JadPel> getJadPelById(String jadwalId) throws IOException {
+    public DefaultResponse<JadwalPelajaran> getJadPelById(String jadwalId) throws IOException {
         // Retrieve JadPel
-        JadPel jadPel = jadPelRepository.findById(jadwalId);
+        JadwalPelajaran jadPel = jadPelRepository.findById(jadwalId);
         return new DefaultResponse<>(jadPel.isValid() ? jadPel : null, jadPel.isValid() ? 1 : 0, "Successfully get data");
     }
     
-    public JadPel updateJadPel(String jadwalId, JadPelRequest jadPelRequest) throws IOException {
+    public JadwalPelajaran updateJadPel(String jadwalId, JadwalPelajaranRequest jadPelRequest) throws IOException {
         Lecture lecture = lectureRepository.findById(jadPelRequest.getLecture_id());
         Mapel mapel = mapelRepository.findById(jadPelRequest.getMapel_id());
-        JadPel jadPel = new JadPel();
+        JadwalPelajaran jadPel = new JadwalPelajaran();
             jadPel.setIdJadwal(jadPelRequest.getIdJadwal());
             jadPel.setLecture(lecture);
             jadPel.setJabatan(jadPelRequest.getJabatan());
@@ -67,7 +67,7 @@ public class JadPelService {
     }
     
     public void deleteJadPelById(String jadwalId) throws IOException {
-        JadPel jadPelResponse = jadPelRepository.findById(jadwalId);
+        JadwalPelajaran jadPelResponse = jadPelRepository.findById(jadwalId);
         if(jadPelResponse.isValid()){
             jadPelRepository.deleteById(jadwalId);
         }else{

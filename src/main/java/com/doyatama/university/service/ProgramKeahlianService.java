@@ -68,8 +68,10 @@ public class ProgramKeahlianService {
     
         public ProgramKeahlian updateProgramKeahlian(String BDGid, ProgramKeahlianRequest programKeahlianRequest) throws IOException {
         ProgramKeahlian programKeahlian = new ProgramKeahlian();
+         
             programKeahlian.setProgram(programKeahlianRequest.getProgram());
-            return programKeahlianRepository.update(BDGid, programKeahlian);
+          
+         return programKeahlianRepository.update(BDGid, programKeahlian);
     }
     
     public void deleteProgramKeahlianById(String BDGid) throws IOException {

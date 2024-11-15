@@ -1,20 +1,28 @@
-package com.doyatama.university.model;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.doyatama.university.payload;
 
-
-public class JadPel {
+/**
+ *
+ * @author Nifan
+ */
+public class JadwalPelajaranRequest {
     private String idJadwal;
-    private Lecture lecture;
+    private String lecture_id;
     private String jabatan;
-    private Mapel mapel;
+    private String mapel_id;
     private String jmlJam;
 
-    public JadPel() {}
-
-    public JadPel(String idJadwal, Lecture lecture, String jabatan, Mapel mapel, String jmlJam) {
+  
+    
+    public JadwalPelajaranRequest() {}
+    public JadwalPelajaranRequest(String idJadwal, String lecture_id, String jabatan, String mapel_id, String jmlJam) {
         this.idJadwal = idJadwal;
-        this.lecture = lecture;
+        this.lecture_id = lecture_id;
         this.jabatan = jabatan;
-        this.mapel = mapel;
+        this.mapel_id = mapel_id;
         this.jmlJam = jmlJam;
     }
 
@@ -26,12 +34,12 @@ public class JadPel {
         this.idJadwal = idJadwal;
     }
 
-    public Lecture getLecture() {
-        return lecture;
+    public String getLecture_id() {
+        return lecture_id;
     }
 
-    public void setLecture(Lecture lecture) {
-        this.lecture = lecture;
+    public void setLecture_id(String lecture_id) {
+        this.lecture_id = lecture_id;
     }
 
     public String getJabatan() {
@@ -42,12 +50,12 @@ public class JadPel {
         this.jabatan = jabatan;
     }
 
-    public Mapel getMapel() {
-        return mapel;
+    public String getMapel_id() {
+        return mapel_id;
     }
 
-    public void setMapel(Mapel mapel) {
-        this.mapel = mapel;
+    public void setMapel_id(String mapel_id) {
+        this.mapel_id = mapel_id;
     }
 
     public String getJmlJam() {
@@ -57,13 +65,6 @@ public class JadPel {
     public void setJmlJam(String jmlJam) {
         this.jmlJam = jmlJam;
     }
-    
-    public boolean isValid() {
-        return this.idJadwal != null &&
-               this.jabatan != null &&
-               this.jmlJam != null;
-    }
-    
     public void set(String fieldName, String value) {
         switch (fieldName) {
             case "idJadwal":
@@ -74,6 +75,12 @@ public class JadPel {
                 break;
             case "jmlJam":
                 this.jmlJam = value;  
+                break;
+            case "mapel_id":
+                this.mapel_id = value;  
+                break;
+            case "lecture_id":
+                this.lecture_id = value;  
                 break;
             default:
                 throw new IllegalArgumentException("Invalid field name: " + fieldName);

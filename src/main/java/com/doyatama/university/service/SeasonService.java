@@ -3,7 +3,7 @@ package com.doyatama.university.service;
 import com.doyatama.university.exception.BadRequestException;
 import com.doyatama.university.exception.ResourceNotFoundException;
 import com.doyatama.university.model.BidangKeahlian;
-import com.doyatama.university.model.JadPel;
+import com.doyatama.university.model.JadwalPelajaran;
 import com.doyatama.university.model.Kelas;
 import com.doyatama.university.model.KonsentrasiKeahlian;
 import com.doyatama.university.model.Lecture;
@@ -16,7 +16,7 @@ import com.doyatama.university.payload.SeasonRequest;
 import com.doyatama.university.payload.DefaultResponse;
 import com.doyatama.university.payload.PagedResponse;
 import com.doyatama.university.repository.BidangKeahlianRepository;
-import com.doyatama.university.repository.JadPelRepository;
+import com.doyatama.university.repository.JadwalPelajaranRepository;
 import com.doyatama.university.repository.KelasRepository;
 import com.doyatama.university.repository.KonsentrasiKeahlianRepository;
 import com.doyatama.university.repository.LectureRepository;
@@ -29,6 +29,7 @@ import com.doyatama.university.util.AppConstants;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class SeasonService {
     private KelasRepository kelasRepository = new KelasRepository();
     private TahunAjaranRepository tahunRepository = new TahunAjaranRepository();
     private StudentRepository studentRepository = new StudentRepository();
-    private JadPelRepository jadPelRepository = new JadPelRepository();
+    private JadwalPelajaranRepository jadPelRepository = new JadwalPelajaranRepository();
     private LectureRepository lectureRepository = new LectureRepository();
     
     
@@ -56,6 +57,26 @@ public class SeasonService {
         List<Season> seasonResponse = seasonRepository.findAll(size);
         return new PagedResponse<>(seasonResponse, seasonResponse.size(), "Successfully get data", 200);
     }
+    
+     public Season convertToSeason(SeasonRequest request) {
+        Season season = new Season();
+        season.setIdSeason(request.getIdSeason());
+        
+        // Set bidangKeahlian, programKeahlian, konsentrasiKeahlian, kelas, lecture, tahunAjaran
+        // Anda bisa mengambil data ini dari repository atau service lain sesuai kebutuhan.
+
+        // Misalnya:
+        // season.setBidangKeahlian(bidangKeahlianRepository.findById(request.getBidangKeahlian_id()));
+        // season.setProgramKeahlian(programKeahlianRepository.findById(request.getProgramKeahlian_id()));
+        // season.setKonsentrasiKeahlian(konsentrasiKeahlianRepository.findById(request.getKonsentrasiKeahlian_id()));
+        // season.setKelas(kelasRepository.findById(request.getKelas_id()));
+        // season.setLecture(lectureRepository.findById(request.getLecture_id()));
+        // season.setTahunAjaran(tahunAjaranRepository.findById(request.getTahunAjaran_id()));
+
+        // Set jadwalPelajaran
+        
+        return season;
+    }
 
     public Season createSeason(SeasonRequest seasonRequest) throws IOException {
         BidangKeahlian bidang = bidangKeahlianRepository.findById(seasonRequest.getBidangKeahlian_id());
@@ -64,11 +85,9 @@ public class SeasonService {
         Kelas kelas = kelasRepository.findById(seasonRequest.getKelas_id());
         Lecture lecture = lectureRepository.findById(seasonRequest.getLecture_id());
         TahunAjaran tahun = tahunRepository.findById(seasonRequest.getTahunAjaran_id());
-        List<List<Student>> students = studentRepository.findAllById2D(seasonRequest.getStudent_id());
-        List<List<JadPel>> jadwal = jadPelRepository.findAllById2D(seasonRequest.getJadPel_id());
+       // List<JadwalPelajaran> jadwal = jadPelRepository.findAllById(seasonRequest.getJadwalPelajaran_id());
         Season season = new Season();
-        logger.info("Data student: " + students);
-        logger.info("Data jadPel: " + jadwal);
+      //  logger.info("Data jadPel: " + jadwal);
             season.setIdSeason(seasonRequest.getIdSeason());
             season.setBidangKeahlian(bidang);
             season.setProgramKeahlian(program);
@@ -76,9 +95,22 @@ public class SeasonService {
             season.setKelas(kelas);
             season.setLecture(lecture);
             season.setTahunAjaran(tahun);
-            season.setStudent(students);
-            season.setJadPel(jadwal);
+           // season.setJadwalPelajaran(jadwal);
             
+//           List<JadwalPelajaran> jadwalList = seasonRequest.getJadwalPelajaran_id().stream()
+//            .map(id -> new JadwalPelajaran()) 
+//            .collect(Collectors.toList());
+//        season.setJadwalPelajaran(jadwalList);
+List<JadwalPelajaran> jadwalList = seasonRequest.getJadwalPelajaran_id().stream()
+        .map(id -> {
+            JadwalPelajaran jadwal = new JadwalPelajaran();
+            jadwal.setIdJadwal(id);  
+            return jadwal;
+        })
+        .collect(Collectors.toList());
+season.setJadwalPelajaran(jadwalList);
+
+
             return seasonRepository.save(season);
     }        
 
@@ -88,28 +120,26 @@ public class SeasonService {
         return new DefaultResponse<>(season.isValid() ? season : null, season.isValid() ? 1 : 0, "Successfully get data");
     }
     
-    public Season updateSeason(String seasonId, SeasonRequest seasonRequest) throws IOException {
-        BidangKeahlian bidang = bidangKeahlianRepository.findById(seasonRequest.getBidangKeahlian_id());
-        ProgramKeahlian program = programKeahlianRepository.findById(seasonRequest.getProgramKeahlian_id());
-        KonsentrasiKeahlian konsentrasi = konsentrasiKeahlianRepository.findById(seasonRequest.getKonsentrasiKeahlian_id());
-        Kelas kelas = kelasRepository.findById(seasonRequest.getKelas_id());
-        Lecture lecture = lectureRepository.findById(seasonRequest.getLecture_id());
-        TahunAjaran tahun = tahunRepository.findById(seasonRequest.getTahunAjaran_id());
-        List<List<Student>> students = studentRepository.findAllById2D(seasonRequest.getStudent_id());
-        List<List<JadPel>> jadwal = jadPelRepository.findAllById2D(seasonRequest.getJadPel_id());
-        
-        Season season = new Season();
-            season.setIdSeason(seasonRequest.getIdSeason());
-            season.setBidangKeahlian(bidang);
-            season.setProgramKeahlian(program);
-            season.setKonsentrasiKeahlian(konsentrasi);
-            season.setKelas(kelas);
-            season.setLecture(lecture);
-            season.setTahunAjaran(tahun);
-            season.setStudent(students);
-            season.setJadPel(jadwal);
-            return seasonRepository.update(seasonId, season);
-    }
+//    public Season updateSeason(String seasonId, SeasonRequest seasonRequest) throws IOException {
+//        BidangKeahlian bidang = bidangKeahlianRepository.findById(seasonRequest.getBidangKeahlian_id());
+//        ProgramKeahlian program = programKeahlianRepository.findById(seasonRequest.getProgramKeahlian_id());
+//        KonsentrasiKeahlian konsentrasi = konsentrasiKeahlianRepository.findById(seasonRequest.getKonsentrasiKeahlian_id());
+//        Kelas kelas = kelasRepository.findById(seasonRequest.getKelas_id());
+//        Lecture lecture = lectureRepository.findById(seasonRequest.getLecture_id());
+//        TahunAjaran tahun = tahunRepository.findById(seasonRequest.getTahunAjaran_id());
+//        JadwalPelajaran jadwal = jadPelRepository.findById(seasonRequest.getJadwalPelajaran_id());
+//        
+//        Season season = new Season();
+//            season.setIdSeason(seasonRequest.getIdSeason());
+//            season.setBidangKeahlian(bidang);
+//            season.setProgramKeahlian(program);
+//            season.setKonsentrasiKeahlian(konsentrasi);
+//            season.setKelas(kelas);
+//            season.setLecture(lecture);
+//            season.setTahunAjaran(tahun);
+//            season.setJadwalPelajaran(jadwal);
+//            return seasonRepository.update(seasonId, season);
+//    }
     
     public void deleteSeasonById(String seasonId) throws IOException {
         Season seasonResponse = seasonRepository.findById(seasonId);
