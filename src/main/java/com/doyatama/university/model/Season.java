@@ -13,6 +13,7 @@ public class Season {
     private Lecture lecture;
     private TahunAjaran tahunAjaran;
     //private JadwalPelajaran jadwalPelajaran;
+     private List<Student> student;
      private List<JadwalPelajaran> jadwalPelajaran = new ArrayList<>();
 
     public Season() {
@@ -22,6 +23,7 @@ public class Season {
     public Season(String idSeason, BidangKeahlian bidangKeahlian, ProgramKeahlian programKeahlian, 
             KonsentrasiKeahlian konsentrasiKeahlian, Kelas kelas, Lecture lecture, TahunAjaran tahunAjaran, 
        // JadwalPelajaran jadwalPelajaran
+            List<Student> student,
      List<JadwalPelajaran> jadwalPelajaran
     ) {
         this.idSeason = idSeason;
@@ -30,6 +32,7 @@ public class Season {
         this.konsentrasiKeahlian = konsentrasiKeahlian;
         this.kelas = kelas;
         this.lecture = lecture;
+        this.student = student;
         this.jadwalPelajaran = jadwalPelajaran;
     }
 
@@ -99,6 +102,18 @@ public class Season {
     
     public void addJadwalPelajaran(JadwalPelajaran jadwal) {
         this.jadwalPelajaran.add(jadwal);
+    }
+
+    public List<Student> getStudent() {
+        return student;
+    }
+
+    public void setStudent(List<Student> student) {
+        this.student = student;
+    }
+    
+    public void addStudent(Student student) {
+        this.student.add(student);
     }
 
 //    public JadwalPelajaran getJadwalPelajaran() {

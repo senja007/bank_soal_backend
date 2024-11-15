@@ -101,6 +101,16 @@ public class SeasonService {
 //            .map(id -> new JadwalPelajaran()) 
 //            .collect(Collectors.toList());
 //        season.setJadwalPelajaran(jadwalList);
+
+List<Student> studentList = seasonRequest.getStudent_id().stream()
+        .map(id -> {
+            Student stud = new Student();
+            stud.setId(id);  
+            return stud;
+        })
+        .collect(Collectors.toList());
+season.setStudent(studentList);
+
 List<JadwalPelajaran> jadwalList = seasonRequest.getJadwalPelajaran_id().stream()
         .map(id -> {
             JadwalPelajaran jadwal = new JadwalPelajaran();

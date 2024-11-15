@@ -11,6 +11,7 @@ public class SeasonRequest {
     private String lecture_id;
     private String tahunAjaran_id;
     //private String jadwalPelajaran_id;
+    private List<String> student_id;
     private List<String> jadwalPelajaran_id;
 
     public SeasonRequest() {}
@@ -19,6 +20,8 @@ public class SeasonRequest {
                          String konsentrasiKeahlian_id, String kelas_id, String lecture_id, 
                          String tahunAjaran_id,
                         // String jadwalPelajaran_id
+                         
+    List<String> student_id,
     List<String> jadwalPelajaran_id
     ) {
         this.idSeason = idSeason;
@@ -28,6 +31,7 @@ public class SeasonRequest {
         this.kelas_id = kelas_id;
         this.lecture_id = lecture_id;
         this.tahunAjaran_id = tahunAjaran_id;
+        this.student_id = student_id;
         this.jadwalPelajaran_id = jadwalPelajaran_id;
     }
 
@@ -95,6 +99,14 @@ public class SeasonRequest {
         this.jadwalPelajaran_id = jadwalPelajaran_id;
     }
 
+    public List<String> getStudent_id() {
+        return student_id;
+    }
+
+    public void setStudent_id(List<String> student_id) {
+        this.student_id = student_id;
+    }
+
     
 
 //    public String getJadwalPelajaran_id() {
@@ -128,6 +140,9 @@ public class SeasonRequest {
                 break;
             case "tahunAjaran_id":
                 this.tahunAjaran_id = (String) value;
+                break;
+            case "student_id":
+                this.student_id = (List<String>) value;
                 break;
             case "jadwalPelajaran_id":
                 this.jadwalPelajaran_id = (List<String>) value;

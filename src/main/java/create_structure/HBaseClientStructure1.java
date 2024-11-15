@@ -28,7 +28,7 @@ public class HBaseClientStructure1 {
        
    // Create Tabel Season
         TableName tableSeason = TableName.valueOf("seasons");
-        String[] season = { "main", "bidangKeahlian", "programKeahlian", "konsentrasiKeahlian", "kelas", "tahunAjaran", "lecture", "jadwalPelajaran", "detail" };
+        String[] season = { "main", "bidangKeahlian", "programKeahlian", "konsentrasiKeahlian", "kelas", "tahunAjaran", "lecture", "student", "jadwalPelajaran", "detail" };
         client.deleteTable(tableSeason);
         client.createTable(tableSeason, season);
 

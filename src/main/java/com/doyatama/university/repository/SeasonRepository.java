@@ -46,6 +46,7 @@ public class SeasonRepository {
         columnMapping.put("kelas", "kelas");
         columnMapping.put("lecture", "lecture");
         columnMapping.put("tahunAjaran", "tahunAjaran");
+        columnMapping.put("student", "student");
         columnMapping.put("jadwalPelajaran", "jadwalPelajaran");
         return client.showListTable(tableSeason.toString(), columnMapping, Season.class, size);
     }
@@ -71,12 +72,21 @@ public class SeasonRepository {
         client.insertRecord(tableSeason, rowKey, "lecture", "nip", season.getLecture().getNip());
       //  client.insertRecord(tableSeason, rowKey, "jadwalPelajaran", "idJadwal", season.getJadwalPelajaran().getIdJadwal());
       
+       int indexz = 0;
+    for (Student stud : season.getStudent()) {
+        client.insertRecord(tableSeason, rowKey, "student", "id" + indexz, stud.getId());
+        
+        indexz++;
+    }
+      
        int index = 0;
     for (JadwalPelajaran jadwal : season.getJadwalPelajaran()) {
         client.insertRecord(tableSeason, rowKey, "jadwalPelajaran", "idJadwal" + index, jadwal.getIdJadwal());
         
         index++;
     }
+    
+    
 
         client.insertRecord(tableSeason, rowKey, "detail", "created_by", "Doyatama");
         return season;
