@@ -64,6 +64,30 @@ public class JadwalPelajaranRepository {
 
         return client.showDataTable(tableJadPel.toString(), columnMapping, jadwalId, JadwalPelajaran.class);
     }
+    
+    
+public List<JadwalPelajaran> findByListOfIds(List<String> jadwalIds) throws IOException {
+    HBaseCustomClient client = new HBaseCustomClient(conf);
+
+    TableName tableJadPel = TableName.valueOf(tableName);
+    Map<String, String> columnMapping = new HashMap<>();
+    columnMapping.put("idJadwal", "idJadwal");
+//    columnMapping.put("lecture", "lecture");
+//    columnMapping.put("jabatan", "jabatan");
+//    columnMapping.put("mapel", "mapel");
+//    columnMapping.put("jmlJam", "jmlJam");
+
+    List<JadwalPelajaran> jadwals = new ArrayList<>();
+    for (String jadwalId : jadwalIds) {
+        JadwalPelajaran jadwal = client.showDataTable(tableJadPel.toString(), columnMapping, jadwalId, JadwalPelajaran.class); // Log error for specific jadwalId and continue processing other IDs
+        if (jadwal != null) {
+            jadwals.add(jadwal);
+        }
+    }
+
+    return jadwals;
+}
+
          
     public List<JadwalPelajaran> findAllById(List<String> jadwalIds) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
