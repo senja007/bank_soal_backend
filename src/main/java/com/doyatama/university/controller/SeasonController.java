@@ -10,6 +10,8 @@ import com.doyatama.university.service.SeasonService;
 import com.doyatama.university.util.AppConstants;
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +45,7 @@ public class SeasonController {
                                            @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) throws IOException {
         return seasonService.getAllSeason(page, size);
     }
+
 
     @PostMapping
     public ResponseEntity<?> createSeason(@Valid @RequestBody SeasonRequest seasonRequest) throws IOException {

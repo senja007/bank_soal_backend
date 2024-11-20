@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -32,7 +33,8 @@ public class SeasonRepository {
      Configuration conf = HBaseConfiguration.create();
     String tableName = "seasons";
     
-    public List<Season> findAll(int size) throws IOException {
+    
+        public List<Season> findAll(int size) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
         TableName tableSeason = TableName.valueOf(tableName);
@@ -48,9 +50,12 @@ public class SeasonRepository {
         columnMapping.put("tahunAjaran", "tahunAjaran");
         columnMapping.put("student", "student");
         columnMapping.put("jadwalPelajaran", "jadwalPelajaran");
+
+        
         return client.showListTable(tableSeason.toString(), columnMapping, Season.class, size);
+
     }
-     
+
     public Season save(Season season) throws IOException {
         HBaseCustomClient client = new HBaseCustomClient(conf);
 
@@ -70,23 +75,73 @@ public class SeasonRepository {
         client.insertRecord(tableSeason, rowKey, "lecture", "id", season.getLecture().getId());
         client.insertRecord(tableSeason, rowKey, "lecture", "name", season.getLecture().getName());
         client.insertRecord(tableSeason, rowKey, "lecture", "nip", season.getLecture().getNip());
-      //  client.insertRecord(tableSeason, rowKey, "jadwalPelajaran", "idJadwal", season.getJadwalPelajaran().getIdJadwal());
-      
-       int indexz = 0;
-    for (Student stud : season.getStudent()) {
-        client.insertRecord(tableSeason, rowKey, "student", "id" + indexz, stud.getId());
+ 
         
-        indexz++;
-    }
-      
-       int index = 0;
-    for (JadwalPelajaran jadwal : season.getJadwalPelajaran()) {
-        client.insertRecord(tableSeason, rowKey, "jadwalPelajaran", "idJadwal" + index, jadwal.getIdJadwal());
         
-        index++;
+        if (season.getStudent() != null && !season.getStudent().isEmpty()) {
+        int index = 0;
+        for (Student stud : season.getStudent()) {
+            if (stud != null) {
+                try {
+                    client.insertRecord(tableSeason, rowKey, "student", "id" + index, stud.getId());
+                    client.insertRecord(tableSeason, rowKey, "student", "nisn" + index, stud.getNisn());
+                    client.insertRecord(tableSeason, rowKey, "student", "name" + index, stud.getName());
+                    client.insertRecord(tableSeason, rowKey, "student", "gender" + index, stud.getGender());
+                    client.insertRecord(tableSeason, rowKey, "student", "phone" + index, stud.getPhone());
+                    index++;
+                } catch (Exception e) {
+                    System.err.println("Error inserting student: " + e.getMessage());
+                }
+            }
+        }
     }
     
     
+
+
+    if (season.getJadwalPelajaran() != null && !season.getJadwalPelajaran().isEmpty()) {
+        int index = 0;
+        for (JadwalPelajaran jadwal : season.getJadwalPelajaran()) {
+            if (jadwal != null) {
+                try {
+                    client.insertRecord(tableSeason, rowKey, "jadwalPelajaran", "idJadwal" + index, jadwal.getIdJadwal());
+                    // Misalkan JadwalPelajaran memiliki atribut lain
+                    client.insertRecord(tableSeason, rowKey, "jadwalPelajaran", "mapel" + index, jadwal.getMapel().getName());
+                    client.insertRecord(tableSeason, rowKey, "jadwalPelajaran", "jmlJam" + index, String.valueOf(jadwal.getJmlJam()));
+                    index++;
+                } catch (Exception e) {
+                    System.err.println("Error inserting jadwalPelajaran: " + e.getMessage());
+                }
+            }
+        }
+    }
+        
+        
+//        if (season.getStudent() != null && !season.getStudent().isEmpty()) {
+//    String studentsJson = new ObjectMapper()
+//        .writerWithDefaultPrettyPrinter()
+//        .writeValueAsString(season.getStudent());
+//    client.insertRecord(tableSeason, rowKey, "student", "nisn", studentsJson);
+//}
+//
+//if (season.getJadwalPelajaran() != null && !season.getJadwalPelajaran().isEmpty()) {
+//    String jadwalJson = new ObjectMapper()
+//        .writerWithDefaultPrettyPrinter()
+//        .writeValueAsString(season.getJadwalPelajaran());
+//    client.insertRecord(tableSeason, rowKey, "jadwalPelajaran", "idJadwal", jadwalJson);
+//}
+
+        
+//        if (season.getStudent() != null && !season.getStudent().isEmpty()) {
+//    String studentsJson = new ObjectMapper().writeValueAsString(season.getStudent());
+//    client.insertRecord(tableSeason, rowKey, "student", "data", studentsJson);
+//}
+//        
+//        if (season.getJadwalPelajaran() != null && !season.getJadwalPelajaran().isEmpty()) {
+//    String jadwalJson = new ObjectMapper().writeValueAsString(season.getJadwalPelajaran());
+//    client.insertRecord(tableSeason, rowKey, "jadwalPelajaran", "data", jadwalJson);
+//}
+
 
         client.insertRecord(tableSeason, rowKey, "detail", "created_by", "Doyatama");
         return season;
@@ -109,6 +164,8 @@ public class SeasonRepository {
         columnMapping.put("student", "student");
         columnMapping.put("jadwalPelajaran", "jadwalPelajaran");
 
+        
+        
         return client.showDataTable(tableSeason.toString(), columnMapping, seasonId, Season.class);
         
     }
@@ -177,4 +234,153 @@ public class SeasonRepository {
         client.deleteRecord(tableName, seasonId);
         return true;
     }  
+    
+    
 }
+
+
+
+
+
+
+
+
+
+//    public List<Season> findAll(int size) throws IOException {
+//    HBaseCustomClient client = new HBaseCustomClient(conf);
+//
+//    TableName tableSeason = TableName.valueOf(tableName);
+//    Map<String, String> columnMapping = new HashMap<>();
+//
+//    // Mapping kolom
+//    columnMapping.put("idSeason", "idSeason");
+//    columnMapping.put("bidangKeahlian", "bidangKeahlian");
+//    columnMapping.put("programKeahlian", "programKeahlian");
+//    columnMapping.put("konsentrasiKeahlian", "konsentrasiKeahlian");
+//    columnMapping.put("kelas", "kelas");
+//    columnMapping.put("lecture", "lecture");
+//    columnMapping.put("tahunAjaran", "tahunAjaran");
+//    columnMapping.put("student", "student");
+//    columnMapping.put("jadwalPelajaran", "jadwalPelajaran");
+//
+//    List<Season> seasons = client.showListTable(tableSeason.toString(), columnMapping, Season.class, size);
+//
+//    // Parsing `student` dan `jadwalPelajaran`
+//    ObjectMapper objectMapper = new ObjectMapper();
+//    for (Season season : seasons) {
+//    // Parsing student
+//    Object studentJson = season.getStudent(); // Ambil data student
+//    if (studentJson instanceof String) {
+//        List<Student> students = objectMapper.readValue(
+//            (String) studentJson,
+//            objectMapper.getTypeFactory().constructCollectionType(List.class, Student.class)
+//        );
+//        season.setStudent(students);
+//    } else if (studentJson instanceof List) {
+//        // Jika sudah berupa List, langsung gunakan
+//        season.setStudent((List<Student>) studentJson);
+//    } else {
+//        throw new IllegalArgumentException("Unexpected type for studentJson: " + studentJson.getClass().getName());
+//    }
+//
+//    // Parsing jadwalPelajaran
+//    Object jadwalJson = season.getJadwalPelajaran();
+//    if (jadwalJson instanceof String) {
+//        List<JadwalPelajaran> jadwals = objectMapper.readValue(
+//            (String) jadwalJson,
+//            objectMapper.getTypeFactory().constructCollectionType(List.class, JadwalPelajaran.class)
+//        );
+//        season.setJadwalPelajaran(jadwals);
+//    } else if (jadwalJson instanceof List) {
+//        season.setJadwalPelajaran((List<JadwalPelajaran>) jadwalJson);
+//    } else {
+//        throw new IllegalArgumentException("Unexpected type for jadwalJson: " + jadwalJson.getClass().getName());
+//    }
+//
+//
+//        
+//
+//        // Parsing jadwalPelajaran
+//      //  String jadwalJson = (String) season.getJadwalPelajaran();
+////        if (jadwalJson != null) {
+////            List<JadwalPelajaran> jadwals = objectMapper.readValue(jadwalJson, objectMapper.getTypeFactory().constructCollectionType(List.class, JadwalPelajaran.class));
+////            season.setJadwalPelajaran(jadwals);
+////        }
+//    }
+//    return seasons;
+//}
+//
+
+
+
+
+
+
+
+
+
+//    public List<Season> findAll(int size) throws IOException {
+//        HBaseCustomClient client = new HBaseCustomClient(conf);
+//
+//        TableName tableSeason = TableName.valueOf(tableName);
+//        Map<String, String> columnMapping = new HashMap<>();
+//
+//        // Add the mappings to the HashMap
+//        columnMapping.put("idSeason", "idSeason");
+//        columnMapping.put("bidangKeahlian", "bidangKeahlian");
+//        columnMapping.put("programKeahlian", "programKeahlian");
+//        columnMapping.put("konsentrasiKeahlian", "konsentrasiKeahlian");
+//        columnMapping.put("kelas", "kelas");
+//        columnMapping.put("lecture", "lecture");
+//        columnMapping.put("tahunAjaran", "tahunAjaran");
+//        columnMapping.put("student", "student");
+//        columnMapping.put("jadwalPelajaran", "jadwalPelajaran");
+//        
+//        return client.showListTable(tableSeason.toString(), columnMapping, Season.class, size);
+//   
+//    
+//    }
+
+
+
+
+
+
+
+//    if (season.getStudent() != null && !season.getStudent().isEmpty()) {
+//        int index = 0;
+//        for (Student stud : season.getStudent()) {
+//            if (stud != null) {
+//                try {
+//                    client.insertRecord(tableSeason, rowKey, "student", "id" + index, stud.getId());
+//                    client.insertRecord(tableSeason, rowKey, "student", "nisn" + index, stud.getNisn());
+//                    client.insertRecord(tableSeason, rowKey, "student", "name" + index, stud.getName());
+//                    client.insertRecord(tableSeason, rowKey, "student", "gender" + index, stud.getGender());
+//                    client.insertRecord(tableSeason, rowKey, "student", "phone" + index, stud.getPhone());
+//                    index++;
+//                } catch (Exception e) {
+//                    System.err.println("Error inserting student: " + e.getMessage());
+//                }
+//            }
+//        }
+//    }
+//    
+//    
+//
+//
+//    if (season.getJadwalPelajaran() != null && !season.getJadwalPelajaran().isEmpty()) {
+//        int index = 0;
+//        for (JadwalPelajaran jadwal : season.getJadwalPelajaran()) {
+//            if (jadwal != null) {
+//                try {
+//                    client.insertRecord(tableSeason, rowKey, "jadwalPelajaran", "idJadwal" + index, jadwal.getIdJadwal());
+//                    // Misalkan JadwalPelajaran memiliki atribut lain
+//                    client.insertRecord(tableSeason, rowKey, "jadwalPelajaran", "mapel" + index, jadwal.getMapel().getName());
+//                    client.insertRecord(tableSeason, rowKey, "jadwalPelajaran", "jmlJam" + index, String.valueOf(jadwal.getJmlJam()));
+//                    index++;
+//                } catch (Exception e) {
+//                    System.err.println("Error inserting jadwalPelajaran: " + e.getMessage());
+//                }
+//            }
+//        }
+//    }

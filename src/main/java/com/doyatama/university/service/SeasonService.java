@@ -29,6 +29,7 @@ import com.doyatama.university.util.AppConstants;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +51,8 @@ public class SeasonService {
     
     private static final Logger logger = LoggerFactory.getLogger(SeasonService.class);
 
+
+
     public PagedResponse<Season> getAllSeason(int page, int size) throws IOException {
         validatePageNumberAndSize(page, size);
 
@@ -67,7 +70,7 @@ public class SeasonService {
         Lecture lecture = lectureRepository.findById(seasonRequest.getLecture_id());
         TahunAjaran tahun = tahunRepository.findById(seasonRequest.getTahunAjaran_id());
         List<Student> student = studentRepository.findAllById(seasonRequest.getStudent_id());
-        List<JadwalPelajaran> jadwalList = jadPelRepository.findByListOfIds(seasonRequest.getJadwalPelajaran_id());
+        List<JadwalPelajaran> jadwalList = jadPelRepository.findAllById(seasonRequest.getJadwalPelajaran_id());
 
 //    if (jadwalList.isEmpty()) {
 //       // throw new ResourceNotFoundException("Jadwal Pelajaran tidak ditemukan untuk ID yang diberikan");

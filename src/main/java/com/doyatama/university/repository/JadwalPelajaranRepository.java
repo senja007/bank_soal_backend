@@ -64,29 +64,7 @@ public class JadwalPelajaranRepository {
 
         return client.showDataTable(tableJadPel.toString(), columnMapping, jadwalId, JadwalPelajaran.class);
     }
-    
-    
-public List<JadwalPelajaran> findByListOfIds(List<String> jadwalIds) throws IOException {
-    HBaseCustomClient client = new HBaseCustomClient(conf);
-
-    TableName tableJadPel = TableName.valueOf(tableName);
-    Map<String, String> columnMapping = new HashMap<>();
-    columnMapping.put("idJadwal", "idJadwal");
-//    columnMapping.put("lecture", "lecture");
-//    columnMapping.put("jabatan", "jabatan");
-//    columnMapping.put("mapel", "mapel");
-//    columnMapping.put("jmlJam", "jmlJam");
-
-    List<JadwalPelajaran> jadwals = new ArrayList<>();
-    for (String jadwalId : jadwalIds) {
-        JadwalPelajaran jadwal = client.showDataTable(tableJadPel.toString(), columnMapping, jadwalId, JadwalPelajaran.class); // Log error for specific jadwalId and continue processing other IDs
-        if (jadwal != null) {
-            jadwals.add(jadwal);
-        }
-    }
-
-    return jadwals;
-}
+   
 
          
     public List<JadwalPelajaran> findAllById(List<String> jadwalIds) throws IOException {
@@ -111,32 +89,6 @@ public List<JadwalPelajaran> findByListOfIds(List<String> jadwalIds) throws IOEx
         return jadpels;
     }
     
-    public List<List<JadwalPelajaran>> findAllById2D(List<List<String>> jadwalIdGroups) throws IOException {
-        HBaseCustomClient client = new HBaseCustomClient(conf);
-        TableName tableJadPel = TableName.valueOf(tableName);
-
-        Map<String, String> columnMapping = new HashMap<>();
-        columnMapping.put("idJadwal", "idJadwal");
-        columnMapping.put("lecture", "lecture");
-        columnMapping.put("jabatan", "jabatan");
-        columnMapping.put("mapel", "mapel");
-        columnMapping.put("jmlJam", "jmlJam");
-
-        List<List<JadwalPelajaran>> jadwals2D = new ArrayList<>();
-
-        for (List<String> jadwalIds : jadwalIdGroups) {
-            List<JadwalPelajaran> jadwalRow = new ArrayList<>();
-            for (String jadwalId : jadwalIds) {
-                JadwalPelajaran jadpel = client.showDataTable(tableJadPel.toString(), columnMapping, jadwalId, JadwalPelajaran.class);
-                if (jadpel != null) {
-                    jadwalRow.add(jadpel);
-                }
-            }
-            jadwals2D.add(jadwalRow);
-        }
-
-        return jadwals2D;
-    }
 
              
     public JadwalPelajaran update(String jadwalId, JadwalPelajaran jadpel) throws IOException {

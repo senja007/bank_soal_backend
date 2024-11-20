@@ -19,6 +19,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -325,7 +326,24 @@ public <T> List<T> showListTableFiltered(String tablename, Map<String, String> c
     return null;
 }
 
+public Map<String, Map<String, String>> getAllRows(TableName tableName) throws IOException {
+    try (Table table = connection.getTable(tableName)) {
+        Scan scan = new Scan();
+        ResultScanner scanner = table.getScanner(scan);
+        Map<String, Map<String, String>> rows = new HashMap<>();
 
+        for (Result result : scanner) {
+            Map<String, String> rowData = new HashMap<>();
+            result.getNoVersionMap().forEach((family, columns) -> {
+                columns.forEach((qualifier, value) -> 
+                    rowData.put(new String(family) + ":" + new String(qualifier), new String(value))
+                );
+            });
+            rows.put(new String(result.getRow()), rowData);
+        }
+        return rows;
+    }
+}
 
     public <T> T showDataTable(String tablename, Map<String, String> columnMapping, String uuid, Class<T> modelClass) {
         Result result = null;

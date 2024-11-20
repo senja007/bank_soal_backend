@@ -19,6 +19,8 @@ public class Season {
     public Season() {
 
     }
+    
+    
 
     public Season(String idSeason, BidangKeahlian bidangKeahlian, ProgramKeahlian programKeahlian, 
             KonsentrasiKeahlian konsentrasiKeahlian, Kelas kelas, Lecture lecture, TahunAjaran tahunAjaran, 
@@ -116,13 +118,6 @@ public class Season {
         this.student.add(student);
     }
 
-//    public JadwalPelajaran getJadwalPelajaran() {
-//        return jadwalPelajaran;
-//    }
-//
-//    public void setJadwalPelajaran(JadwalPelajaran jadwalPelajaran) {
-//        this.jadwalPelajaran = jadwalPelajaran;
-//    }
     
     public boolean isValid() {
         return this.idSeason != null;
